@@ -1,34 +1,32 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
+
+[RequireComponent(typeof(CharacterController))]
+// only executes the following if on a component with a chara controller.
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
     private float playerSpeed = 5.0f;
+    [SerializeField]
     private float gravityValue = -9.81f;
 
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    private InputManager inputManager;
+    private Transform cameraTransform;
 
-    [Header("Input Actions")]
-    public InputActionReference moveAction; // expects Vector2
 
-
-    private void Awake()
+    private void Start()
     {
         controller = GetComponent<CharacterController>();
+        inputManager = InputManager.Instance;
+        cameraTransform = Camera.main.transform;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    private void OnEnable()
-    {
-        moveAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        moveAction.action.Disable();
-    }
 
     void Update()
     {
@@ -37,18 +35,23 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
+        // velocity is the rate of player falling, so this doesnt execute if the player is 'grounded'.
 
-        // Read input
-        Vector2 input = moveAction.action.ReadValue<Vector2>();
-        Vector3 move = new Vector3(input.x, 0, input.y);
-        move = Vector3.ClampMagnitude(move, 1f);
 
-        if (move != Vector3.zero)
-        {
-            transform.forward = move;
-        }
+        Vector2 movement = inputManager.GetPlayerMovement();
+        Vector3 move = new Vector3(movement.x, 0f, movement.y);
+        // converts the vector 2 into a vector3, where '0f' is defined as how high off the ground the player is.
 
-        // Apply gravity
+        move = cameraTransform.forward * move.z + cameraTransform.right * move.x;
+        move.y = 0f;
+        // another precaution to make sure the player stays on the ground unless falling/ jumping.
+
+        //if (move != Vector3.zero)
+        //{
+        //    transform.forward = move;
+        //}
+        // move in the faced direction (need to define what 'forawrd' is).
+
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         // Combine horizontal and vertical movement
