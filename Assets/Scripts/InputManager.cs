@@ -16,7 +16,6 @@ public class InputManager : MonoBehaviour
 
     private PlayerControls playerControls;
 
-
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -30,7 +29,6 @@ public class InputManager : MonoBehaviour
         // make sure that this script only exists once, and if not to assign the variable to this script.
 
         playerControls = new PlayerControls();
-
     }
 
     private void OnEnable()
@@ -52,8 +50,4 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.Look.ReadValue<Vector2>();
     }
-
-
-
-
 }
