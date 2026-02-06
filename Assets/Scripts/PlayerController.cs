@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
@@ -14,13 +15,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float gravityValue = -9.81f;
     [SerializeField]
-    private float rotationSpeed = 5f;
+    private float rotationSpeed = 2f;
 
     public CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
-
 
     public InputActionReference moveAction;
     public InputActionReference aimAction;
@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         cameraTransform = Camera.main.transform;
+
     }
 
     private void OnEnable()
@@ -47,32 +48,29 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //playerRot = transform.eulerAngles;
+
         groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0f)
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            playerVelocity.y = -2f;
+            playerVelocity.y = 0f;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
 // gravity
 
 
         Vector2 input = moveAction.action.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x, 0, input.y);
 
-        move = move.x * cameraTransform.right + move.z * cameraTransform.forward;
+        move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
 
         controller.Move(move * Time.deltaTime * playerSpeed);
-// use the vec2 to create a new vec3 where vertical movement it locked to 0 (change for jumping)
+// use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
 
-        controller.Move(playerVelocity * Time.deltaTime);
-// final execution that takes into account the custom speed variable
-
-
-        Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
     }
 }
