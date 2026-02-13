@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float gravityValue = -9.81f;
     [SerializeField]
-    private float rotationSpeed = 2f;
+    private float rotationSpeed = 20f;
     
     public CharacterController controller;
     private Vector3 playerVelocity;
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         cameraTransform = Camera.main.transform;
-        PlayerInput input = GetComponent<PlayerInput>();
+
     }
 
     private void OnEnable()
@@ -47,9 +47,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        transform.position = cameraTransform.position;
-        transform.rotation = Quaternion.Euler(cameraTransform.eulerAngles);
-
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -70,12 +67,8 @@ public class PlayerController : MonoBehaviour
         controller.Move(move * Time.deltaTime * playerSpeed);
         // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
-        if (move.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, (rotationSpeed) * Time.deltaTime);
-        }
-
+        Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
     }
 }
