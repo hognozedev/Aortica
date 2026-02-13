@@ -28,8 +28,12 @@ public class PlayerController : MonoBehaviour
     public InputActionReference attackAction;
     public InputActionReference interactAction;
 
+    [HideInInspector] public PlayerStamina _playerStamina;
+
     private void Start()
     {
+        _playerStamina = GetComponent<PlayerStamina>();
+
         cameraTransform = Camera.main.transform;
         PlayerInput input = GetComponent<PlayerInput>();
     }
@@ -44,6 +48,13 @@ public class PlayerController : MonoBehaviour
         moveAction.action.Disable();
     }
 // to toggle movement, e.g. if entering a pause menu
+
+
+    public void SetSprintSpeed(float speed)
+    {
+        sprintSpeed = speed;
+    }
+
 
     void Update()
     {
@@ -70,11 +81,6 @@ public class PlayerController : MonoBehaviour
         controller.Move(move * Time.deltaTime * playerSpeed);
         // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
-        if (move.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, (rotationSpeed) * Time.deltaTime);
-        }
 
 
     }
