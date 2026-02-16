@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,19 +8,20 @@ public class PlayerStamina : MonoBehaviour
 	public float playerStamina = 100f;
 
 	[SerializeField] private float maxStamina = 100f;
-	[SerializeField] private float staminaLoss = 0.5f;
-	[SerializeField] private float staminaRegen = 0.5f;
+	[SerializeField] private float staminaLoss = 10f;
+	[SerializeField] private float staminaRegen = 10f;
+    [SerializeField] private float staminaDelay = 1f;
 
-	[SerializeField] private int walkSpeed = 4;
+
+    [SerializeField] private int walkSpeed = 4;
 	[SerializeField] private int sprintSpeed = 8;
 
-	[SerializeField] private Image stamBarUI = null;
-	[SerializeField] private CanvasGroup stamSlider = null;
+	[SerializeField] private Image stamSlider = null;
+	[SerializeField] private CanvasGroup stamCanvasGroup = null;
 
 
 	public bool hasRegenerated = true;
 	public bool playerSprinting = false;
-
 	private PlayerController playerController;
 
 
@@ -31,27 +33,23 @@ public class PlayerStamina : MonoBehaviour
 
 	private void Update()
 	{
-		if (playerSprinting)
+		if (playerSprinting == false)
 		{
-			if(playerStamina <= maxStamina - 0.01)
+			if(playerStamina <= maxStamina - 0.1)
 			{
 				playerStamina += staminaRegen * Time.deltaTime;
+// WAIT BEFORE REFILLING
 				UpdateStamina(1);
 				//increase stamina amount if less than full
-
-				if (playerStamina >= maxStamina)
-				{
-					playerController.SprintSpeed(walkSpeed);
-					stamSlider.alpha = 0;
-					hasRegenerated = true;
-                // reset slider and back to walk speed
-
-                }
-
             }
+
+			if (playerStamina >= maxStamina - 0.1)
+			{
+				stamCanvasGroup.alpha = 0;
+			}
+
 		}
 	}
-
 
 	public void Sprinting()
 	{
@@ -60,33 +58,22 @@ public class PlayerStamina : MonoBehaviour
 			playerSprinting = true;
 			playerStamina -= staminaLoss * Time.deltaTime;
 			UpdateStamina(1);
+		// if the player has enough stamina and they are sprinting, lose over time and execute the visual bar decrease.
 
-			// if the player has enough stamina and they are sprinting, lose over time and execute the visual bar decrease.
-
-			if (playerStamina <= 0)
-			{
-				hasRegenerated = false;
-				playerController.SprintSpeed(walkSpeed);
-				stamSlider.alpha = 0;
-
-            //if stamina runs out just ensure the slider is empty
-
-            }
         }
 	}
 
-
 	void UpdateStamina(int value) //checks when i ask instead of every frame
 	{
-		stamBarUI.fillAmount = playerStamina / maxStamina;
+        stamSlider.fillAmount = playerStamina / maxStamina;
 
 		if (value == 0)
 		{
-			stamSlider.alpha = 0;
+            stamCanvasGroup.alpha = 0;
 		}
 		else
 		{
-			stamSlider.alpha = 1;
+            stamCanvasGroup.alpha = 1;
 		}
 	}
 }

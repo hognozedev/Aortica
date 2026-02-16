@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
 
     private PlayerStamina staminaScript;
-    private bool isWalking = false;
 
     private PlayerInput playerInput;
     private InputAction moveAction;
@@ -28,9 +27,6 @@ public class PlayerController : MonoBehaviour
     private InputAction sprintAction;
     private InputAction attackAction;
     private InputAction interactAction;
-
-    public bool wasPressedThisFrame { get; }
-    public bool wasReleasedThisFrame { get; }
 
 
     private void Start()
@@ -43,7 +39,7 @@ public class PlayerController : MonoBehaviour
         sprintAction = playerInput.actions["Sprint"];
 
         cameraTransform = Camera.main.transform;
-
+        
     }
 
     public void SprintSpeed(float speed)
@@ -55,9 +51,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        bool sprintKeyPressed = Keyboard.current.shiftKey.wasPressedThisFrame;
-        bool sprintKeyReleased = Keyboard.current.shiftKey.wasReleasedThisFrame;
-        bool isWalking = Keyboard.current.wKey.wasPressedThisFrame;
+        bool isSprinting = Keyboard.current.shiftKey.isPressed;
+        bool isWalking = Keyboard.current.wKey.isPressed;
 
 
         if (isWalking)
@@ -65,13 +60,15 @@ public class PlayerController : MonoBehaviour
             staminaScript.playerSprinting = false;
         }
 
-        if (sprintKeyPressed == true)
+        if (isSprinting & isWalking == true)
         {
+
             if (staminaScript.playerStamina > 0)
             {
                 staminaScript.playerSprinting = true;
                 staminaScript.Sprinting();
             }
+
             else
             {
                 isWalking = true;
