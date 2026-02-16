@@ -41,6 +41,7 @@ public class PlayerStamina : MonoBehaviour
 
 				if (playerStamina >= maxStamina)
 				{
+					playerController.SprintSpeed(walkSpeed);
 					stamSlider.alpha = 0;
 					hasRegenerated = true;
                 // reset slider and back to walk speed
@@ -65,6 +66,7 @@ public class PlayerStamina : MonoBehaviour
 			if (playerStamina <= 0)
 			{
 				hasRegenerated = false;
+				playerController.SprintSpeed(walkSpeed);
 				stamSlider.alpha = 0;
 
             //if stamina runs out just ensure the slider is empty

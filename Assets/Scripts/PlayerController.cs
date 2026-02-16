@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool groundedPlayer;
     private Transform cameraTransform;
 
-    private PlayerStamina playerStamina;
+    private PlayerStamina staminaScript;
     private bool isWalking = false;
 
     private PlayerInput playerInput;
@@ -29,10 +29,14 @@ public class PlayerController : MonoBehaviour
     private InputAction attackAction;
     private InputAction interactAction;
 
+    public bool wasPressedThisFrame { get; }
+    public bool wasReleasedThisFrame { get; }
+
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-        playerStamina = GetComponent<PlayerStamina>();
+        staminaScript = GetComponent<PlayerStamina>();
         playerInput = GetComponent<PlayerInput>();
 
         moveAction = playerInput.actions["Move"];
@@ -51,10 +55,29 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        //if ()
+        bool sprintKeyPressed = Keyboard.current.shiftKey.wasPressedThisFrame;
+        bool sprintKeyReleased = Keyboard.current.shiftKey.wasReleasedThisFrame;
+        bool isWalking = Keyboard.current.wKey.wasPressedThisFrame;
+
+
+        if (isWalking)
         {
-            Debug.Log("sprinting");
+            staminaScript.playerSprinting = false;
         }
+
+        if (sprintKeyPressed == true)
+        {
+            if (staminaScript.playerStamina > 0)
+            {
+                staminaScript.playerSprinting = true;
+                staminaScript.Sprinting();
+            }
+            else
+            {
+                isWalking = true;
+            }
+        }
+
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
