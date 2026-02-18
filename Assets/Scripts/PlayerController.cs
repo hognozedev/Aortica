@@ -54,13 +54,14 @@ public class PlayerController : MonoBehaviour
         bool isSprinting = Keyboard.current.shiftKey.isPressed;
         bool isWalking = Keyboard.current.wKey.isPressed;
 
+        staminaScript.playerSprinting = false;
 
         if (isWalking)
         {
             staminaScript.playerSprinting = false;
         }
 
-        if (isSprinting & isWalking == true)
+        if (isSprinting & isWalking)
         {
 
             if (staminaScript.playerStamina > 0)
