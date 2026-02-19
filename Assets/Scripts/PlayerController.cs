@@ -9,11 +9,12 @@ using UnityEngine.InputSystem.Utilities;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerSpeed = 3.0f;
-    [SerializeField] private float sprintSpeed = 10;
+    [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
 
+    private float walkSpeed = 3f;
+    private float playerSpeed = 3f;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -37,16 +38,11 @@ public class PlayerController : MonoBehaviour
 
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
+        aimAction = playerInput.actions["Aim"];
 
         cameraTransform = Camera.main.transform;
-        
+        Cursor.lockState = CursorLockMode.Confined;
     }
-
-    public void SprintSpeed(float speed)
-    {
-        playerSpeed = speed;
-    }
-
 
     void Update()
     {
@@ -59,6 +55,7 @@ public class PlayerController : MonoBehaviour
         if (isWalking)
         {
             staminaScript.playerSprinting = false;
+            playerSpeed = walkSpeed;
         }
 
         if (isSprinting & isWalking)
@@ -68,14 +65,18 @@ public class PlayerController : MonoBehaviour
             {
                 staminaScript.playerSprinting = true;
                 staminaScript.Sprinting();
-            }
 
-            else
-            {
-                isWalking = true;
+                playerSpeed = sprintSpeed;
+
             }
         }
 
+        if(staminaScript.playerStamina <= 0 - 0.1)
+        {
+            staminaScript.playerSprinting = false;
+            playerSpeed = walkSpeed;
+        }
+// end of stamina code
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -93,12 +94,15 @@ public class PlayerController : MonoBehaviour
 
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
-
         controller.Move(move * Time.deltaTime * playerSpeed);
+
     // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
+
 
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
+
+    // player will move in direction the camera faces
 
     }
 }

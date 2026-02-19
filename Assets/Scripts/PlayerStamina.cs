@@ -1,20 +1,19 @@
+using System.Collections;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using JetBrains.Annotations;
 
 public class PlayerStamina : MonoBehaviour
 {
 	[Header("Stamina Stats")]
-	public float playerStamina = 100f;
 
-	[SerializeField] private float maxStamina = 100f;
+	public float playerStamina = 20f;
+	[SerializeField] private float maxStamina = 20f;
 	[SerializeField] private float staminaLoss = 10f;
-	[SerializeField] private float staminaRegen = 10f;
-    [SerializeField] private float staminaDelay = 1f;
-
-
-    [SerializeField] private int walkSpeed = 4;
-	[SerializeField] private int sprintSpeed = 8;
+	[SerializeField] private float regenSpeed = 10f;
+    //[SerializeField] private float regenDelay = 2f;
 
 	[SerializeField] private Image stamSlider = null;
 	[SerializeField] private CanvasGroup stamCanvasGroup = null;
@@ -24,7 +23,7 @@ public class PlayerStamina : MonoBehaviour
 	public bool playerSprinting = false;
 	private PlayerController playerController;
 
-
+	
 	private void Start()
 	{
 		playerController = GetComponent<PlayerController>();
@@ -35,23 +34,30 @@ public class PlayerStamina : MonoBehaviour
 	{
 		if (playerSprinting == false)
 		{
-			if(playerStamina <= maxStamina - 0.1)
-			{
-				playerStamina += staminaRegen * Time.deltaTime;
-// WAIT BEFORE REFILLING
+            if (playerStamina <= maxStamina - 0.1)
+            {
+				playerStamina += regenSpeed * Time.deltaTime;
 				UpdateStamina(1);
-				//increase stamina amount if less than full
+
+				//StartCoroutine(RegenWait());
+
             }
 
-			if (playerStamina >= maxStamina - 0.1)
+            if (playerStamina >= maxStamina - 0.1)
 			{
 				stamCanvasGroup.alpha = 0;
 			}
 
-		}
-	}
+        }
 
-	public void Sprinting()
+        //IEnumerator RegenWait()
+        //{
+        //    yield return new WaitForSeconds(regenDelay);
+        //}
+    }
+
+
+    public void Sprinting()
 	{
 		if (hasRegenerated)
 		{
