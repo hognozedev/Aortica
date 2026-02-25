@@ -60,14 +60,13 @@ public class PlayerController : MonoBehaviour
 
         if (isSprinting & isWalking)
         {
-
             if (staminaScript.playerStamina > 0)
             {
-                staminaScript.playerSprinting = true;
-                staminaScript.Sprinting();
+                    staminaScript.playerSprinting = true;
+                    staminaScript.Sprinting();
 
-                playerSpeed = sprintSpeed;
-
+                    playerSpeed = sprintSpeed;    
+                
             }
         }
 
