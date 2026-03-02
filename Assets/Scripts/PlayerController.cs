@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private InputAction interactAction;
 
 
-    private void Start()
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
         staminaScript = GetComponent<PlayerStamina>();
@@ -39,9 +39,34 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
         aimAction = playerInput.actions["Aim"];
+        attackAction = playerInput.actions["Attack"];
+
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    private void OnEnable()
+    {
+        attackAction.performed += _ => ShootGun();
+    }
+
+    private void OnDisable()
+    {
+        attackAction.performed -= _ => ShootGun();
+    }
+
+    private void ShootGun()
+    {
+        RaycastHit hit;
+
+        if(Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
+        {
+
+        }
+    
+        //populate the 'hit' variable with whatever the raycast makes contact with when being projected forwards from the camera centre.
+
     }
 
     void Update()
@@ -95,13 +120,13 @@ public class PlayerController : MonoBehaviour
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
-    // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
+        // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
 
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
 
-    // player will move in direction the camera faces
+        // player will move in direction the camera faces
 
     }
 }
