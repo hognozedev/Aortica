@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform barrelMove;
+    [SerializeField] private Transform bulletParent;
+
 
     private float walkSpeed = 3f;
     private float playerSpeed = 3f;
@@ -19,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
+    private float bulletMissDistance = 25f;
 
     private PlayerStamina staminaScript;
 
@@ -44,6 +49,7 @@ public class PlayerController : MonoBehaviour
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
     }
 
     private void OnEnable()
@@ -60,13 +66,21 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
 
-        if(Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
-        {
-
-        }
-    
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelMove.position, Quaternion.identity, bulletParent);
+        BulletControl bulletControl = bullet.GetComponent<BulletControl>();
+       
         //populate the 'hit' variable with whatever the raycast makes contact with when being projected forwards from the camera centre.
 
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
+        {
+            bulletControl.target = hit.point;
+            bulletControl.hit = true;
+        }
+        else
+        {
+            bulletControl.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
+            bulletControl.hit = true;
+        }
     }
 
     void Update()
