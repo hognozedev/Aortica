@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.UI;
 [RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
 
 
@@ -23,9 +24,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
-    private float bulletMissDistance = 25f;
+    private float bulletMissDistance = 75f;
 
     private PlayerStamina staminaScript;
+    private GunMaster gunMaster;
+
 
     private PlayerInput playerInput;
     private InputAction moveAction;
@@ -67,24 +70,25 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
 
         GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelMove.position, Quaternion.identity, bulletParent);
-        BulletControl bulletControl = bullet.GetComponent<BulletControl>();
+        GunMaster gunMaster = bullet.GetComponent<GunMaster>();
        
         //populate the 'hit' variable with whatever the raycast makes contact with when being projected forwards from the camera centre.
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
         {
-            bulletControl.target = hit.point;
-            bulletControl.hit = true;
+            gunMaster.target = hit.point;
+            gunMaster.hit = true;
         }
         else
         {
-            bulletControl.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
-            bulletControl.hit = true;
+            gunMaster.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
+            gunMaster.hit = true;
         }
     }
 
     void Update()
     {
+
 
         bool isSprinting = Keyboard.current.shiftKey.isPressed;
         bool isWalking = Keyboard.current.wKey.isPressed;

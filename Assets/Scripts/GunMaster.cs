@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class BulletControl : MonoBehaviour
+public class GunMaster : MonoBehaviour
 {
-
     [SerializeField] private GameObject bulletDecal;
 
-    private float speed = 50f;
+
+    private float speed = 100f;
     private float timeToDestroy = 3f;
 
     public Vector3 target {  get; set; }
     public bool hit {  get; set; }
+
 
     private void OnEnable()
     {
@@ -31,7 +32,7 @@ public class BulletControl : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         ContactPoint contact = other.GetContact(0);
-        GameObject.Instantiate(bulletDecal, contact.point, Quaternion.LookRotation(contact.normal));
+        GameObject.Instantiate(bulletDecal, contact.point + contact.normal * .0001f, Quaternion.LookRotation(contact.normal));
         Destroy(gameObject);
     }
 }
