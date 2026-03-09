@@ -24,11 +24,17 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
+<<<<<<< Updated upstream
     private float bulletMissDistance = 75f;
 
     private PlayerStamina staminaScript;
     private GunMaster gunMaster;
 
+=======
+
+    private PlayerStamina staminaScript;
+    private GunMaster gunMaster;
+>>>>>>> Stashed changes
 
     private PlayerInput playerInput;
     private InputAction moveAction;
@@ -36,6 +42,11 @@ public class PlayerController : MonoBehaviour
     private InputAction sprintAction;
     private InputAction attackAction;
     private InputAction interactAction;
+<<<<<<< Updated upstream
+=======
+    private InputAction attackAction;
+    private InputAction reloadAction;
+>>>>>>> Stashed changes
 
 
     private void Awake()
@@ -43,6 +54,7 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         staminaScript = GetComponent<PlayerStamina>();
         playerInput = GetComponent<PlayerInput>();
+        gunMaster = GetComponent<GunMaster>();
 
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
@@ -55,6 +67,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
+<<<<<<< Updated upstream
     private void OnEnable()
     {
         attackAction.performed += _ => ShootGun();
@@ -85,6 +98,9 @@ public class PlayerController : MonoBehaviour
             gunMaster.hit = true;
         }
     }
+=======
+    //PUT TRIGGERS FOR SHOOT && RELOAD HERE
+>>>>>>> Stashed changes
 
     void Update()
     {
