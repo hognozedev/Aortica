@@ -7,8 +7,8 @@ public abstract class GunMaster : MonoBehaviour
 {
     [HideInInspector] public PlayerController playerController;
     [HideInInspector] public Transform cameraTransform;
-    //public GameObject bulletDecal;
-    //public GameObject bulletPrefab;
+    public GameObject bulletDecal;
+    public GameObject bulletPrefab;
     public GunData gunData;
 
     // gundata behaviour
@@ -22,11 +22,10 @@ public abstract class GunMaster : MonoBehaviour
 
 
     // bullet behaviour
-    private float speed = 100f;
-    private float timeToDestroy = 3f;
-    private float CurrentCooldown;
-    private float bulletMissDistance = 75f;
-
+    //private float speed = 100f;
+    //private float timeToDestroy = 3f;
+    //private float CurrentCooldown;
+    //private float bulletMissDistance = 75f;
 
     public Vector3 target { get; set; }
 
@@ -34,24 +33,49 @@ public abstract class GunMaster : MonoBehaviour
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
-        cameraTransform = playerController.cameraTransform.transform;
-        attackAction = playerInput.actions["Attack"];
-        reloadAction = playerInput.actions["Reload"];
+        cameraTransform = Camera.main.transform;
 
         currentAmmo = gunData.magSize;
+        isReloading = false;
 
     }
 
-    public virtual void Update(){}
+    public void Update()
+    {
+        bool isShooting = Keyboard.current.fKey.isPressed;
+        bool isReloading = Keyboard.current.rKey.isPressed;
+
+        if (isShooting)
+        {
+            Debug.Log("attack pressed");
+            TryShoot();
+        }
+
+        if (isReloading)
+        {
+            Debug.Log("reload pressed");
+            TryReload();
+        }
+    }
+
 
     public void TryReload()
     {
-        if (isReloading && currentAmmo < gunData.magSize)
+        if (isReloading == false)
         {
-            StartCoroutine(Reload());
-        }
+            if(currentAmmo < gunData.magSize)
+            {
+                StartCoroutine(Reload());
+            }
 
+            else
+            {
+                Debug.Log("Already full");
+            }
+
+        }
     }
+
 
     private IEnumerator Reload()
     {

@@ -19,17 +19,19 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    public Transform cameraTransform;
+    private Transform cameraTransform;
 
     private PlayerStamina staminaScript;
+
+    // DO INPUTS HERE AND REFERENCE GUNMASTER !!
 
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction aimAction;
     private InputAction sprintAction;
     private InputAction interactAction;
-    public InputAction attackAction;
-    public InputAction reloadAction;
+    private InputAction attackAction;
+    private InputAction reloadAction;
 
 
     private void Awake()
