@@ -18,6 +18,8 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        playerControls = new PlayerControls();
+
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -27,8 +29,6 @@ public class InputManager : MonoBehaviour
             _instance = this;
         }
         // make sure that this script only exists once, and if not to assign the variable to this script.
-
-        playerControls = new PlayerControls();
     }
 
     private void OnEnable()
@@ -40,7 +40,6 @@ public class InputManager : MonoBehaviour
     {
         playerControls.Disable();
     }
-
 
     public Vector2 GetPlayerMovement()
     {

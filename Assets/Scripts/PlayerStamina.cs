@@ -13,49 +13,40 @@ public class PlayerStamina : MonoBehaviour
 	[SerializeField] private float maxStamina = 20f;
 	[SerializeField] private float staminaLoss = 10f;
 	[SerializeField] private float regenSpeed = 10f;
-    //[SerializeField] private float regenDelay = 2f;
+    [SerializeField] private float regenDelay = 2f;
 
 	[SerializeField] private Image stamSlider = null;
 	[SerializeField] private CanvasGroup stamCanvasGroup = null;
 
-
 	public bool hasRegenerated = true;
 	public bool playerSprinting = false;
-	private PlayerController playerController;
-
-	
-	private void Start()
-	{
-		playerController = GetComponent<PlayerController>();
-	}
 
 
 	private void Update()
 	{
 		if (playerSprinting == false)
 		{
+
             if (playerStamina <= maxStamina - 0.1)
             {
-				playerStamina += regenSpeed * Time.deltaTime;
-				UpdateStamina(1);
-
-				//StartCoroutine(RegenWait());
-
+                StartCoroutine(RegenWait());
             }
 
-            if (playerStamina >= maxStamina - 0.1)
+			if (playerStamina >= maxStamina - 0.1)
 			{
 				stamCanvasGroup.alpha = 0;
+				playerStamina = maxStamina;
 			}
 
         }
-
-        //IEnumerator RegenWait()
-        //{
-        //    yield return new WaitForSeconds(regenDelay);
-        //}
     }
 
+    IEnumerator RegenWait()
+    {
+        yield return new WaitForSeconds(regenDelay);
+        playerStamina += regenSpeed * Time.deltaTime;
+        UpdateStamina(1);
+    }
 
     public void Sprinting()
 	{

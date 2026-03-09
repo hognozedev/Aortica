@@ -5,37 +5,31 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UI;
-[RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
 
+[RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform barrelMove;
-    [SerializeField] private Transform bulletParent;
-
 
     private float walkSpeed = 3f;
     private float playerSpeed = 3f;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private Transform cameraTransform;
-    private float bulletMissDistance = 75f;
+    public Transform cameraTransform;
 
     private PlayerStamina staminaScript;
-    private GunMaster gunMaster;
-
 
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction aimAction;
     private InputAction sprintAction;
-    private InputAction attackAction;
     private InputAction interactAction;
+    public InputAction attackAction;
+    public InputAction reloadAction;
 
 
     private void Awake()
@@ -48,48 +42,15 @@ public class PlayerController : MonoBehaviour
         sprintAction = playerInput.actions["Sprint"];
         aimAction = playerInput.actions["Aim"];
         attackAction = playerInput.actions["Attack"];
-
+        reloadAction = playerInput.actions["Reload"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
 
-    private void OnEnable()
-    {
-        attackAction.performed += _ => ShootGun();
-    }
-
-    private void OnDisable()
-    {
-        attackAction.performed -= _ => ShootGun();
-    }
-
-    private void ShootGun()
-    {
-        RaycastHit hit;
-
-        GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelMove.position, Quaternion.identity, bulletParent);
-        GunMaster gunMaster = bullet.GetComponent<GunMaster>();
-       
-        //populate the 'hit' variable with whatever the raycast makes contact with when being projected forwards from the camera centre.
-
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, Mathf.Infinity))
-        {
-            gunMaster.target = hit.point;
-            gunMaster.hit = true;
-        }
-        else
-        {
-            gunMaster.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
-            gunMaster.hit = true;
-        }
-    }
-
     void Update()
     {
-
-
         bool isSprinting = Keyboard.current.shiftKey.isPressed;
         bool isWalking = Keyboard.current.wKey.isPressed;
 
@@ -108,8 +69,7 @@ public class PlayerController : MonoBehaviour
                     staminaScript.playerSprinting = true;
                     staminaScript.Sprinting();
 
-                    playerSpeed = sprintSpeed;    
-                
+                    playerSpeed = sprintSpeed;                 
             }
         }
 
@@ -118,14 +78,14 @@ public class PlayerController : MonoBehaviour
             staminaScript.playerSprinting = false;
             playerSpeed = walkSpeed;
         }
-// end of stamina code
+        // end of stamina code
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
         }
-    // gravity
+        // gravity
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
