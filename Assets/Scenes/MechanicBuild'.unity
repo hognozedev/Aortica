@@ -373803,10 +373803,13 @@ MonoBehaviour:
   gravityValue: -9.81
   lookSensitivity: 100
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   bulletPrefab: {fileID: 5172844333555704337, guid: 54fa07c69480e9549a3424772b6b5ca8, type: 3}
   barrelMove: {fileID: 1698004600}
   bulletParent: {fileID: 1308265301}
   blackScreen: {fileID: 586838392}
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 --- !u!114 &100979458
@@ -374366,6 +374369,9 @@ MonoBehaviour:
   bulletDecal: {fileID: 9004008164920913377, guid: 2c694b3aa6950934bae1e5e48c956b94, type: 3}
   bulletPrefab: {fileID: 5172844333555704337, guid: 54fa07c69480e9549a3424772b6b5ca8, type: 3}
   gunData: {fileID: 11400000, guid: 8154844bd74c6794d8d2d751ad8727f3, type: 2}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 --- !u!1 &466269328
 GameObject:

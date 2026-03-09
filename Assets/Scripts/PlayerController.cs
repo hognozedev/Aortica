@@ -25,11 +25,17 @@ public class PlayerController : MonoBehaviour
     private bool groundedPlayer;
     private Transform cameraTransform;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private float bulletMissDistance = 75f;
 
     private PlayerStamina staminaScript;
     private GunMaster gunMaster;
 
+=======
+
+    private PlayerStamina staminaScript;
+    private GunMaster gunMaster;
+>>>>>>> Stashed changes
 =======
 
     private PlayerStamina staminaScript;
@@ -43,6 +49,11 @@ public class PlayerController : MonoBehaviour
     private InputAction attackAction;
     private InputAction interactAction;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    private InputAction attackAction;
+    private InputAction reloadAction;
+>>>>>>> Stashed changes
 =======
     private InputAction attackAction;
     private InputAction reloadAction;
@@ -67,6 +78,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     private void OnEnable()
     {
@@ -98,6 +110,9 @@ public class PlayerController : MonoBehaviour
             gunMaster.hit = true;
         }
     }
+=======
+    //PUT TRIGGERS FOR SHOOT && RELOAD HERE
+>>>>>>> Stashed changes
 =======
     //PUT TRIGGERS FOR SHOOT && RELOAD HERE
 >>>>>>> Stashed changes
