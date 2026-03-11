@@ -49,5 +49,9 @@ public class InputManager : MonoBehaviour
     {
         return playerControls.Player.Look.ReadValue<Vector2>();
     }
+    public Vector2 GetPlayerAttack()
+    {
+        return playerControls.Player.Attack.ReadValue<Vector2>();
+    }
 
 }

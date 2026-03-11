@@ -3,25 +3,23 @@ using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public abstract class GunMaster : MonoBehaviour
+public class GunMaster : MonoBehaviour
 {
     [HideInInspector] public PlayerController playerController;
     [HideInInspector] public Transform cameraTransform;
+
+    [SerializeField] private GameObject bulletPrefab;
+
     public GameObject bulletDecal;
-    public GameObject bulletPrefab;
     public GunData gunData;
 
-    // gundata behaviour
     private float currentAmmo = 0;
     private float NextTimeToFire = 0;
-    private bool isReloading = false;
 
-    [HideInInspector] public PlayerInput playerInput;
-    [HideInInspector] public InputAction attackAction;
-    [HideInInspector] public InputAction reloadAction;
+    public bool isReloading = false;
+    public bool isShooting = false;
 
-
-    // bullet behaviour
+// bullet behaviour
     //private float speed = 100f;
     //private float timeToDestroy = 3f;
     //private float CurrentCooldown;
@@ -36,14 +34,13 @@ public abstract class GunMaster : MonoBehaviour
         cameraTransform = Camera.main.transform;
 
         currentAmmo = gunData.magSize;
+        isShooting = false;
         isReloading = false;
 
     }
 
     public void Update()
     {
-        bool isShooting = Keyboard.current.fKey.isPressed;
-        bool isReloading = Keyboard.current.rKey.isPressed;
 
         if (isShooting)
         {
@@ -63,7 +60,7 @@ public abstract class GunMaster : MonoBehaviour
     {
         if (isReloading == false)
         {
-            if(currentAmmo < gunData.magSize)
+            if (currentAmmo < gunData.magSize)
             {
                 StartCoroutine(Reload());
             }
@@ -80,11 +77,8 @@ public abstract class GunMaster : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
-
-        Debug.Log(gunData.gunName + "reloading.....");
-
         yield return new WaitForSeconds(gunData.reloadTime);
-
+        currentAmmo = gunData.magSize;
         isReloading = false;
 
         Debug.Log(gunData.gunName + "done!");
@@ -99,13 +93,13 @@ public abstract class GunMaster : MonoBehaviour
             return;
         }
 
-        if(currentAmmo <= 0f)
+        if (currentAmmo <= 0f)
         {
             Debug.Log(gunData.gunName + "empty, please reload");
             return;
         }
 
-        if(Time.time >= NextTimeToFire)
+        if (Time.time >= NextTimeToFire)
         {
             NextTimeToFire = Time.time + (1 / gunData.fireRate);
             // e.g. if fire rate is 2 then wait between is 0.5 secs
@@ -123,9 +117,15 @@ public abstract class GunMaster : MonoBehaviour
     }
     // things that still need to happen when firing, even if no hit target like recoil/ screen shake, etc.
 
+    private void Shoot()
+    {
+        RaycastHit hit;
+        //GameObject bullet = GameObject.Instantiate(bulletPrefab, Quaternion.identity, bulletParent);
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, gunData.shootingRange))
+        {
+            Debug.Log(gunData.gunName + "hit" + hit.collider.name);
+        }
 
-    public abstract void Shoot();
-    // inherits to each child for flexibility, defines what happens on the hit event
-
+    }
 
 }

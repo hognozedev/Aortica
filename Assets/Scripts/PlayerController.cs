@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
@@ -22,16 +23,14 @@ public class PlayerController : MonoBehaviour
     private Transform cameraTransform;
 
     private PlayerStamina staminaScript;
-
-    // DO INPUTS HERE AND REFERENCE GUNMASTER !!
+    public GunMaster gunMaster;
 
     private PlayerInput playerInput;
     private InputAction moveAction;
-    private InputAction aimAction;
     private InputAction sprintAction;
-    private InputAction interactAction;
     private InputAction attackAction;
     private InputAction reloadAction;
+    private InputAction interactAction;
 
 
     private void Awake()
@@ -39,10 +38,10 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         staminaScript = GetComponent<PlayerStamina>();
         playerInput = GetComponent<PlayerInput>();
+        gunMaster = GetComponent<GunMaster>();
 
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
-        aimAction = playerInput.actions["Aim"];
         attackAction = playerInput.actions["Attack"];
         reloadAction = playerInput.actions["Reload"];
 
@@ -53,8 +52,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        bool isSprinting = Keyboard.current.shiftKey.isPressed;
-        bool isWalking = Keyboard.current.wKey.isPressed;
+        bool isSprinting = sprintAction.IsPressed();
+        bool isWalking = moveAction.IsPressed();
+
+        gunMaster.isShooting = attackAction.WasPressedThisFrame();
+        gunMaster.isReloading = reloadAction.WasPressedThisFrame();
+
 
         staminaScript.playerSprinting = false;
 
@@ -99,13 +102,11 @@ public class PlayerController : MonoBehaviour
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
-
         // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
 
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
-
         // player will move in direction the camera faces
 
     }
