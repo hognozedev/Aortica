@@ -55,9 +55,8 @@ public class PlayerController : MonoBehaviour
         bool isSprinting = sprintAction.IsPressed();
         bool isWalking = moveAction.IsPressed();
 
-        gunMaster.isShooting = attackAction.WasPressedThisFrame();
-        gunMaster.isReloading = reloadAction.WasPressedThisFrame();
-
+        //bool shootPressed = attackAction.WasPressedThisFrame();
+        //bool reloadPressed = reloadAction.WasPressedThisFrame();
 
         staminaScript.playerSprinting = false;
 

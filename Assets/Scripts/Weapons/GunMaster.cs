@@ -8,9 +8,6 @@ public class GunMaster : MonoBehaviour
     [HideInInspector] public PlayerController playerController;
     [HideInInspector] public Transform cameraTransform;
 
-    [SerializeField] private GameObject bulletPrefab;
-
-    public GameObject bulletDecal;
     public GunData gunData;
 
     private float currentAmmo = 0;
@@ -19,13 +16,11 @@ public class GunMaster : MonoBehaviour
     public bool isReloading = false;
     public bool isShooting = false;
 
-// bullet behaviour
-    //private float speed = 100f;
-    //private float timeToDestroy = 3f;
-    //private float CurrentCooldown;
-    //private float bulletMissDistance = 75f;
-
-    public Vector3 target { get; set; }
+    // bullet behaviour
+    private GameObject bulletPrefab;
+    private Transform barrelTransform;
+    private Transform bulletParent;
+    private float bulletMissDistance = 25f;
 
 
     private void Start()
@@ -41,6 +36,8 @@ public class GunMaster : MonoBehaviour
 
     public void Update()
     {
+        bool isShooting = Keyboard.current.fKey.wasPressedThisFrame;
+        bool isReloading = Keyboard.current.rKey.wasPressedThisFrame;
 
         if (isShooting)
         {
@@ -64,7 +61,6 @@ public class GunMaster : MonoBehaviour
             {
                 StartCoroutine(Reload());
             }
-
             else
             {
                 Debug.Log("Already full");
@@ -120,10 +116,18 @@ public class GunMaster : MonoBehaviour
     private void Shoot()
     {
         RaycastHit hit;
-        //GameObject bullet = GameObject.Instantiate(bulletPrefab, Quaternion.identity, bulletParent);
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity, bulletParent);
+
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, gunData.shootingRange))
         {
             Debug.Log(gunData.gunName + "hit" + hit.collider.name);
+            target = hit.point;
+            boolHit = true;
+        }
+        else
+        {
+            target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
+            boolHit = true;
         }
 
     }

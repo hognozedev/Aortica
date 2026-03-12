@@ -9,6 +9,7 @@ public class GunData : ScriptableObject
     [Header("Fire Config")]
     public float shootingRange;
     public float fireRate;
+    public float bulletDamage;
 
     [Header("Reload Config")]
     public float magSize;

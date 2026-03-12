@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8789369631504892504}
   - component: {fileID: 6253366251354004100}
   - component: {fileID: 7450357509413131352}
-  - component: {fileID: 5421752608152897436}
+  - component: {fileID: 7566711652786734178}
   m_Layer: 0
   m_Name: BulletObject
   m_TagString: Untagged
@@ -113,7 +113,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5421752608152897436
+--- !u!114 &7566711652786734178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +122,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5172844333555704337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f535514d79f944440ba8ceaf2140f6a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c89ddc5620220c4fa982baa3d9d6f98, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BulletControl
-  bulletDecal: {fileID: 9004008164920913377, guid: 2c694b3aa6950934bae1e5e48c956b94, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::BulletController
