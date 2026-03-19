@@ -373801,7 +373801,7 @@ MonoBehaviour:
   sprintSpeed: 6
   gravityValue: -9.81
   lookSensitivity: 100
-  gunMaster: {fileID: 0}
+  gunMaster: {fileID: 1342556083}
 --- !u!114 &100979458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373985,7 +373985,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.09705208, y: 0.8936749, z: -0.37017226, w: 0.23430446}
+  m_LocalRotation: {x: 0.06377877, y: 0.9109583, z: -0.37733126, w: 0.15397559}
   m_LocalPosition: {x: 0, y: 0, z: 5.048191}
   m_LocalScale: {x: 0.28063536, y: 0.28063536, z: 0.28063536}
   m_ConstrainProportionsScale: 0
@@ -375256,7 +375256,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681001509}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0798765, y: 0.9116276, z: -0.34261248, w: 0.21253636}
+  m_LocalRotation: {x: 0.052136183, y: 0.92573863, z: -0.34791577, w: 0.13872464}
   m_LocalPosition: {x: -0.16113934, y: 2.0203052, z: 5.048191}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -380343,7 +380343,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5172844333555704337, guid: 54fa07c69480e9549a3424772b6b5ca8, type: 3}
   barrelTransform: {fileID: 2032497250}
   bulletParent: {fileID: 1811147833}
-  bulletDecal: {fileID: 9004008164920913377, guid: 2c694b3aa6950934bae1e5e48c956b94, type: 3}
+  bulletMissDistance: 25
 --- !u!43 &1433712224
 Mesh:
   m_ObjectHideFlags: 0
@@ -389281,7 +389281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7410997984905695084}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.097052075, y: 0.8936749, z: -0.37017226, w: 0.23430446}
+  m_LocalRotation: {x: 0.063778795, y: 0.9109583, z: -0.3773313, w: 0.1539756}
   m_LocalPosition: {x: -0.16113934, y: 2.0203052, z: 5.048191}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

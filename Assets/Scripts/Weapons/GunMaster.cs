@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class GunMaster : MonoBehaviour
 {
-    [HideInInspector] public PlayerController playerController;
+    public PlayerController playerController;
     [HideInInspector] public Transform cameraTransform;
 
     public GunData gunData;
@@ -17,10 +18,10 @@ public class GunMaster : MonoBehaviour
     public bool isShooting = false;
 
     // bullet behaviour
-    private GameObject bulletPrefab;
-    private Transform barrelTransform;
-    private Transform bulletParent;
-    private float bulletMissDistance = 25f;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform barrelTransform;
+    [SerializeField] private Transform bulletParent;
+    [SerializeField] private float bulletMissDistance = 25f;
 
 
     private void Start()
@@ -36,9 +37,6 @@ public class GunMaster : MonoBehaviour
 
     public void Update()
     {
-        bool isShooting = Keyboard.current.fKey.wasPressedThisFrame;
-        bool isReloading = Keyboard.current.rKey.wasPressedThisFrame;
-
         if (isShooting)
         {
             Debug.Log("attack pressed");
@@ -55,7 +53,7 @@ public class GunMaster : MonoBehaviour
 
     public void TryReload()
     {
-        if (isReloading == false)
+        if (isReloading)
         {
             if (currentAmmo < gunData.magSize)
             {
@@ -72,7 +70,6 @@ public class GunMaster : MonoBehaviour
 
     private IEnumerator Reload()
     {
-        isReloading = true;
         yield return new WaitForSeconds(gunData.reloadTime);
         currentAmmo = gunData.magSize;
         isReloading = false;
@@ -117,17 +114,18 @@ public class GunMaster : MonoBehaviour
     {
         RaycastHit hit;
         GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity, bulletParent);
+        BulletController bulletController = bullet.GetComponent<BulletController>();
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, gunData.shootingRange))
         {
             Debug.Log(gunData.gunName + "hit" + hit.collider.name);
-            target = hit.point;
-            boolHit = true;
+            bulletController.target = hit.point;
+            bulletController.hit = true;
         }
         else
         {
-            target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
-            boolHit = true;
+            bulletController.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
+            bulletController.hit = true;
         }
 
     }

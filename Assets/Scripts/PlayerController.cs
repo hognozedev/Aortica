@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         staminaScript = GetComponent<PlayerStamina>();
         playerInput = GetComponent<PlayerInput>();
-        gunMaster = GetComponent<GunMaster>();
 
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
@@ -55,8 +54,8 @@ public class PlayerController : MonoBehaviour
         bool isSprinting = sprintAction.IsPressed();
         bool isWalking = moveAction.IsPressed();
 
-        //bool shootPressed = attackAction.WasPressedThisFrame();
-        //bool reloadPressed = reloadAction.WasPressedThisFrame();
+        gunMaster.isShooting = attackAction.WasPerformedThisFrame();
+        gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
 
         staminaScript.playerSprinting = false;
 
