@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class ScrapMill : MonoBehaviour
+public class ScrapMill : MonoBehaviour, IInteractable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private PlayerController playerController;
+
+    private void Start()
     {
-        
+        playerController = GetComponent<PlayerController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Interact()
     {
-        
+        Debug.Log("yepyepyepyep");
     }
+
 }

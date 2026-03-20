@@ -7,14 +7,19 @@ using UnityEngine.InputSystem.Utilities;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
+interface IInteractable
+{
+    public void Interact();
+}
 
+[RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
 
+    public Transform interactSource;
     private float walkSpeed = 3f;
     private float playerSpeed = 3f;
     private CharacterController controller;
@@ -43,6 +48,7 @@ public class PlayerController : MonoBehaviour
         sprintAction = playerInput.actions["Sprint"];
         attackAction = playerInput.actions["Attack"];
         reloadAction = playerInput.actions["Reload"];
+        interactAction = playerInput.actions["Interact"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -53,6 +59,8 @@ public class PlayerController : MonoBehaviour
     {
         bool isSprinting = sprintAction.IsPressed();
         bool isWalking = moveAction.IsPressed();
+
+       
 
         gunMaster.isShooting = attackAction.WasPerformedThisFrame();
         gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
@@ -106,6 +114,16 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
         // player will move in direction the camera faces
+
+        if (interactAction.WasPressedThisFrame())
+        {
+            Debug.Log("hsdfh");
+        }
+
+    }
+
+    void ItemInteract(Vector3 center, float radius)
+    {
 
     }
 }

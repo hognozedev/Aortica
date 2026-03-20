@@ -6,12 +6,16 @@ public class GunData : ScriptableObject
     public LayerMask targetLayerMask;
     public string gunName;
 
-    [Header("Fire Config")]
+    [Header("Fire Stats")]
     public float shootingRange;
     public float fireRate;
     public float bulletDamage;
 
-    [Header("Reload Config")]
+    //public float bulletSpread;
+    //public float bulletPenetration;
+
+    [Header("Reload Stats")]
     public float magSize;
     public float reloadTime;
+
 }

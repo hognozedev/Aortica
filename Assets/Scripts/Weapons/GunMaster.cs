@@ -39,17 +39,14 @@ public class GunMaster : MonoBehaviour
     {
         if (isShooting)
         {
-            Debug.Log("attack pressed");
             TryShoot();
         }
 
         if (isReloading)
         {
-            Debug.Log("reload pressed");
             TryReload();
         }
     }
-
 
     public void TryReload()
     {
@@ -63,10 +60,8 @@ public class GunMaster : MonoBehaviour
             {
                 Debug.Log("Already full");
             }
-
         }
     }
-
 
     private IEnumerator Reload()
     {
@@ -74,21 +69,20 @@ public class GunMaster : MonoBehaviour
         currentAmmo = gunData.magSize;
         isReloading = false;
 
-        Debug.Log(gunData.gunName + "done!");
-
+        Debug.Log(gunData.gunName + " done!");
     }
 
     public void TryShoot()
     {
         if (isReloading)
         {
-            Debug.Log(gunData.gunName + "currently reloading.");
+            Debug.Log(gunData.gunName + " currently reloading.");
             return;
         }
 
         if (currentAmmo <= 0f)
         {
-            Debug.Log(gunData.gunName + "empty, please reload");
+            Debug.Log(gunData.gunName + " empty, please reload");
             return;
         }
 
@@ -104,7 +98,7 @@ public class GunMaster : MonoBehaviour
     private void HandleShoot()
     {
         currentAmmo--;
-        Debug.Log(gunData.gunName + "has shot. Bullets left = " + currentAmmo);
+        Debug.Log(gunData.gunName + " has shot. Bullets left = " + currentAmmo);
         Shoot();
 
     }
@@ -118,10 +112,12 @@ public class GunMaster : MonoBehaviour
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, gunData.shootingRange))
         {
-            Debug.Log(gunData.gunName + "hit" + hit.collider.name);
+            Debug.Log(gunData.gunName + " hit " + hit.collider.name);
+            Debug.Log("took " + gunData.bulletDamage + " damage");
             bulletController.target = hit.point;
             bulletController.hit = true;
         }
+
         else
         {
             bulletController.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;

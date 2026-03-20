@@ -18,5 +18,6 @@ MonoBehaviour:
   gunName: Mauser
   shootingRange: 100
   fireRate: 4
+  bulletDamage: 10
   magSize: 5
   reloadTime: 2.5
