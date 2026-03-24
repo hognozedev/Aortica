@@ -58,9 +58,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool isSprinting = sprintAction.IsPressed();
-        bool isWalking = moveAction.IsPressed();
-
-       
+        bool isWalking = moveAction.IsPressed();       
 
         gunMaster.isShooting = attackAction.WasPerformedThisFrame();
         gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
@@ -117,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
         if (interactAction.WasPressedThisFrame())
         {
-            Debug.Log("hsdfh");
+
         }
 
     }
