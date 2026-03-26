@@ -1,42 +1,58 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ScrapMill : MonoBehaviour, IInteractable
 {
+    //player variables
     private PlayerController playerController;
+    int currentScrap = 0;
+    public TextMeshProUGUI scrapCount;
 
-    public float scrapAmount;
-    public float millingTime;
+    //scrap variables
+    public int scrapAmount;
+    private int timeUntilFull;
+    private int fullCapacity;
 
-    private bool isJammed;
+    //machine function
+    private bool isJammed = true;
+    public int millingTime = 10;
+
 
     private void Awake()
     {
-        isJammed = true;
         playerController = GetComponent<PlayerController>();
 
     }
 
     private void Start()
     {
+        playerController = GetComponent<PlayerController>();
 
         isJammed = true;
-        playerController = GetComponent<PlayerController>();
+        scrapCount.text = currentScrap.ToString();
     }
 
     public void Interact()
     {
-        Debug.Log("has interacted");
-
-        if(isJammed)
+        if(isJammed == true)
         {
+            Debug.Log("jammed");
             MillStart();
+        }
+
+        if(isJammed == false)
+        {
+            Debug.Log("NOT jammed");
+            MillCollection();
         }
 
     }
 
     private void MillStopped()
     {
+        isJammed = true;
         Debug.Log("mill has stopped");
 
     }
@@ -45,17 +61,22 @@ public class ScrapMill : MonoBehaviour, IInteractable
     {
         Debug.Log("mill is running again");
 
+        isJammed = false;
         StartCoroutine(Running());
 
     }
 
     private IEnumerator Running()
     {
-        Debug.Log("1");
-
         yield return new WaitForSeconds(millingTime);
-        Debug.Log("2");
+        MillStopped();
 
+    }
+
+    private void MillCollection()
+    {
+        currentScrap += scrapAmount;
+        scrapCount.text = currentScrap.ToString();
     }
 
 }

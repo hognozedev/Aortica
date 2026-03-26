@@ -15,21 +15,26 @@ interface IInteractable
 [RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
+    //inspector variables
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
 
-    public Transform interactSource;
+    //other privs
     private float walkSpeed = 3f;
     private float playerSpeed = 3f;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
-
+    private LayerMask isInteractable;
     private PlayerStamina staminaScript;
-    public GunMaster gunMaster;
 
+    //script refs
+    public GunMaster gunMaster;
+    public Transform interactSource;
+
+    //inputs
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction sprintAction;
@@ -49,6 +54,8 @@ public class PlayerController : MonoBehaviour
         attackAction = playerInput.actions["Attack"];
         reloadAction = playerInput.actions["Reload"];
         interactAction = playerInput.actions["Interact"];
+
+        isInteractable = LayerMask.GetMask("Interactable");
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -115,13 +122,18 @@ public class PlayerController : MonoBehaviour
 
         if (interactAction.WasPressedThisFrame())
         {
-
+            Collider[] colliders = Physics.OverlapSphere(interactSource.position, 1.5f);
+            foreach (Collider cll in colliders)
+            {
+                if (cll.gameObject.TryGetComponent(out IInteractable interactObj))
+                {
+                    interactObj.Interact();
+                }
+            }
         }
+        //interaction with object using a collision sphere around player. if object inherits the 'IInteractable' interface, then
+        // excecute whatever is in the Interact(); for that individual object's script.
 
-    }
-
-    void ItemInteract(Vector3 center, float radius)
-    {
 
     }
 }
