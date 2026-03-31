@@ -7,39 +7,66 @@ public class ScrapMill : MonoBehaviour, IInteractable
 {
     //player variables
     private PlayerController playerController;
-    int currentScrap = 0;
+    public TextMeshProUGUI playerCount;
     public TextMeshProUGUI scrapCount;
 
     //scrap variables
+    private float decimalScrapAmount;
     public int scrapAmount;
-    private int timeUntilFull;
-    private int fullCapacity;
+    public int playerScrap;
+
+    private float genSpeed = 0.5f;
+    public int fullCapacity;
 
     //machine function
-    private bool isJammed = true;
-    public int millingTime = 10;
+    private bool isJammed;
+    public int millDelay = 5;
 
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
 
+        scrapCount.GetComponent<TextMeshProUGUI>();
+        playerCount.GetComponent<TextMeshProUGUI>();
+
     }
 
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
-
         isJammed = true;
-        scrapCount.text = currentScrap.ToString();
+
+        scrapAmount = 0;
+        decimalScrapAmount = 0;
+    }
+
+    private void Update()
+    {
+        if(isJammed == false)
+        {
+            if (scrapAmount < fullCapacity)
+            {
+                decimalScrapAmount += Time.deltaTime * genSpeed;
+                scrapAmount = Mathf.RoundToInt(decimalScrapAmount);
+
+                scrapCount.text = scrapAmount.ToString();
+            }
+
+            else
+            {
+                Debug.Log("full");
+                isJammed = true;
+            }
+
+        }
     }
 
     public void Interact()
     {
         if(isJammed == true)
         {
-            Debug.Log("jammed");
-            MillStart();
+            MillRestart();
         }
 
         if(isJammed == false)
@@ -50,33 +77,30 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     }
 
-    private void MillStopped()
+    private void MillRestart()
     {
-        isJammed = true;
-        Debug.Log("mill has stopped");
-
-    }
-
-    private void MillStart()
-    {
-        Debug.Log("mill is running again");
-
-        isJammed = false;
         StartCoroutine(Running());
 
     }
 
     private IEnumerator Running()
     {
-        yield return new WaitForSeconds(millingTime);
-        MillStopped();
+        yield return new WaitForSeconds(millDelay);
+
+        Debug.Log("mill is running again");
+        MillCollection();
+        isJammed = false;
 
     }
 
     private void MillCollection()
     {
-        currentScrap += scrapAmount;
-        scrapCount.text = currentScrap.ToString();
-    }
+        playerScrap += scrapAmount;
 
+        scrapAmount = 0;
+        decimalScrapAmount = 0;
+
+        playerCount.text = playerScrap.ToString();
+
+    }
 }
