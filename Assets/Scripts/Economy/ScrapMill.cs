@@ -25,16 +25,14 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        playerController = GetComponent<PlayerController>();
 
-        scrapCount.GetComponent<TextMeshProUGUI>();
-        playerCount.GetComponent<TextMeshProUGUI>();
 
     }
 
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
+
         isJammed = true;
 
         scrapAmount = 0;
