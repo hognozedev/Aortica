@@ -24,7 +24,7 @@ public class LevelCrafting : MonoBehaviour
 
     private void Start()
     {
-        CreateItemButton(itemStats.ItemType.RifeAmmo),
+        CreateItemButton(itemStats.ItemType.RifleAmmo, itemStats.);
     }
 
     private void CreateItemButton(string itemName, int itemCost)
