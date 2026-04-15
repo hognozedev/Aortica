@@ -7,38 +7,44 @@ using TMPro;
 using System.ComponentModel;
 using System.Collections.Specialized;
 
-public class LevelCrafting : MonoBehaviour
+public class LevelCrafting : MonoBehaviour, IInteractable
 {
     [SerializeField] private CanvasGroup craftingCanvasGroup = null;
+    public Transform container;
+    public Transform craftItemTemplate;
+    public TextMeshProUGUI nameReference;
+    public TextMeshProUGUI costReference;
 
-    private Transform container;
-    private Transform craftItemTemplate;
 
     private void Awake()
     {
-        container = transform.Find("container");
-        craftItemTemplate = container.Find("craftTemplate");
-
+        //craftItemTemplate.gameObject.SetActive(false);
         craftingCanvasGroup.gameObject.SetActive(false);
     }
 
     private void Start()
     {
-        CreateItemButton(itemStats.ItemType.RifleAmmo, itemStats.);
+        CreateItemButton("Rifle Ammo", itemStats.GetCost(itemStats.ItemType.RifleAmmo), 0);
+        CreateItemButton("Bandage", itemStats.GetCost(itemStats.ItemType.Bandage), 1);
+
     }
 
-    private void CreateItemButton(string itemName, int itemCost)
+    private void CreateItemButton(string itemName, int itemCost, int positionIndex)
     {
         Transform craftItemTransform = Instantiate(craftItemTemplate, container);
         RectTransform craftItemRectTransform = craftItemTransform.GetComponent<RectTransform>();
+        float craftItemHeight = 75f;
 
-        float craftItemHeight = 30f;
         craftItemRectTransform.anchoredPosition = new Vector2(0, -craftItemHeight * positionIndex);
 
-        craftItemTransform.Find("itemName").GetComponent<TextMeshProUGUI>().SetText(itemName);
-        craftItemTransform.Find("costText").GetComponent<TextMeshProUGUI>().SetText(itemCost.ToString());
+        nameReference.text = itemName;
+        costReference.text = itemCost.ToString();
 
+    }
 
+    public void Interact()
+    {
+        craftingCanvasGroup.gameObject.SetActive(true);
     }
 
 }

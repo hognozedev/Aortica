@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 6f;
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
+    [SerializeField] private GameObject interactPrompt;
 
     //other privs
     private float walkSpeed = 3f;
@@ -56,10 +58,12 @@ public class PlayerController : MonoBehaviour
         interactAction = playerInput.actions["Interact"];
 
         isInteractable = LayerMask.GetMask("Interactable");
+        interactPrompt.gameObject.SetActive(false);
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+
     }
 
     void Update()
@@ -120,20 +124,16 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
         // player will move in direction the camera faces
 
-        if (interactAction.WasPressedThisFrame())
-        {
-            Collider[] colliders = Physics.OverlapSphere(interactSource.position, 1.5f);
-            foreach (Collider cll in colliders)
-            {
-                if (cll.gameObject.TryGetComponent(out IInteractable interactObj))
-                {
-                    interactObj.Interact();
-                }
-            }
-        }
-        //interaction with object using a collision sphere around player. if object inherits the 'IInteractable' interface, then
-        // excecute whatever is in the Interact(); for that individual object's script.
-
-
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == (isInteractable))
+        {
+            Debug.Log("in");
+
+        }
+    }
+
+
 }
