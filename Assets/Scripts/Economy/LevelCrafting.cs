@@ -9,7 +9,7 @@ using System.Collections.Specialized;
 
 public class LevelCrafting : MonoBehaviour, IInteractable
 {
-    [SerializeField] private CanvasGroup craftingCanvasGroup = null;
+    [SerializeField] private CanvasGroup craftCanvasGroup = null;
     public Transform container;
     public Transform craftItemTemplate;
     public TextMeshProUGUI nameReference;
@@ -18,8 +18,7 @@ public class LevelCrafting : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        //craftItemTemplate.gameObject.SetActive(false);
-        craftingCanvasGroup.gameObject.SetActive(false);
+        craftCanvasGroup.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -44,7 +43,7 @@ public class LevelCrafting : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        craftingCanvasGroup.gameObject.SetActive(true);
+        craftCanvasGroup.gameObject.SetActive(true);
     }
 
 }

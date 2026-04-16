@@ -23,11 +23,6 @@ public class ScrapMill : MonoBehaviour, IInteractable
     public int millDelay = 5;
 
 
-    private void Awake()
-    {
-
-
-    }
 
     private void Start()
     {

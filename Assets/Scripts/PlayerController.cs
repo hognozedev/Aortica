@@ -7,6 +7,7 @@ using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+using System.Collections;
 
 interface IInteractable
 {
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
-    private LayerMask isInteractable;
+    private LayerMask intMask;
     private PlayerStamina staminaScript;
 
     //script refs
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
         reloadAction = playerInput.actions["Reload"];
         interactAction = playerInput.actions["Interact"];
 
-        isInteractable = LayerMask.GetMask("Interactable");
+        intMask = LayerMask.GetMask("Interactable");
         interactPrompt.gameObject.SetActive(false);
 
         cameraTransform = Camera.main.transform;
@@ -69,20 +70,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool isSprinting = sprintAction.IsPressed();
-        bool isWalking = moveAction.IsPressed();       
+        bool walkForward = playerVelocity.y > 0;
+                         //moveAction.IsPressed();       
 
         gunMaster.isShooting = attackAction.WasPerformedThisFrame();
         gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
 
         staminaScript.playerSprinting = false;
 
-        if (isWalking)
+        if (walkForward)
         {
             staminaScript.playerSprinting = false;
             playerSpeed = walkSpeed;
         }
 
-        if (isSprinting & isWalking)
+        if (isSprinting & walkForward)
         {
             if (staminaScript.playerStamina > 0)
             {
@@ -124,16 +126,27 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
         // player will move in direction the camera faces
 
+
+
+        
+                Collider[] colliders = Physics.OverlapSphere(interactSource.position, 1.5f, intMask);
+                foreach (Collider cll in colliders)
+
+                // for each thing using a collision component that is in radius, and uses the 'interact' mask, excecute the following:
+
+                {
+                    if (cll.gameObject.TryGetComponent(out IInteractable interactObj))
+                    {
+                        interactPrompt.gameObject.SetActive(true);
+
+                        if (interactAction.WasPressedThisFrame())
+                         {
+                            interactObj.Interact();
+                            interactPrompt.gameObject.SetActive(false);
+
+                        }
+                    }
+                }
+
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == (isInteractable))
-        {
-            Debug.Log("in");
-
-        }
-    }
-
-
 }

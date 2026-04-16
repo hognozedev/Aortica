@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 public class PlayerStamina : MonoBehaviour
 {
-	[Header("Stamina Stats")]
+	[Header("Stamina")]
 
 	public float playerStamina = 20f;
 	[SerializeField] private float maxStamina = 20f;
