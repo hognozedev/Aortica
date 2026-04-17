@@ -25,13 +25,13 @@ public class PlayerController : MonoBehaviour
 
     //other privs
     private float walkSpeed = 3f;
-    private float playerSpeed = 3f;
+    private float playerSpeed;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
     private LayerMask intMask;
-    private PlayerStamina staminaScript;
+    private PlayerStats playerStats;
 
     //script refs
     public GunMaster gunMaster;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        staminaScript = GetComponent<PlayerStamina>();
+        playerStats = GetComponent<PlayerStats>();
         playerInput = GetComponent<PlayerInput>();
 
         moveAction = playerInput.actions["Move"];
@@ -70,34 +70,33 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool isSprinting = sprintAction.IsPressed();
-        bool walkForward = playerVelocity.y > 0;
-                         //moveAction.IsPressed();       
+        bool walkForward = moveAction.IsPressed();      //make so only for forward motion (player local z axis)                    
 
         gunMaster.isShooting = attackAction.WasPerformedThisFrame();
         gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
 
-        staminaScript.playerSprinting = false;
+        playerStats.playerSprinting = false;
 
         if (walkForward)
         {
-            staminaScript.playerSprinting = false;
+            playerStats.playerSprinting = false;
             playerSpeed = walkSpeed;
         }
 
         if (isSprinting & walkForward)
         {
-            if (staminaScript.playerStamina > 0)
+            if (playerStats.currentStamina > 0)
             {
-                    staminaScript.playerSprinting = true;
-                    staminaScript.Sprinting();
+                playerStats.playerSprinting = true;
+                playerStats.Sprinting();
 
-                    playerSpeed = sprintSpeed;                 
+                playerSpeed = sprintSpeed;                 
             }
         }
 
-        if(staminaScript.playerStamina <= 0 - 0.1)
+        if(playerStats.currentStamina <= 0 - 0.1)
         {
-            staminaScript.playerSprinting = false;
+            playerStats.playerSprinting = false;
             playerSpeed = walkSpeed;
         }
         // end of stamina code
@@ -107,11 +106,10 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
-        // gravity
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
-
+        // gravity
 
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x, 0, input.y);
@@ -121,32 +119,29 @@ public class PlayerController : MonoBehaviour
         controller.Move(move * Time.deltaTime * playerSpeed);
         // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
-
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
         // player will move in direction the camera faces
 
 
-
         
-                Collider[] colliders = Physics.OverlapSphere(interactSource.position, 1.5f, intMask);
-                foreach (Collider cll in colliders)
+        Collider[] colliders = Physics.OverlapSphere(interactSource.position, 1.5f, intMask);
+        foreach (Collider cll in colliders)
+        // for each thing using a collision component that is in radius, and uses the 'interact' mask, excecute the following:
 
-                // for each thing using a collision component that is in radius, and uses the 'interact' mask, excecute the following:
+        {
+              if (cll.gameObject.TryGetComponent(out IInteractable interactObj))
+              {
+                    interactPrompt.gameObject.SetActive(true);
 
-                {
-                    if (cll.gameObject.TryGetComponent(out IInteractable interactObj))
+                    if (interactAction.WasPressedThisFrame())
                     {
-                        interactPrompt.gameObject.SetActive(true);
+                        interactObj.Interact();
+                        interactPrompt.gameObject.SetActive(false);
 
-                        if (interactAction.WasPressedThisFrame())
-                         {
-                            interactObj.Interact();
-                            interactPrompt.gameObject.SetActive(false);
-
-                        }
                     }
-                }
+              }
+        }
 
     }
 }

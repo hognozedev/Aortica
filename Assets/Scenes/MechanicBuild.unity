@@ -374203,8 +374203,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 305ca0bc3b8cd6a41b0c0923f1827153, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  playerStamina: 20
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStamina
+  currentHealth: 0
+  currentStamina: 20
   maxStamina: 20
   staminaLoss: 10
   regenSpeed: 10
@@ -374671,7 +374672,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.018614557, y: -0.09748622, z: -0.0018236696, w: 0.99506116}
+  m_LocalRotation: {x: -0.018600145, y: -0.1050503, z: -0.0019651698, w: 0.99429107}
   m_LocalPosition: {x: 0, y: 0, z: -5.7142854}
   m_LocalScale: {x: 0.28063536, y: 0.28063536, z: 0.28063536}
   m_ConstrainProportionsScale: 0
@@ -376144,7 +376145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681001509}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07308801, y: 0.9156509, z: -0.34412453, w: 0.19447352}
+  m_LocalRotation: {x: 0.07988085, y: 0.91162485, z: -0.34261146, w: 0.21254797}
   m_LocalPosition: {x: -0.16113934, y: 2.0203052, z: 5.0481915}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -381108,7 +381109,7 @@ GameObject:
   - component: {fileID: 1130041810}
   - component: {fileID: 1130041809}
   m_Layer: 5
-  m_Name: UIs
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -391068,7 +391069,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7410997984905695084}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018614557, y: -0.09748621, z: -0.0018236693, w: 0.99506116}
+  m_LocalRotation: {x: -0.018600142, y: -0.1050503, z: -0.0019651696, w: 0.994291}
   m_LocalPosition: {x: 0, y: 0, z: -5.7142854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

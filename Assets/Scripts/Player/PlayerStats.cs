@@ -5,15 +5,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using JetBrains.Annotations;
 
-public class PlayerStamina : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
-	[Header("Stamina")]
+	[Header("Player Health")]
+	public float currentHealth = 100;
+	public float maxHealth = 100;
 
-	public float playerStamina = 20f;
-	[SerializeField] private float maxStamina = 20f;
-	[SerializeField] private float staminaLoss = 10f;
-	[SerializeField] private float regenSpeed = 10f;
-    [SerializeField] private float regenDelay = 2f;
+
+    [Header("Stamina")]
+	public float currentStamina = 20;
+	[SerializeField] private float maxStamina = 20;
+	[SerializeField] private float staminaLoss = 10;
+	[SerializeField] private float regenSpeed = 10;
+    [SerializeField] private float regenDelay = 2;
 
 	[SerializeField] private Image stamSlider = null;
 	[SerializeField] private CanvasGroup stamCanvasGroup = null;
@@ -27,15 +31,15 @@ public class PlayerStamina : MonoBehaviour
 		if (playerSprinting == false)
 		{
 
-            if (playerStamina <= maxStamina - 0.1)
+            if (currentStamina <= maxStamina -.2)
             {
                 StartCoroutine(RegenWait());
             }
 
-			if (playerStamina >= maxStamina - 0.1)
+			if (currentStamina >= maxStamina -.2)
 			{
 				stamCanvasGroup.alpha = 0;
-				playerStamina = maxStamina;
+                currentStamina = maxStamina;
 			}
 
         }
@@ -44,7 +48,7 @@ public class PlayerStamina : MonoBehaviour
     IEnumerator RegenWait()
     {
         yield return new WaitForSeconds(regenDelay);
-        playerStamina += regenSpeed * Time.deltaTime;
+        currentStamina += regenSpeed * Time.time;
         UpdateStamina(1);
     }
 
@@ -53,7 +57,7 @@ public class PlayerStamina : MonoBehaviour
 		if (hasRegenerated)
 		{
 			playerSprinting = true;
-			playerStamina -= staminaLoss * Time.deltaTime;
+            currentStamina -= staminaLoss * Time.deltaTime;
 			UpdateStamina(1);
 		// if the player has enough stamina and they are sprinting, lose over time and execute the visual bar decrease.
 
@@ -62,13 +66,13 @@ public class PlayerStamina : MonoBehaviour
 
 	void UpdateStamina(int value) //checks when i ask instead of every frame
 	{
-        stamSlider.fillAmount = playerStamina / maxStamina;
+        stamSlider.fillAmount = currentStamina / maxStamina;
 
 		if (value == 0)
 		{
             stamCanvasGroup.alpha = 0;
 		}
-		else
+		else if (value >= 1)
 		{
             stamCanvasGroup.alpha = 1;
 		}

@@ -15,7 +15,7 @@ public class itemStats
         {
             default:
             case ItemType.RifleAmmo:    return 1;
-            case ItemType.Bandage:      return 2;    
+            case ItemType.Bandage:      return 3;    
         }
     }
 
