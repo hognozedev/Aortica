@@ -11,7 +11,10 @@ using System.Collections;
 
 interface IInteractable
 {
+    public bool CanInteract();
     public void Interact();
+    public void OnFocusGained();
+    public void OnFocusLost();
 }
 
 [RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
@@ -30,12 +33,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
-    private LayerMask intMask;
     private PlayerStats playerStats;
 
     //script refs
     public GunMaster gunMaster;
-    public Transform interactSource;
 
     //inputs
     private PlayerInput playerInput;
@@ -45,6 +46,11 @@ public class PlayerController : MonoBehaviour
     private InputAction reloadAction;
     private InputAction interactAction;
 
+    //collision
+    [SerializeField] private float radius = 1f;
+    [SerializeField] private LayerMask intLayers;
+    private Collider[] buffer = new Collider[32];
+    private IInteractable focused;
 
     private void Awake()
     {
@@ -58,9 +64,6 @@ public class PlayerController : MonoBehaviour
         reloadAction = playerInput.actions["Reload"];
         interactAction = playerInput.actions["Interact"];
 
-        intMask = LayerMask.GetMask("Interactable");
-        interactPrompt.gameObject.SetActive(false);
-
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
@@ -69,6 +72,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        IInteractable nearest = FindNearestInteractable();
+        UpdateFocus(nearest);
+        if(focused != null && interactAction.WasPressedThisFrame())
+        {
+            if(focused.CanInteract()) focused.Interact();
+        }
+
         bool isSprinting = sprintAction.IsPressed();
         bool walkForward = moveAction.IsPressed();      //make so only for forward motion (player local z axis)                    
 
@@ -123,25 +133,41 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
         // player will move in direction the camera faces
 
+    }
 
-        
-        Collider[] colliders = Physics.OverlapSphere(interactSource.position, 1.5f, intMask);
-        foreach (Collider cll in colliders)
-        // for each thing using a collision component that is in radius, and uses the 'interact' mask, excecute the following:
+    private IInteractable FindNearestInteractable()
+    {
+        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, buffer, intLayers, QueryTriggerInteraction.Collide);
+        IInteractable nearest = null;
 
+        float bestDistSq = float.MaxValue;
+
+        for(int i = 0; i < count; i++)
         {
-              if (cll.gameObject.TryGetComponent(out IInteractable interactObj))
-              {
-                    interactPrompt.gameObject.SetActive(true);
+            Collider col = buffer[i];
+            if(col == null) continue;
+            IInteractable interactable = col.GetComponentInParent<IInteractable>();
 
-                    if (interactAction.WasPressedThisFrame())
-                    {
-                        interactObj.Interact();
-                        interactPrompt.gameObject.SetActive(false);
+            if(interactable == null) continue;
+            if(!interactable.CanInteract()) continue;
 
-                    }
-              }
+            float distSq = (col.transform.position - transform.position).sqrMagnitude;
+            if (distSq < bestDistSq)
+            {
+                bestDistSq = distSq;
+                nearest = interactable;
+            }
         }
+        return nearest;
+    }
+
+    private void UpdateFocus(IInteractable nearest)
+    {
+        if(ReferenceEquals(focused, nearest)) return;
+        focused?.OnFocusLost();
+        focused = nearest;
+        focused?.OnFocusGained();
 
     }
+
 }

@@ -7,9 +7,8 @@ public class CameraSwitching : MonoBehaviour
 {
     [SerializeField] private PlayerInput playerInput;
     [SerializeField] private int priorityBoostAmount = 10;
-    [SerializeField] private Canvas PlayerCanvas;
-    [SerializeField] private Canvas AimCanvas;
-
+    [SerializeField] private Image reticleHip;
+    [SerializeField] private Image reticleAim;
 
     private CinemachineCamera aimCamera;
     private InputAction aimAction;
@@ -18,8 +17,8 @@ public class CameraSwitching : MonoBehaviour
     {
         aimCamera = GetComponent<CinemachineCamera>();
         aimAction = playerInput.actions["Aim"];
-        PlayerCanvas.enabled = true;
-        AimCanvas.enabled = false;
+        reticleHip.enabled = true;
+        reticleAim.enabled = false;
     }
 
     private void OnEnable()
@@ -38,15 +37,15 @@ public class CameraSwitching : MonoBehaviour
     private void StartAim()
     {
         aimCamera.Priority += priorityBoostAmount;
-        AimCanvas.enabled = true;
-        PlayerCanvas.enabled = false;
+        reticleAim.enabled = true;
+        reticleHip.enabled = false;
     }
 
     private void CancelAim()
     {
         aimCamera.Priority -= priorityBoostAmount;
-        AimCanvas.enabled = false;
-        PlayerCanvas.enabled = true;
+        reticleAim.enabled = false;
+        reticleHip.enabled = true;
     }
     // adds 10 to the priority order in order to ensure it is well above the current highest (which is 2)
 

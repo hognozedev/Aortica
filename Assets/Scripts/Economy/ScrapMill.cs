@@ -9,6 +9,7 @@ public class ScrapMill : MonoBehaviour, IInteractable
     private PlayerController playerController;
     public TextMeshProUGUI playerCount;
     public TextMeshProUGUI scrapCount;
+    [SerializeField] private GameObject interactPrompt = null;
 
     //scrap variables
     private float decimalScrapAmount;
@@ -22,6 +23,9 @@ public class ScrapMill : MonoBehaviour, IInteractable
     private bool isJammed;
     public int millDelay = 5;
 
+    //interact
+    [SerializeField] private bool isEnabled = true;
+    public bool CanInteract() => isEnabled;
 
 
     private void Start()
@@ -51,7 +55,6 @@ public class ScrapMill : MonoBehaviour, IInteractable
                 Debug.Log("full");
                 isJammed = true;
             }
-
         }
     }
 
@@ -67,13 +70,11 @@ public class ScrapMill : MonoBehaviour, IInteractable
             Debug.Log("NOT jammed");
             MillCollection();
         }
-
     }
 
     private void MillRestart()
     {
         StartCoroutine(Running());
-
     }
 
     private IEnumerator Running()
@@ -83,7 +84,6 @@ public class ScrapMill : MonoBehaviour, IInteractable
         Debug.Log("mill is running again");
         MillCollection();
         isJammed = false;
-
     }
 
     private void MillCollection()
@@ -94,6 +94,14 @@ public class ScrapMill : MonoBehaviour, IInteractable
         decimalScrapAmount = 0;
 
         playerCount.text = playerScrap.ToString();
+    }
 
+    public void OnFocusGained()
+    {
+        interactPrompt.gameObject.SetActive(true);
+    }
+    public void OnFocusLost()
+    {
+        interactPrompt.gameObject.SetActive(false);
     }
 }

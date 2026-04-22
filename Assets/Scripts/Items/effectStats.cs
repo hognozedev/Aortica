@@ -11,5 +11,24 @@ public class effectStats
         Hunger,
     }
 
-    public static StatusEffect statusEffect;
+    /*
+    public static int GetEffect(StatusEffect statusEffect)
+    {
+        switch (statusEffect)
+        {
+            case StatusEffect.Fatigue:  return 1;
+            case StatusEffect.Hunger:  return 2;
+        }
+    }
+
+    public void Fatigue()
+    {
+        Debug.Log("player now has fatigue");
+    }
+
+    public void Hunger()
+    {
+        Debug.Log("player now has fatigue");
+    }
+    */
 }

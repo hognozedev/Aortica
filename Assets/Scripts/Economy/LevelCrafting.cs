@@ -6,14 +6,23 @@ using UnityEngine.UI;
 using TMPro;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using Unity.IO.LowLevel.Unsafe;
+using UnityEngine.InputSystem;
 
 public class LevelCrafting : MonoBehaviour, IInteractable
 {
     [SerializeField] private CanvasGroup craftCanvasGroup = null;
+    [SerializeField] private GameObject playerHUD = null;
+    [SerializeField] private GameObject interactPrompt = null;
+
     public Transform container;
     public Transform craftItemTemplate;
     public TextMeshProUGUI nameReference;
     public TextMeshProUGUI costReference;
+
+    //interact
+    [SerializeField] private bool isEnabled = true;
+    public bool CanInteract() => isEnabled;
 
 
     private void Awake()
@@ -44,6 +53,20 @@ public class LevelCrafting : MonoBehaviour, IInteractable
     public void Interact()
     {
         craftCanvasGroup.gameObject.SetActive(true);
+        playerHUD.gameObject.SetActive(false);
+        Cursor.visible = true;
+    }
+
+    public void OnFocusGained()
+    {
+        interactPrompt.gameObject.SetActive(true); 
+    }
+    public void OnFocusLost()
+    {
+        craftCanvasGroup.gameObject.SetActive(false);
+        playerHUD.gameObject.SetActive(true);
+        interactPrompt.gameObject.SetActive(false);
+        Cursor.visible = false;
     }
 
 }
