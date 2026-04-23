@@ -8,13 +8,15 @@ using System.ComponentModel;
 using System.Collections.Specialized;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine.InputSystem;
+using static itemStats;
+using Unity.VisualScripting;
 
 public class LevelCrafting : MonoBehaviour, IInteractable
 {
+    //UI
     [SerializeField] private CanvasGroup craftCanvasGroup = null;
     [SerializeField] private GameObject playerHUD = null;
     [SerializeField] private GameObject interactPrompt = null;
-
     public Transform container;
     public Transform craftItemTemplate;
     public TextMeshProUGUI nameReference;
@@ -24,6 +26,11 @@ public class LevelCrafting : MonoBehaviour, IInteractable
     [SerializeField] private bool isEnabled = true;
     public bool CanInteract() => isEnabled;
 
+    //references
+    private IShop shopInterface;
+    private PlayerStats playerStats;
+    [SerializeField] private Button itembutton;
+
 
     private void Awake()
     {
@@ -32,12 +39,12 @@ public class LevelCrafting : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        CreateItemButton("Rifle Ammo", itemStats.GetCost(itemStats.ItemType.RifleAmmo), 0);
-        CreateItemButton("Bandage", itemStats.GetCost(itemStats.ItemType.Bandage), 1);
+        CreateItemButton(itemStats.ItemType.RifleAmmo, "Rifle Ammo", itemStats.GetCost(itemStats.ItemType.RifleAmmo), 0);
+        CreateItemButton(itemStats.ItemType.Bandage, "Bandage", itemStats.GetCost(itemStats.ItemType.Bandage), 1);
 
     }
 
-    private void CreateItemButton(string itemName, int itemCost, int positionIndex)
+    private void CreateItemButton(itemStats.ItemType itemType, string itemName, int itemCost, int positionIndex)
     {
         Transform craftItemTransform = Instantiate(craftItemTemplate, container);
         RectTransform craftItemRectTransform = craftItemTransform.GetComponent<RectTransform>();
@@ -50,13 +57,25 @@ public class LevelCrafting : MonoBehaviour, IInteractable
 
     }
 
+    public void OnButtonClick()
+    {
+        TryBuyItem(itemType);
+        //reference button somehow?
+    }
+
+    private void TryBuyItem(itemStats.ItemType itemType)
+    {
+        shopInterface.BoughtItem(itemType);
+    }
+
+
+
     public void Interact()
     {
         craftCanvasGroup.gameObject.SetActive(true);
         playerHUD.gameObject.SetActive(false);
         Cursor.visible = true;
     }
-
     public void OnFocusGained()
     {
         interactPrompt.gameObject.SetActive(true); 

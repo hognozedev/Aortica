@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-/*
 public class interactPrompt : MonoBehaviour
 {
+    /*
     [SerializeField] private TextMeshProUGUI interactKey;
     private PlayerInput playerInput;
     private InputAction interactAction;
@@ -19,5 +19,5 @@ public class interactPrompt : MonoBehaviour
         Debug.Log(interactAction.GetBindingDisplayString());
 
     }
+    */
 }
-*/

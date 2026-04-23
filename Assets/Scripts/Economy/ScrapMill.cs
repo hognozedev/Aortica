@@ -6,7 +6,6 @@ using TMPro;
 public class ScrapMill : MonoBehaviour, IInteractable
 {
     //player variables
-    private PlayerController playerController;
     public TextMeshProUGUI playerCount;
     public TextMeshProUGUI scrapCount;
     [SerializeField] private GameObject interactPrompt = null;
@@ -16,10 +15,9 @@ public class ScrapMill : MonoBehaviour, IInteractable
     public int scrapAmount;
     public int playerScrap;
 
+    //machine function & stats
     private float genSpeed = 0.5f;
     public int fullCapacity;
-
-    //machine function
     private bool isJammed;
     public int millDelay = 5;
 
@@ -30,8 +28,6 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        playerController = GetComponent<PlayerController>();
-
         isJammed = true;
 
         scrapAmount = 0;
@@ -89,11 +85,10 @@ public class ScrapMill : MonoBehaviour, IInteractable
     private void MillCollection()
     {
         playerScrap += scrapAmount;
-
         scrapAmount = 0;
         decimalScrapAmount = 0;
-
         playerCount.text = playerScrap.ToString();
+
     }
 
     public void OnFocusGained()

@@ -33,10 +33,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
-    private PlayerStats playerStats;
 
     //script refs
     public GunMaster gunMaster;
+    private PlayerStamina playerStamina;
 
     //inputs
     private PlayerInput playerInput;
@@ -52,11 +52,13 @@ public class PlayerController : MonoBehaviour
     private Collider[] buffer = new Collider[32];
     private IInteractable focused;
 
+
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        playerStats = GetComponent<PlayerStats>();
         playerInput = GetComponent<PlayerInput>();
+        playerStamina = GetComponent<PlayerStamina>();
 
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
@@ -85,28 +87,28 @@ public class PlayerController : MonoBehaviour
         gunMaster.isShooting = attackAction.WasPerformedThisFrame();
         gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
 
-        playerStats.playerSprinting = false;
+        playerStamina.playerSprinting = false;
 
         if (walkForward)
         {
-            playerStats.playerSprinting = false;
+            playerStamina.playerSprinting = false;
             playerSpeed = walkSpeed;
         }
 
         if (isSprinting & walkForward)
         {
-            if (playerStats.currentStamina > 0)
+            if (playerStamina.currentStamina > 0)
             {
-                playerStats.playerSprinting = true;
-                playerStats.Sprinting();
+                playerStamina.playerSprinting = true;
+                playerStamina.Sprinting();
 
                 playerSpeed = sprintSpeed;                 
             }
         }
 
-        if(playerStats.currentStamina <= 0 - 0.1)
+        if(playerStamina.currentStamina <= 0 - 0.1)
         {
-            playerStats.playerSprinting = false;
+            playerStamina.playerSprinting = false;
             playerSpeed = walkSpeed;
         }
         // end of stamina code
@@ -160,7 +162,6 @@ public class PlayerController : MonoBehaviour
         }
         return nearest;
     }
-
     private void UpdateFocus(IInteractable nearest)
     {
         if(ReferenceEquals(focused, nearest)) return;

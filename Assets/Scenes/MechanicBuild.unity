@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 12587219}
   - component: {fileID: 12587221}
+  - component: {fileID: 12587222}
   m_Layer: 5
   m_Name: ScrapCraft
   m_TagString: Untagged
@@ -168,6 +169,27 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &12587222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12587218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c325e6362e3c94c8edc016438af1b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelCrafting
+  craftCanvasGroup: {fileID: 12587221}
+  playerHUD: {fileID: 413290497}
+  interactPrompt: {fileID: 25188732}
+  container: {fileID: 1431014418}
+  craftItemTemplate: {fileID: 156660345}
+  nameReference: {fileID: 1071128949}
+  costReference: {fileID: 1249039999}
+  isEnabled: 1
+  itembutton: {fileID: 0}
 --- !u!1 &20907063
 GameObject:
   m_ObjectHideFlags: 0
@@ -374106,9 +374128,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 305ca0bc3b8cd6a41b0c0923f1827153, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStamina
-  currentHealth: 0
-  maxHealth: 100
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   currentStamina: 20
   maxStamina: 20
   staminaLoss: 10
@@ -374280,15 +374300,15 @@ RectTransform:
   m_GameObject: {fileID: 156660344}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 305115666}
   m_Father: {fileID: 1431014418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -293.96, y: 0}
   m_SizeDelta: {x: 650, y: 674}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &261210464
@@ -374402,9 +374422,9 @@ RectTransform:
   - {fileID: 43020627}
   m_Father: {fileID: 156660345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -37.5}
   m_SizeDelta: {x: 500, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &305115667
@@ -374450,7 +374470,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 305115668}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 12587222}
+        m_TargetAssemblyTypeName: LevelCrafting, Assembly-CSharp
+        m_MethodName: OnButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &305115668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374576,7 +374608,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.018600244, y: -0.104995355, z: -0.0019641414, w: 0.99429685}
+  m_LocalRotation: {x: -0.01860791, y: -0.101028726, z: -0.0018899353, w: 0.9947077}
   m_LocalPosition: {x: 0, y: 0, z: -5.7142854}
   m_LocalScale: {x: 0.28063536, y: 0.28063536, z: 0.28063536}
   m_ConstrainProportionsScale: 0
@@ -375601,16 +375633,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629496686}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 728169587}
+  m_Father: {fileID: 1431014418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282, y: -289}
+  m_AnchoredPosition: {x: 282, y: -254}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &629496688
@@ -376098,7 +376130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681001509}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.03244818, y: -0.21138017, z: -0.0070215203, w: 0.97683996}
+  m_LocalRotation: {x: -0.032519303, y: -0.20123087, z: -0.006684384, w: 0.97898114}
   m_LocalPosition: {x: 0, y: 0, z: -7.1428566}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -376573,7 +376605,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1431014418}
-  - {fileID: 629496687}
   m_Father: {fileID: 12587219}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -381184,6 +381215,7 @@ MonoBehaviour:
   nameReference: {fileID: 1071128949}
   costReference: {fileID: 1249039999}
   isEnabled: 1
+  itembutton: {fileID: 0}
 --- !u!1 &1249039997
 GameObject:
   m_ObjectHideFlags: 0
@@ -381739,7 +381771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f535514d79f944440ba8ceaf2140f6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunMaster
-  playerController: {fileID: 0}
+  playerController: {fileID: 100979457}
   cameraTransform: {fileID: 0}
   gunData: {fileID: 11400000, guid: 8154844bd74c6794d8d2d751ad8727f3, type: 2}
   isReloading: 0
@@ -381777,6 +381809,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 156660345}
+  - {fileID: 629496687}
   m_Father: {fileID: 728169587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -390983,7 +391016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7410997984905695084}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018600242, y: -0.10499534, z: -0.0019641402, w: 0.99429685}
+  m_LocalRotation: {x: -0.018607907, y: -0.10102871, z: -0.0018899352, w: 0.9947077}
   m_LocalPosition: {x: 0, y: 0, z: -5.7142854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
