@@ -6,7 +6,8 @@ public class itemStats
     public enum ItemType
     {
         RifleAmmo,
-        Bandage
+        Bandage,
+        ShotgunShell
     }
 
     public static int GetCost(ItemType itemType)
@@ -14,8 +15,9 @@ public class itemStats
         switch(itemType)
         {
             default:
-            case ItemType.RifleAmmo:    return 1;
+            case ItemType.RifleAmmo:    return 2;
             case ItemType.Bandage:      return 3;    
+            case ItemType.ShotgunShell: return 5;    
         }
     }
 

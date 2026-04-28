@@ -18,7 +18,7 @@ interface IInteractable
 }
 
 [RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IShop
 {
     //inspector variables
     [SerializeField] private float sprintSpeed = 6f;
@@ -136,6 +136,14 @@ public class PlayerController : MonoBehaviour
         // player will move in direction the camera faces
 
     }
+
+    public void BoughtItem(itemStats.ItemType itemType)
+    {
+        Debug.Log("you bought " + itemType);
+    }
+
+
+
 
     private IInteractable FindNearestInteractable()
     {

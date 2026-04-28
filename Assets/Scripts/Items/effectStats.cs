@@ -9,16 +9,7 @@ public class effectStats
     {
         Fatigue,
         Hunger,
-    }
-
-    /*
-    public static int GetEffect(StatusEffect statusEffect)
-    {
-        switch (statusEffect)
-        {
-            case StatusEffect.Fatigue:  return 1;
-            case StatusEffect.Hunger:  return 2;
-        }
+        Hatred
     }
 
     public void Fatigue()
@@ -28,7 +19,12 @@ public class effectStats
 
     public void Hunger()
     {
-        Debug.Log("player now has fatigue");
+        Debug.Log("player now has hunger");
     }
-    */
+
+    public void Hatred()
+    {
+        Debug.Log("player now has hatred");
+    }
+
 }

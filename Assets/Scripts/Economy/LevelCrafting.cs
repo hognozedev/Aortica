@@ -1,15 +1,16 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
-using TMPro;
-using System.ComponentModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using TMPro;
 using Unity.IO.LowLevel.Unsafe;
-using UnityEngine.InputSystem;
-using static itemStats;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using static itemStats;
+using static WaveInfo;
 
 public class LevelCrafting : MonoBehaviour, IInteractable
 {
@@ -28,8 +29,6 @@ public class LevelCrafting : MonoBehaviour, IInteractable
 
     //references
     private IShop shopInterface;
-    private PlayerStats playerStats;
-    [SerializeField] private Button itembutton;
 
 
     private void Awake()
@@ -42,6 +41,12 @@ public class LevelCrafting : MonoBehaviour, IInteractable
         CreateItemButton(itemStats.ItemType.RifleAmmo, "Rifle Ammo", itemStats.GetCost(itemStats.ItemType.RifleAmmo), 0);
         CreateItemButton(itemStats.ItemType.Bandage, "Bandage", itemStats.GetCost(itemStats.ItemType.Bandage), 1);
 
+        if (WaveInfo.waveNumber >= 2)
+        {
+            CreateItemButton(itemStats.ItemType.ShotgunShell, "Shotgun Shell", itemStats.GetCost(itemStats.ItemType.ShotgunShell), 2);
+
+        }
+
     }
 
     private void CreateItemButton(itemStats.ItemType itemType, string itemName, int itemCost, int positionIndex)
@@ -50,23 +55,30 @@ public class LevelCrafting : MonoBehaviour, IInteractable
         RectTransform craftItemRectTransform = craftItemTransform.GetComponent<RectTransform>();
         float craftItemHeight = 75f;
 
-        craftItemRectTransform.anchoredPosition = new Vector2(0, -craftItemHeight * positionIndex);
+        craftItemRectTransform.anchoredPosition = new Vector2(0, +craftItemHeight * positionIndex);
 
         nameReference.text = itemName;
         costReference.text = itemCost.ToString();
 
     }
 
-    public void OnButtonClick()
-    {
-        TryBuyItem(itemType);
-        //reference button somehow?
+        /*
+        //Button btn = targetBtn.GetComponent<Button>();
+        //btn.onClick.AddListener(TryBuyItem(itemType));
+
+        craftItemTransform.GetComponent<Button>().onClick = () =>
+        {
+            TryBuyItem(itemType);
+        };
+
     }
 
-    private void TryBuyItem(itemStats.ItemType itemType)
+    public void TryBuyItem(itemStats.ItemType itemType)
     {
         shopInterface.BoughtItem(itemType);
+
     }
+        */
 
 
 
