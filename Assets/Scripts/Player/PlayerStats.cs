@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 
 public class PlayerStats
-{
+{    
     /*
         //health
         static float currentHealth = 100;
@@ -16,12 +16,9 @@ public class PlayerStats
         static float regenDelay = 2;
 
         //currency
-        static int currentScrap;
+        static int currentSalv;
         static int enmityTotal;
 
-        public void BoughtItem(itemStats.ItemType itemType)
-        {
-            Debug.Log("bought " +  itemType);
-        }
     */
+    
 }

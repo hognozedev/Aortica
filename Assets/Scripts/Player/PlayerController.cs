@@ -18,7 +18,7 @@ interface IInteractable
 }
 
 [RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
-public class PlayerController : MonoBehaviour, IShop
+public class PlayerController : MonoBehaviour
 {
     //inspector variables
     [SerializeField] private float sprintSpeed = 6f;
@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour, IShop
     [SerializeField] private LayerMask intLayers;
     private Collider[] buffer = new Collider[32];
     private IInteractable focused;
-
 
 
     private void Awake()
@@ -137,14 +136,6 @@ public class PlayerController : MonoBehaviour, IShop
 
     }
 
-    public void BoughtItem(itemStats.ItemType itemType)
-    {
-        Debug.Log("you bought " + itemType);
-    }
-
-
-
-
     private IInteractable FindNearestInteractable()
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, radius, buffer, intLayers, QueryTriggerInteraction.Collide);
@@ -170,13 +161,13 @@ public class PlayerController : MonoBehaviour, IShop
         }
         return nearest;
     }
+
     private void UpdateFocus(IInteractable nearest)
     {
         if(ReferenceEquals(focused, nearest)) return;
         focused?.OnFocusLost();
         focused = nearest;
         focused?.OnFocusGained();
-
     }
 
 }

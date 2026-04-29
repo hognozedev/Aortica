@@ -1,3 +1,5 @@
+/*
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,10 +12,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static itemStats;
-using static WaveInfo;
 
 public class LevelCrafting : MonoBehaviour, IInteractable
-{
+{  
     //UI
     [SerializeField] private CanvasGroup craftCanvasGroup = null;
     [SerializeField] private GameObject playerHUD = null;
@@ -27,14 +28,12 @@ public class LevelCrafting : MonoBehaviour, IInteractable
     [SerializeField] private bool isEnabled = true;
     public bool CanInteract() => isEnabled;
 
-    //references
-    private IShop shopInterface;
-
 
     private void Awake()
     {
         craftCanvasGroup.gameObject.SetActive(false);
     }
+
 
     private void Start()
     {
@@ -46,8 +45,8 @@ public class LevelCrafting : MonoBehaviour, IInteractable
             CreateItemButton(itemStats.ItemType.ShotgunShell, "Shotgun Shell", itemStats.GetCost(itemStats.ItemType.ShotgunShell), 2);
 
         }
-
     }
+
 
     private void CreateItemButton(itemStats.ItemType itemType, string itemName, int itemCost, int positionIndex)
     {
@@ -60,26 +59,18 @@ public class LevelCrafting : MonoBehaviour, IInteractable
         nameReference.text = itemName;
         costReference.text = itemCost.ToString();
 
-    }
-
-        /*
-        //Button btn = targetBtn.GetComponent<Button>();
-        //btn.onClick.AddListener(TryBuyItem(itemType));
 
         craftItemTransform.GetComponent<Button>().onClick = () =>
         {
             TryBuyItem(itemType);
         };
-
     }
+    
 
     public void TryBuyItem(itemStats.ItemType itemType)
     {
         shopInterface.BoughtItem(itemType);
-
-    }
-        */
-
+    }      
 
 
     public void Interact()
@@ -88,10 +79,14 @@ public class LevelCrafting : MonoBehaviour, IInteractable
         playerHUD.gameObject.SetActive(false);
         Cursor.visible = true;
     }
+
+
     public void OnFocusGained()
     {
         interactPrompt.gameObject.SetActive(true); 
     }
+
+
     public void OnFocusLost()
     {
         craftCanvasGroup.gameObject.SetActive(false);
@@ -101,3 +96,5 @@ public class LevelCrafting : MonoBehaviour, IInteractable
     }
 
 }
+
+*/
