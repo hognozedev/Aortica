@@ -4,10 +4,33 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class CraftManager : MonoBehaviour
+public class CraftManager : MonoBehaviour, IInteractable
 {
     [SerializeField] private List <CraftItems> craftItems;
     [SerializeField] private ShopSlot[] shopSlots;
+
+    //interact
+    [SerializeField] private GameObject interactPrompt = null;
+    [SerializeField] private CanvasGroup canvasGroup = null;
+    [SerializeField] private GameObject playerHUD = null;
+
+    [SerializeField] private bool isEnabled = true;
+    public bool CanInteract() => isEnabled;
+
+
+    private void Start()
+    {
+        PopulateCraftItems();
+        canvasGroup.gameObject.SetActive(false);
+
+    }
+
+    public void Interact()
+    {
+        canvasGroup.gameObject.SetActive(true);
+        playerHUD.gameObject.SetActive(false);
+        Cursor.visible = true;
+    }
 
 
     public void PopulateCraftItems()
@@ -26,7 +49,23 @@ public class CraftManager : MonoBehaviour
     }
 
 
+    public void OnFocusGained()
+    {
+        interactPrompt.gameObject.SetActive(true);
+    }
+
+    public void OnFocusLost()
+    {
+        canvasGroup.gameObject.SetActive(false);
+        playerHUD.gameObject.SetActive(true);
+        interactPrompt.gameObject.SetActive(false);
+        Cursor.visible = false;
+    }
+
+
+
 }
+
 
 [System.Serializable]
 public class CraftItems

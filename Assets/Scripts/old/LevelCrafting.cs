@@ -24,7 +24,6 @@ public class LevelCrafting : MonoBehaviour, IInteractable
     public TextMeshProUGUI nameReference;
     public TextMeshProUGUI costReference;
 
-    //interact
     [SerializeField] private bool isEnabled = true;
     public bool CanInteract() => isEnabled;
 
