@@ -7,13 +7,13 @@ public class ScrapMill : MonoBehaviour, IInteractable
 {
     //player variables
     public TextMeshProUGUI playerCount;
-    public TextMeshProUGUI scrapCount;
+    public TextMeshProUGUI salvCount;
     [SerializeField] private GameObject interactPrompt = null;
 
     //scrap variables
-    private float decimalScrapAmount;
-    public int scrapAmount;
-    public int playerScrap;
+    private float decimalSalvAmount;
+    public int salvAmount;
+    public int playerSalv;
 
     //machine function & stats
     private float genSpeed = 0.5f;
@@ -30,20 +30,20 @@ public class ScrapMill : MonoBehaviour, IInteractable
     {
         isJammed = true;
 
-        scrapAmount = 0;
-        decimalScrapAmount = 0;
+        salvAmount = 0;
+        decimalSalvAmount = 0;
     }
 
     private void Update()
     {
         if(isJammed == false)
         {
-            if (scrapAmount < fullCapacity)
+            if (salvAmount < fullCapacity)
             {
-                decimalScrapAmount += Time.deltaTime * genSpeed;
-                scrapAmount = Mathf.RoundToInt(decimalScrapAmount);
+                decimalSalvAmount += Time.deltaTime * genSpeed;
+                salvAmount = Mathf.RoundToInt(decimalSalvAmount);
 
-                scrapCount.text = scrapAmount.ToString();
+                salvCount.text = salvAmount.ToString();
             }
 
             else
@@ -84,10 +84,10 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     private void MillCollection()
     {
-        playerScrap += scrapAmount;
-        scrapAmount = 0;
-        decimalScrapAmount = 0;
-        playerCount.text = playerScrap.ToString();
+        playerSalv += salvAmount;
+        salvAmount = 0;
+        decimalSalvAmount = 0;
+        playerCount.text = playerSalv.ToString();
 
     }
 

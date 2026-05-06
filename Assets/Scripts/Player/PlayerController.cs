@@ -3,9 +3,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.InputSystem.Utilities;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -25,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
     [SerializeField] private GameObject interactPrompt;
+    public bool inLobby = false;
 
     //other privs
     private float walkSpeed = 3f;
@@ -80,37 +78,47 @@ public class PlayerController : MonoBehaviour
             if(focused.CanInteract()) focused.Interact();
         }
 
-        bool isSprinting = sprintAction.IsPressed();
-        bool walkForward = moveAction.IsPressed();      //make so only for forward motion (player local z axis)                    
+            bool isSprinting = sprintAction.IsPressed();
+            bool walkForward = moveAction.IsPressed();      //make so only for forward motion (player local z axis)
+                         
+        
+        if (inLobby == false)
+        {
 
-        gunMaster.isShooting = attackAction.WasPerformedThisFrame();
-        gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
+            gunMaster.isShooting = attackAction.WasPerformedThisFrame();
+            gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
 
-        playerStamina.playerSprinting = false;
+            playerStamina.playerSprinting = false;
+
+            if (walkForward)
+            {
+                playerStamina.playerSprinting = false;
+            }
+
+            if (isSprinting & walkForward)
+            {
+                if (playerStamina.currentStamina > 0)
+                {
+                    playerStamina.playerSprinting = true;
+                    playerStamina.Sprinting();
+
+                    playerSpeed = sprintSpeed;
+                }
+            }
+
+            if (playerStamina.currentStamina <= 0 - 0.1)
+            {
+                playerStamina.playerSprinting = false;
+                playerSpeed = walkSpeed;
+            }
+            // end of stamina code
+
+        }
 
         if (walkForward)
         {
-            playerStamina.playerSprinting = false;
             playerSpeed = walkSpeed;
         }
-
-        if (isSprinting & walkForward)
-        {
-            if (playerStamina.currentStamina > 0)
-            {
-                playerStamina.playerSprinting = true;
-                playerStamina.Sprinting();
-
-                playerSpeed = sprintSpeed;                 
-            }
-        }
-
-        if(playerStamina.currentStamina <= 0 - 0.1)
-        {
-            playerStamina.playerSprinting = false;
-            playerSpeed = walkSpeed;
-        }
-        // end of stamina code
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)

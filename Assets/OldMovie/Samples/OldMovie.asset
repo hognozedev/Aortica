@@ -62,6 +62,9 @@ MonoBehaviour:
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
+  filter:
+    m_OverrideState: 0
+    m_Value: 0
   downscale:
     m_OverrideState: 0
     m_Value: 0
@@ -157,10 +160,10 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0.1
   m_Jolt:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.015
   m_Fps:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 16
   m_Vignette:
     m_OverrideState: 0
@@ -169,7 +172,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 8
   m_Audio:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   m_Volume:
     m_OverrideState: 1

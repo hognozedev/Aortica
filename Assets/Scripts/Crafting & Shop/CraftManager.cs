@@ -14,6 +14,8 @@ public class CraftManager : MonoBehaviour, IInteractable
     [SerializeField] private CanvasGroup canvasGroup = null;
     [SerializeField] private GameObject playerHUD = null;
 
+    [SerializeField] private ScrapMill scrapMill;
+
     [SerializeField] private bool isEnabled = true;
     public bool CanInteract() => isEnabled;
 
@@ -47,6 +49,37 @@ public class CraftManager : MonoBehaviour, IInteractable
             shopSlots[i].gameObject.SetActive(false);
         }
     }
+
+    public void TryBuyItem(ItemData itemData, int cost)
+    {
+        if(itemData != null && scrapMill.playerSalv >= cost)
+        {
+            //CHECK if(HasInventorySpace)
+            scrapMill.playerSalv -= cost;
+            scrapMill.playerCount.text =scrapMill.playerSalv.ToString();
+
+        }
+        //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
+
+        else if(itemData != null && scrapMill.playerSalv <= cost)
+        {
+            Debug.Log("not enough salv");
+        }
+
+    }
+
+    /*
+    private bool HasInventorySpace(ItemData itemData)
+    {
+        //ONLY IF PLAYER HAS INVENTORY SPACE DO LATER
+    }
+    */
+
+
+
+
+
+
 
 
     public void OnFocusGained()
