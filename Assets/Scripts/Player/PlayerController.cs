@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityValue = -9.81f;
     [SerializeField] private float lookSensitivity = 100f;
     [SerializeField] private GameObject interactPrompt;
-    public bool inLobby = false;
+    public bool inLobby;
 
     //other privs
     private float walkSpeed = 3f;
@@ -34,13 +34,14 @@ public class PlayerController : MonoBehaviour
 
     //script refs
     public GunMaster gunMaster;
+    public Dialogue dialogue;
     private PlayerStamina playerStamina;
 
     //inputs
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction sprintAction;
-    private InputAction attackAction;
+    public InputAction attackAction;
     private InputAction reloadAction;
     private InputAction interactAction;
 
@@ -49,6 +50,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask intLayers;
     private Collider[] buffer = new Collider[32];
     private IInteractable focused;
+
+    public bool isClicked;
 
 
     private void Awake()
@@ -80,8 +83,10 @@ public class PlayerController : MonoBehaviour
 
             bool isSprinting = sprintAction.IsPressed();
             bool walkForward = moveAction.IsPressed();      //make so only for forward motion (player local z axis)
-                         
-        
+
+            dialogue.isClicked = attackAction.WasPerformedThisFrame();
+
+
         if (inLobby == false)
         {
 
@@ -93,6 +98,7 @@ public class PlayerController : MonoBehaviour
             if (walkForward)
             {
                 playerStamina.playerSprinting = false;
+                playerSpeed = walkSpeed;
             }
 
             if (isSprinting & walkForward)
@@ -115,10 +121,11 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (walkForward)
+        if(inLobby == true)
         {
             playerSpeed = walkSpeed;
         }
+
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
