@@ -1,0 +1,33 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class InteractBehaviour : MonoBehaviour, IInteractable
+{
+    [SerializeField] private GameObject interactPrompt = null;
+    private bool warned = false;
+
+
+    public bool CanInteract() => true;
+    public void Interact()
+    {
+        if (warned == true)
+        {
+            SceneManager.LoadScene("MechanicBuild");
+        }
+
+        Debug.Log("Start first wave? You can't go back.");
+        warned = true;
+    }
+
+    public void OnFocusGained()
+    {
+        interactPrompt.gameObject.SetActive(true);
+
+    }
+
+    public void OnFocusLost()
+    {
+        interactPrompt.gameObject.SetActive(false);
+
+    }
+}

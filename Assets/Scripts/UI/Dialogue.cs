@@ -9,29 +9,40 @@ public class Dialogue : MonoBehaviour
     public string[] lines;
     public float textSpeed;
 
-    private PlayerController playerController;
-
     private int index;
+    public bool isClicking = false;
+    public PlayerController playerController;
 
-    public bool isClicked = false;
 
-
-
-    private void Start()
+    void Start()
     {
         dialogueText.text = string.Empty;
-        StartDialogue();
+
     }
 
-    private void Update()
-    {
-        if (playerController.isClicked)
-        {
-            Debug.Log("yupp");
+    void Update()
+    {    
+        if(playerController.clickAction.WasPressedThisFrame())
+        {           
+            Debug.Log("clicked");
+
+            if(dialogueText.text == lines[index])
+            {
+                NextLine();
+
+            }
+             
+            else
+            {
+                StopAllCoroutines();
+                dialogueText.text = lines[index];
+
+            }
         }
+
     }
 
-    void StartDialogue()
+    public void StartDialogue()
     {
         index = 0;
         StartCoroutine(TypeLine());
@@ -46,7 +57,7 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    void NextLine()
+    public void NextLine()
     {
         if(index < lines.Length - 1)
         {

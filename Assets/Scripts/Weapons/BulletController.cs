@@ -5,17 +5,11 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     [SerializeField] private GameObject bulletDecal;
-    private float speed = 200f;
+    private float speed = 350f;
     private float decalDestroy = 10f;
 
     public Vector3 target { get; set; }
     public bool hit { get; set; }
-
-    private void OnEnable()
-    {
-        Destroy(gameObject, .8f);
-        // destroys the bullet itself.
-    }
 
     private void Update()
     {
@@ -27,7 +21,9 @@ public class BulletController : MonoBehaviour
         ContactPoint contact = other.GetContact(0);
         GameObject spawnedObject = Instantiate(bulletDecal, contact.point + contact.normal * .0001f, Quaternion.LookRotation(contact.normal));
         Destroy(spawnedObject, decalDestroy);
-        //spawn decal on point of contact then vanish after set time.
+        Destroy(gameObject);
+    //spawn decal on point of contact then destroy after set time, bullet prefab destroy on contact.
+
     }
 
 }

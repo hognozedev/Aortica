@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static PlayerData;
 
 public class ScrapMill : MonoBehaviour, IInteractable
 {
@@ -13,13 +14,13 @@ public class ScrapMill : MonoBehaviour, IInteractable
     //scrap variables
     private float decimalSalvAmount;
     public int salvAmount;
-    public int playerSalv;
 
     //machine function & stats
     private float genSpeed = 0.5f;
     public int fullCapacity;
     private bool isJammed;
     public int millDelay = 5;
+    public float jamChancePerc = 0.25f;
 
     //interact
     [SerializeField] private bool isEnabled = true;
@@ -48,10 +49,11 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
             else
             {
-                Debug.Log("full");
+                Debug.Log("Mill is jammed!");
                 isJammed = true;
             }
         }
+
     }
 
     public void Interact()
@@ -63,7 +65,6 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
         if(isJammed == false)
         {
-            Debug.Log("NOT jammed");
             MillCollection();
         }
     }
@@ -77,17 +78,17 @@ public class ScrapMill : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(millDelay);
 
-        Debug.Log("mill is running again");
+        Debug.Log("Mill un-jammed.");
         MillCollection();
         isJammed = false;
     }
 
     private void MillCollection()
     {
-        playerSalv += salvAmount;
+        PlayerData.playerSalv += salvAmount;
         salvAmount = 0;
         decimalSalvAmount = 0;
-        playerCount.text = playerSalv.ToString();
+        playerCount.text = PlayerData.playerSalv.ToString();
 
     }
 

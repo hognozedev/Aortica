@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class GunMaster : MonoBehaviour
 {
     public PlayerController playerController;
+    public VivisectorAI vEnemy;
     [HideInInspector] public Transform cameraTransform;
 
     public GunData gunData;
@@ -20,7 +21,6 @@ public class GunMaster : MonoBehaviour
     // bullet behaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform barrelTransform;
-    [SerializeField] private Transform bulletParent;
     [SerializeField] private float bulletMissDistance = 25f;
 
 
@@ -69,20 +69,20 @@ public class GunMaster : MonoBehaviour
         currentAmmo = gunData.magSize;
         isReloading = false;
 
-        Debug.Log(gunData.gunName + " done!");
+        Debug.Log(gunData.gunName + " reloaded");
     }
 
     public void TryShoot()
     {
         if (isReloading)
         {
-            Debug.Log(gunData.gunName + " currently reloading.");
+            Debug.Log("reloading.");
             return;
         }
 
         if (currentAmmo <= 0f)
         {
-            Debug.Log(gunData.gunName + " empty, please reload");
+            Debug.Log("Reload " + gunData.gunName + " with 'R'");
             return;
         }
 
@@ -98,7 +98,7 @@ public class GunMaster : MonoBehaviour
     private void HandleShoot()
     {
         currentAmmo--;
-        Debug.Log(gunData.gunName + " has shot. Bullets left = " + currentAmmo);
+        Debug.Log(currentAmmo + " bullets left");
         Shoot();
 
     }
@@ -107,15 +107,18 @@ public class GunMaster : MonoBehaviour
     private void Shoot()
     {
         RaycastHit hit;
-        GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity, bulletParent);
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, barrelTransform.position, Quaternion.identity);
         BulletController bulletController = bullet.GetComponent<BulletController>();
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, gunData.shootingRange))
         {
-            Debug.Log(gunData.gunName + " hit " + hit.collider.name);
-            Debug.Log("took " + gunData.bulletDamage + " damage");
             bulletController.target = hit.point;
             bulletController.hit = true;
+
+            if(hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vComponent))
+            {
+                vComponent.TakeDamage(gunData.bulletDamage);
+            }
         }
 
         else

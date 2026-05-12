@@ -9,7 +9,7 @@ public class GunData : ScriptableObject
     [Header("Fire Stats")]
     public float shootingRange;
     public float fireRate;
-    public float bulletDamage;
+    public int bulletDamage;
 
     //public float bulletSpread;
     //public float bulletPenetration;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunData
   targetLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4294967295
   gunName: Mauser
   shootingRange: 100
   fireRate: 4

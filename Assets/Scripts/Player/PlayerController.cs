@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System.Collections;
+using static PlayerData;
 
 interface IInteractable
 {
@@ -18,32 +19,30 @@ interface IInteractable
 public class PlayerController : MonoBehaviour
 {
     //inspector variables
-    [SerializeField] private float sprintSpeed = 6f;
-    [SerializeField] private float gravityValue = -9.81f;
-    [SerializeField] private float lookSensitivity = 100f;
-    [SerializeField] private GameObject interactPrompt;
+    [SerializeField] private float gravityValue = -9.81f, lookSensitivity = 100f;
+    [SerializeField] private GameObject interactPrompt, healthImage;
+    [SerializeField] private Sprite h75;
+    [SerializeField] private Sprite h50;
+    [SerializeField] private Sprite h25;
     public bool inLobby;
 
     //other privs
-    private float walkSpeed = 3f;
-    private float playerSpeed;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
+    private float playerSpeed;
 
     //script refs
     public GunMaster gunMaster;
-    public Dialogue dialogue;
-    private PlayerStamina playerStamina;
+    public Dialogue dialogueScript;
+    public PlayerStamina stamina;
+    public CameraSwitching camSwitcher;
 
     //inputs
     private PlayerInput playerInput;
-    private InputAction moveAction;
-    private InputAction sprintAction;
-    public InputAction attackAction;
-    private InputAction reloadAction;
-    private InputAction interactAction;
+    [HideInInspector] public InputAction moveAction, sprintAction, clickAction;
+    private InputAction attackAction, reloadAction, interactAction;
 
     //collision
     [SerializeField] private float radius = 1f;
@@ -51,20 +50,18 @@ public class PlayerController : MonoBehaviour
     private Collider[] buffer = new Collider[32];
     private IInteractable focused;
 
-    public bool isClicked;
-
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
-        playerStamina = GetComponent<PlayerStamina>();
 
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
         attackAction = playerInput.actions["Attack"];
         reloadAction = playerInput.actions["Reload"];
         interactAction = playerInput.actions["Interact"];
+        clickAction = playerInput.actions["Click"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -81,51 +78,42 @@ public class PlayerController : MonoBehaviour
             if(focused.CanInteract()) focused.Interact();
         }
 
-            bool isSprinting = sprintAction.IsPressed();
-            bool walkForward = moveAction.IsPressed();      //make so only for forward motion (player local z axis)
-
-            dialogue.isClicked = attackAction.WasPerformedThisFrame();
-
+        bool walkForward = moveAction.IsPressed();
+        bool isSprinting = sprintAction.IsPressed();
 
         if (inLobby == false)
         {
-
             gunMaster.isShooting = attackAction.WasPerformedThisFrame();
             gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
 
-            playerStamina.playerSprinting = false;
-
             if (walkForward)
             {
-                playerStamina.playerSprinting = false;
                 playerSpeed = walkSpeed;
             }
 
-            if (isSprinting & walkForward)
+            if (isSprinting & walkForward & !camSwitcher.aiming)
             {
-                if (playerStamina.currentStamina > 0)
+                if (stamina.currentStamina > 0)
                 {
-                    playerStamina.playerSprinting = true;
-                    playerStamina.Sprinting();
-
+                    stamina.playerSprinting = true;
+                    stamina.Sprinting();
                     playerSpeed = sprintSpeed;
                 }
             }
 
-            if (playerStamina.currentStamina <= 0 - 0.1)
+            else
             {
-                playerStamina.playerSprinting = false;
-                playerSpeed = walkSpeed;
+                stamina.playerSprinting = false;
             }
             // end of stamina code
 
-        }
-
-        if(inLobby == true)
+        }        
+        
+            if (inLobby == true)
         {
             playerSpeed = walkSpeed;
-        }
 
+        }
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -184,5 +172,12 @@ public class PlayerController : MonoBehaviour
         focused = nearest;
         focused?.OnFocusGained();
     }
+
+
+    public void UpdatePlayerDamage()
+    {
+
+    }
+
 
 }

@@ -1,62 +1,77 @@
-using System.Collections;
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using JetBrains.Annotations;
-using static PlayerStats;
+using static PlayerData;
 
 public class PlayerStamina : MonoBehaviour
 {
-    [Header("Stamina")]
 	public float currentStamina = 20;
-	[SerializeField] private float maxStamina = 20;
-	[SerializeField] private float staminaLoss = 10;
-	[SerializeField] private float regenSpeed = 10;
-    [SerializeField] private float regenDelay = 2;
 
 	[SerializeField] private Image stamSlider = null;
 	[SerializeField] private CanvasGroup stamCanvasGroup = null;
 
-	public bool hasRegenerated = true;
 	public bool playerSprinting = false;
+    float playerSpeed;
 
-	private void Update()
-	{
-		if (playerSprinting == false)
+
+    void Update()
+	{    
+
+        if (currentStamina <= 0)
+        {
+            playerSprinting = false;
+            playerSpeed = walkSpeed;
+        }
+
+        if (playerSprinting == false)
 		{
-
-            if (currentStamina <= maxStamina -.2)
+            if (currentStamina <= maxStamina - 1)
             {
                 StartCoroutine(RegenWait());
             }
 
-			if (currentStamina >= maxStamina -.2)
+			if (currentStamina >= maxStamina)
 			{
 				stamCanvasGroup.alpha = 0;
                 currentStamina = maxStamina;
 			}
+        }
+    }
 
+    public void TrySprint()
+    {
+        Debug.Log("try sprint");
+
+        if (currentStamina > 0)
+        {
+            Sprinting();
+            playerSpeed = sprintSpeed;
+        }
+
+        if (currentStamina < maxStamina)
+        {
+            playerSprinting = false;
+            playerSpeed = walkSpeed;
+            RegenWait();
         }
     }
 
     IEnumerator RegenWait()
     {
-        yield return new WaitForSeconds(regenDelay);
-        currentStamina += regenSpeed * Time.time;
-        UpdateStamina(1);
+            yield return new WaitForSeconds(regenDelay);
+            currentStamina += regenSpeed * Time.deltaTime;
+            UpdateStamina(1);
     }
 
     public void Sprinting()
 	{
-		if (hasRegenerated)
-		{
 			playerSprinting = true;
             currentStamina -= staminaLoss * Time.deltaTime;
 			UpdateStamina(1);
 		// if the player has enough stamina and they are sprinting, lose over time and execute the visual bar decrease.
 
-        }
 	}
 
 	void UpdateStamina(int value) //checks when i ask instead of every frame
@@ -67,7 +82,8 @@ public class PlayerStamina : MonoBehaviour
 		{
             stamCanvasGroup.alpha = 0;
 		}
-		else if (value >= 1)
+
+		if (value == 1)
 		{
             stamCanvasGroup.alpha = 1;
 		}

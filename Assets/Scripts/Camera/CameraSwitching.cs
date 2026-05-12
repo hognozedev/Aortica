@@ -11,7 +11,8 @@ public class CameraSwitching : MonoBehaviour
     [SerializeField] private Image reticleAim;
 
     private CinemachineCamera aimCamera;
-    private InputAction aimAction;
+    [HideInInspector] public InputAction aimAction;
+    [HideInInspector] public bool aiming;
 
     private void Awake()
     {
@@ -36,6 +37,8 @@ public class CameraSwitching : MonoBehaviour
 
     private void StartAim()
     {
+        aiming = true;
+
         aimCamera.Priority += priorityBoostAmount;
         reticleAim.enabled = true;
         reticleHip.enabled = false;
@@ -43,6 +46,8 @@ public class CameraSwitching : MonoBehaviour
 
     private void CancelAim()
     {
+        aiming = false; 
+
         aimCamera.Priority -= priorityBoostAmount;
         reticleAim.enabled = false;
         reticleHip.enabled = true;

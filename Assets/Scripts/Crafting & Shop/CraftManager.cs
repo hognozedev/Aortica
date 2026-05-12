@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static PlayerData;
 
 public class CraftManager : MonoBehaviour, IInteractable
 {
@@ -40,7 +41,7 @@ public class CraftManager : MonoBehaviour, IInteractable
         for (int i = 0; i < craftItems.Count && i < shopSlots.Length; i++)
         {
             CraftItems craftItem = craftItems[i];
-            shopSlots[i].Initialize(craftItem.itemData, craftItem.cost);
+            shopSlots[i].Initialize(craftItem.itemData, craftItem.salvCost);
             shopSlots[i].gameObject.SetActive(true);
         }
 
@@ -52,16 +53,16 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void TryBuyItem(ItemData itemData, int cost)
     {
-        if(itemData != null && scrapMill.playerSalv >= cost)
+        if(itemData != null && PlayerData.playerSalv >= cost)
         {
             //CHECK if(HasInventorySpace)
-            scrapMill.playerSalv -= cost;
-            scrapMill.playerCount.text =scrapMill.playerSalv.ToString();
+            PlayerData.playerSalv -= cost;
+            scrapMill.playerCount.text = PlayerData.playerSalv.ToString();
 
         }
         //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
 
-        else if(itemData != null && scrapMill.playerSalv <= cost)
+        else if(itemData != null && PlayerData.playerSalv <= cost)
         {
             Debug.Log("not enough salv");
         }
@@ -104,5 +105,5 @@ public class CraftManager : MonoBehaviour, IInteractable
 public class CraftItems
 {
     public ItemData itemData;
-    public int cost;
+    public int salvCost;
 }

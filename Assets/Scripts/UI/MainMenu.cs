@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("MechanicBuild");
+        SceneManager.LoadScene("GameLobby");
     }
 
     public void QuitGame()
