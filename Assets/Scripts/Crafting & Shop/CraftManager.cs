@@ -5,10 +5,17 @@ using System.Collections;
 using System.Collections.Generic;
 using static PlayerData;
 
+[System.Serializable]
+public class CraftItems
+{
+    public ItemData itemData;
+    public int salvCost;
+}
+
 public class CraftManager : MonoBehaviour, IInteractable
 {
     [SerializeField] private List <CraftItems> craftItems;
-    [SerializeField] private ShopSlot[] shopSlots;
+    [SerializeField] private CraftSlots[] craftSlots;
 
     //interact
     [SerializeField] private GameObject interactPrompt = null;
@@ -38,16 +45,16 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void PopulateCraftItems()
     {
-        for (int i = 0; i < craftItems.Count && i < shopSlots.Length; i++)
+        for (int i = 0; i < craftItems.Count && i < craftSlots.Length; i++)
         {
             CraftItems craftItem = craftItems[i];
-            shopSlots[i].Initialize(craftItem.itemData, craftItem.salvCost);
-            shopSlots[i].gameObject.SetActive(true);
+            craftSlots[i].Initialize(craftItem.itemData, craftItem.salvCost);
+            craftSlots[i].gameObject.SetActive(true);
         }
 
-        for (int i = craftItems.Count; i < shopSlots.Length; i++)
+        for (int i = craftItems.Count; i < craftSlots.Length; i++)
         {
-            shopSlots[i].gameObject.SetActive(false);
+            craftSlots[i].gameObject.SetActive(false);
         }
     }
 
@@ -56,8 +63,7 @@ public class CraftManager : MonoBehaviour, IInteractable
         if(itemData != null && PlayerData.playerSalv >= cost)
         {
             //CHECK if(HasInventorySpace)
-            PlayerData.playerSalv -= cost;
-            scrapMill.playerCount.text = PlayerData.playerSalv.ToString();
+            PlayerData.playerSalv -= cost;        
 
         }
         //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
@@ -79,10 +85,6 @@ public class CraftManager : MonoBehaviour, IInteractable
 
 
 
-
-
-
-
     public void OnFocusGained()
     {
         interactPrompt.gameObject.SetActive(true);
@@ -96,14 +98,4 @@ public class CraftManager : MonoBehaviour, IInteractable
         Cursor.visible = false;
     }
 
-
-
-}
-
-
-[System.Serializable]
-public class CraftItems
-{
-    public ItemData itemData;
-    public int salvCost;
 }

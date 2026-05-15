@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 6373910936030637246}
   - component: {fileID: 6047770024622496373}
   - component: {fileID: 9014351809842940599}
-  - component: {fileID: 4517453028110606473}
+  - component: {fileID: 349674421619029606}
   m_Layer: 0
   m_Name: enemyV
   m_TagString: Untagged
@@ -334,8 +334,8 @@ Transform:
   m_GameObject: {fileID: 7640079446950226130}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.25, y: 0.91, z: 24.583}
-  m_LocalScale: {x: 0.5115601, y: 0.5115601, z: 0.5115601}
+  m_LocalPosition: {x: 0, y: 0.75, z: 0}
+  m_LocalScale: {x: 0.45000002, y: 0.45000002, z: 0.45000002}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 81824089459021270}
@@ -408,7 +408,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   walkPoint: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
   walkPointRange: 50
   projectile: {fileID: 469063769684599243, guid: 239ea4d4fc9c441439254b77662c7ca4, type: 3}
   enemyHealth: 50
@@ -437,7 +436,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.25, z: 1}
   m_Center: {x: 0, y: 0.27, z: 0.04}
---- !u!95 &4517453028110606473
+--- !u!95 &349674421619029606
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -450,7 +449,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: f01afed6c46bd2347803c7ccbf1fda7e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0

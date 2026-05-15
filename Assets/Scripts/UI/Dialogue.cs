@@ -24,20 +24,17 @@ public class Dialogue : MonoBehaviour
     {    
         if(playerController.clickAction.WasPressedThisFrame())
         {           
-            Debug.Log("clicked");
-
             if(dialogueText.text == lines[index])
             {
                 NextLine();
-
             }
-             
+            
             else
             {
                 StopAllCoroutines();
                 dialogueText.text = lines[index];
-
             }
+
         }
 
     }

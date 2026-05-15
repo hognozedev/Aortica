@@ -3,16 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class InteractBehaviour : MonoBehaviour, IInteractable
 {
-    [SerializeField] private GameObject interactPrompt = null;
+    [SerializeField] private GameObject interactPrompt;
     private bool warned = false;
 
 
     public bool CanInteract() => true;
+
     public void Interact()
     {
         if (warned == true)
         {
-            SceneManager.LoadScene("MechanicBuild");
+            SceneManager.LoadScene("WaveScene1");
         }
 
         Debug.Log("Start first wave? You can't go back.");

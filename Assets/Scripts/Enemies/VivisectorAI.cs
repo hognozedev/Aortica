@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using static PlayerData;
 
 public class VivisectorAI : MonoBehaviour
 {
@@ -46,11 +47,11 @@ public class VivisectorAI : MonoBehaviour
 
     }
 
-
     private void Patrol()
     {
         if (!walkPointSet) SearchWalkPoint();
-        if(walkPointSet) agent.SetDestination(walkPoint);
+        if(walkPointSet)
+            agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
@@ -67,6 +68,7 @@ public class VivisectorAI : MonoBehaviour
         {
             vAnimator.SetTrigger("vClose");
             isClose = true;
+            isOpen = false;
         }
 
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
@@ -94,6 +96,7 @@ public class VivisectorAI : MonoBehaviour
         {
             vAnimator.SetTrigger("vOpen");
             isOpen = true;
+            isClose = false;
         }
 
         agent.SetDestination(transform.position);
@@ -107,12 +110,11 @@ public class VivisectorAI : MonoBehaviour
             rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
             ///
-
+            
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));
+            Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));       
 
         }
-
     }
 
     private void ResetAttack()
@@ -123,7 +125,6 @@ public class VivisectorAI : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        //Debug.Log("took " + damage + " damage");
         enemyHealth -= damage;
         if(enemyHealth <= 0) EnemyDeath();
 
@@ -133,6 +134,10 @@ public class VivisectorAI : MonoBehaviour
     {
         vAnimator.SetTrigger("vDie");
         StartCoroutine(DestroyEnemy());
+
+        Debug.Log("Enemy killed");
+
+        vivisectorsKilled++;
     }
 
     IEnumerator DestroyEnemy()

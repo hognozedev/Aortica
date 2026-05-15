@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static PlayerData;
 
 public class GunMaster : MonoBehaviour
 {
     public PlayerController playerController;
-    public VivisectorAI vEnemy;
     [HideInInspector] public Transform cameraTransform;
 
     public GunData gunData;
@@ -66,9 +65,18 @@ public class GunMaster : MonoBehaviour
     private IEnumerator Reload()
     {
         yield return new WaitForSeconds(gunData.reloadTime);
-        currentAmmo = gunData.magSize;
-        isReloading = false;
 
+        if(PlayerData.iRifle < gunData.magSize)
+        {
+            currentAmmo = PlayerData.iRifle;
+        }
+
+        else
+        {
+            currentAmmo = gunData.magSize;
+        }
+
+        isReloading = false;
         Debug.Log(gunData.gunName + " reloaded");
     }
 
@@ -98,7 +106,9 @@ public class GunMaster : MonoBehaviour
     private void HandleShoot()
     {
         currentAmmo--;
+        PlayerData.iRifle--;
         Debug.Log(currentAmmo + " bullets left");
+        Debug.Log(PlayerData.iRifle + " total");
         Shoot();
 
     }
@@ -117,6 +127,7 @@ public class GunMaster : MonoBehaviour
 
             if(hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vComponent))
             {
+                Debug.Log("You hit " + hit.transform.name);
                 vComponent.TakeDamage(gunData.bulletDamage);
             }
         }

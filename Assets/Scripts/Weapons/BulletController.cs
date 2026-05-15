@@ -11,6 +11,12 @@ public class BulletController : MonoBehaviour
     public Vector3 target { get; set; }
     public bool hit { get; set; }
 
+    private void OnEnable()
+    {
+        Destroy(gameObject, 0.2f);
+
+    }
+
     private void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);

@@ -1,10 +1,11 @@
+using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections;
 using static PlayerData;
 
 interface IInteractable
@@ -20,10 +21,7 @@ public class PlayerController : MonoBehaviour
 {
     //inspector variables
     [SerializeField] private float gravityValue = -9.81f, lookSensitivity = 100f;
-    [SerializeField] private GameObject interactPrompt, healthImage;
-    [SerializeField] private Sprite h75;
-    [SerializeField] private Sprite h50;
-    [SerializeField] private Sprite h25;
+    [SerializeField] private GameObject interactPrompt, h75, h50, h25;
     public bool inLobby;
 
     //other privs
@@ -41,7 +39,7 @@ public class PlayerController : MonoBehaviour
 
     //inputs
     private PlayerInput playerInput;
-    [HideInInspector] public InputAction moveAction, sprintAction, clickAction;
+    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction;
     private InputAction attackAction, reloadAction, interactAction;
 
     //collision
@@ -62,11 +60,13 @@ public class PlayerController : MonoBehaviour
         reloadAction = playerInput.actions["Reload"];
         interactAction = playerInput.actions["Interact"];
         clickAction = playerInput.actions["Click"];
+        inventoryAction = playerInput.actions["Inventory"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -174,10 +174,43 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void UpdatePlayerDamage()
+    public void UpdatePlayerHealth(int damage)
     {
+        currentHealth -= damage;
 
+        if (currentHealth <= (maxHealth * 0.75))
+        {
+            h75.SetActive(true);
+            h50.SetActive(false);
+            h25.SetActive(false);
+
+            if(currentHealth <= (maxHealth * 0.5))
+            {
+                h75.SetActive(false);
+                h50.SetActive(true);
+                h25.SetActive(false);
+
+                if (currentHealth <= (maxHealth * 0.25))
+                {
+                    h75.SetActive(false);
+                    h50.SetActive(false);
+                    h25.SetActive(true);
+
+                    if (currentHealth <= 0)
+                    {
+                        Debug.Log("YOU DIED");
+                        StartCoroutine(PlayerDeath());
+
+                    }
+                }
+            }
+        }
     }
 
+    IEnumerator PlayerDeath()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("MainMenu");
+    }
 
 }

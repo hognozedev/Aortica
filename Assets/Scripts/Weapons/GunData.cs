@@ -7,15 +7,15 @@ public class GunData : ScriptableObject
     public string gunName;
 
     [Header("Fire Stats")]
-    public float shootingRange;
-    public float fireRate;
+    public int shootingRange;
+    public int fireRate;
     public int bulletDamage;
 
     //public float bulletSpread;
     //public float bulletPenetration;
 
     [Header("Reload Stats")]
-    public float magSize;
+    public int magSize;
     public float reloadTime;
 
 }
