@@ -16,6 +16,7 @@ public class InteractBehaviour : MonoBehaviour, IInteractable
             SceneManager.LoadScene("WaveScene1");
         }
 
+        Debug.Log("");
         Debug.Log("Start first wave? You can't go back.");
         warned = true;
     }

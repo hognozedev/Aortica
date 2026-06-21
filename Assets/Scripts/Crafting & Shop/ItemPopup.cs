@@ -18,23 +18,21 @@ public class ItemPopup : MonoBehaviour
     {
         itemPopup.alpha = 1;
         itemDescText.text = itemData.itemDescription;
-
     }
 
     public void HideItemPopup()
     {
-        itemPopup.alpha = 1;
+        itemPopup.alpha = 0;
         itemDescText.text = "";
     }
 
     public void FollowMouse()
     {
-        //Vector3 mousePosition = Mouse.current;
-
         Vector3 mousePosition = Mouse.current.position.ReadValue();
         Vector3 offset = new Vector3(10, -10, 0);
 
         popupRect.position = mousePosition + offset;
     }
+//was different for new input system 
 
 }

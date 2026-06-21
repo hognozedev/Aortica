@@ -49,6 +49,7 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
             else
             {
+                Debug.Log("");
                 Debug.Log("Mill is jammed!");
                 isJammed = true;
             }
@@ -60,11 +61,16 @@ public class ScrapMill : MonoBehaviour, IInteractable
     {
         if(isJammed == true)
         {
+            Debug.Log("");
+            Debug.Log("Mill will restart soon.");
             MillRestart();
         }
 
         if(isJammed == false)
         {
+            Debug.Log("");
+            Debug.Log("You collected Salvage");
+
             MillCollection();
         }
     }
@@ -78,7 +84,8 @@ public class ScrapMill : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(millDelay);
 
-        Debug.Log("Mill un-jammed.");
+        Debug.Log("");
+        Debug.Log("Mill restarted");
         MillCollection();
         isJammed = false;
     }

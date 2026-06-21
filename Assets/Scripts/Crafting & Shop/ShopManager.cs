@@ -21,6 +21,8 @@ public class ShopManager : MonoBehaviour, IInteractable
     [SerializeField] private GameObject interactPrompt = null;
     [SerializeField] private CanvasGroup canvasGroup = null;
 
+    [SerializeField] private PlayerController playerController;
+
     [SerializeField] private bool isEnabled = true;
     public bool CanInteract() => isEnabled;
 
@@ -34,6 +36,8 @@ public class ShopManager : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        playerController.InMenu();
+
         canvasGroup.gameObject.SetActive(true);
         Cursor.visible = true;
     }
@@ -66,17 +70,11 @@ public class ShopManager : MonoBehaviour, IInteractable
 
         else if(itemData != null && PlayerData.playerEnm <= cost)
         {
+            Debug.Log("");
             Debug.Log("Not enough Enmity");
         }
 
     }
-
-    /*
-    private bool HasInventorySpace(ItemData itemData)
-    {
-        //ONLY IF PLAYER HAS INVENTORY SPACE DO LATER
-    }
-    */
 
     public void OnFocusGained()
     {
@@ -85,6 +83,8 @@ public class ShopManager : MonoBehaviour, IInteractable
 
     public void OnFocusLost()
     {
+        playerController.ExitedMenu();
+
         canvasGroup.gameObject.SetActive(false);
         interactPrompt.gameObject.SetActive(false);
         Cursor.visible = false;

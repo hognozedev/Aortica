@@ -1,7 +1,7 @@
-using System.Collections;
 using System;
+using System.Collections;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public static class PlayerData
 {
     //health
@@ -23,5 +23,8 @@ public static class PlayerData
 
     //inventory
     public static int iRifle, iBandage;
+
+    //states
+    public static bool playerCanMove = true;
 
 }

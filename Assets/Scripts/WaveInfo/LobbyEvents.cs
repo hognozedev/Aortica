@@ -14,6 +14,7 @@ public class LobbyEvents : MonoBehaviour
     {
         Debug.Log("this is wave " + "");
         playerController.inLobby = true;
+
     }
 
     public void Start()
@@ -21,6 +22,16 @@ public class LobbyEvents : MonoBehaviour
         waveText.CrossFadeAlpha(0, 3, false);
         blackScreen.CrossFadeAlpha(0, 5, false);
         StartCoroutine(DialogueWait());
+
+        Debug.Log("RESPONSE WILL BE DISPLAYED HERE, PLEASE CHECK.");
+        Debug.Log("");
+        Debug.Log("");
+        Debug.Log("Move - WASD");
+        Debug.Log("Interact - E");
+        Debug.Log("Sprint - Shift");
+        Debug.Log("Aim - RMB");
+        Debug.Log("Shoot - LMB");
+
     }
 
     IEnumerator DialogueWait()

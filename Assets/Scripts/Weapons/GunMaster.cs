@@ -53,10 +53,13 @@ public class GunMaster : MonoBehaviour
         {
             if (currentAmmo < gunData.magSize)
             {
+                Debug.Log("");
+                Debug.Log("reloading...");
                 StartCoroutine(Reload());
             }
             else
             {
+                Debug.Log("");
                 Debug.Log("Already full");
             }
         }
@@ -77,19 +80,15 @@ public class GunMaster : MonoBehaviour
         }
 
         isReloading = false;
-        Debug.Log(gunData.gunName + " reloaded");
+        Debug.Log("");
+        Debug.Log(gunData.gunName + " reload complete.");
     }
 
     public void TryShoot()
     {
-        if (isReloading)
-        {
-            Debug.Log("reloading.");
-            return;
-        }
-
         if (currentAmmo <= 0f)
         {
+            Debug.Log("");
             Debug.Log("Reload " + gunData.gunName + " with 'R'");
             return;
         }
@@ -107,10 +106,9 @@ public class GunMaster : MonoBehaviour
     {
         currentAmmo--;
         PlayerData.iRifle--;
+        Debug.Log("");
         Debug.Log(currentAmmo + " bullets left");
-        Debug.Log(PlayerData.iRifle + " total");
         Shoot();
-
     }
     // things that still need to happen when firing, even if no hit target like recoil/ screen shake, etc.
 
@@ -125,11 +123,14 @@ public class GunMaster : MonoBehaviour
             bulletController.target = hit.point;
             bulletController.hit = true;
 
+            /*
             if(hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vComponent))
             {
+                Debug.Log("");
                 Debug.Log("You hit " + hit.transform.name);
                 vComponent.TakeDamage(gunData.bulletDamage);
             }
+            */
         }
 
         else

@@ -3,7 +3,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     private static InputManager _instance;
-    // this is the only input manager in the game so im defining it as a 'singleton'
+//this is the only input manager in the game so im defining it as a 'singleton'
 
     public static InputManager Instance
     {
@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
             return _instance; 
         }
     }
-    // this is called an 'accessor' meaning that whenever i call this function from another script it makes sure to use '_instance' correctly.
+//this is called an 'accessor' meaning that whenever i call this function from another script it makes sure to use '_instance' correctly.
 
     private PlayerControls playerControls;
 
@@ -28,7 +28,7 @@ public class InputManager : MonoBehaviour
         {
             _instance = this;
         }
-        // make sure that this script only exists once, and if not to assign the variable to this script.
+    //make sure that this script only exists once, and if not to assign the variable to this script.
     }
 
     private void OnEnable()
@@ -36,7 +36,7 @@ public class InputManager : MonoBehaviour
         playerControls.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         playerControls.Disable();
     }

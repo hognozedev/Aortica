@@ -23,6 +23,7 @@ public class CraftManager : MonoBehaviour, IInteractable
     [SerializeField] private GameObject playerHUD = null;
 
     [SerializeField] private ScrapMill scrapMill;
+    [SerializeField] private PlayerController playerController;
 
     [SerializeField] private bool isEnabled = true;
     public bool CanInteract() => isEnabled;
@@ -32,11 +33,12 @@ public class CraftManager : MonoBehaviour, IInteractable
     {
         PopulateCraftItems();
         canvasGroup.gameObject.SetActive(false);
-
     }
 
     public void Interact()
     {
+        playerController.InMenu();
+
         canvasGroup.gameObject.SetActive(true);
         playerHUD.gameObject.SetActive(false);
         Cursor.visible = true;
@@ -70,20 +72,11 @@ public class CraftManager : MonoBehaviour, IInteractable
 
         else if(itemData != null && PlayerData.playerSalv <= cost)
         {
-            Debug.Log("not enough salv");
+            Debug.Log("");
+            Debug.Log("Not enough Salvage");
         }
 
     }
-
-    /*
-    private bool HasInventorySpace(ItemData itemData)
-    {
-        //ONLY IF PLAYER HAS INVENTORY SPACE DO LATER
-    }
-    */
-
-
-
 
     public void OnFocusGained()
     {
@@ -92,10 +85,11 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void OnFocusLost()
     {
+        playerController.ExitedMenu();
+
         canvasGroup.gameObject.SetActive(false);
         playerHUD.gameObject.SetActive(true);
         interactPrompt.gameObject.SetActive(false);
         Cursor.visible = false;
     }
-
 }

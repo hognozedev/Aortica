@@ -10,6 +10,7 @@ public class EnemyProjectile : MonoBehaviour
         {
             playerController.UpdatePlayerHealth(vDamage); Destroy(gameObject);
         }
+
         Destroy(gameObject, 0.5f);
     }
 }

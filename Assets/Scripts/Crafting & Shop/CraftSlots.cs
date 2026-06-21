@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
+
 public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
 {
     public ItemData itemData;
@@ -34,7 +35,7 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        itemPopup.ShowItemPopup(itemData);
+        if(itemData != null) itemPopup.ShowItemPopup(itemData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -44,6 +45,7 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerMove(PointerEventData eventData)
     {
-        itemPopup.FollowMouse();
+        if (itemData != null) itemPopup.FollowMouse();
+
     }
 }

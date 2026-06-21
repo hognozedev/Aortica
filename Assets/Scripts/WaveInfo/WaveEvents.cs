@@ -8,7 +8,6 @@ public class WaveEvents : MonoBehaviour
 
     public void Awake()
     {
-        Debug.Log("Wave " + waveNumber);
         playerController.inLobby = false;
     }
 

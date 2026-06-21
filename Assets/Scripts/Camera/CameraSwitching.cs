@@ -37,11 +37,14 @@ public class CameraSwitching : MonoBehaviour
 
     private void StartAim()
     {
+        Debug.Log("pressed");
+
         aiming = true;
 
         aimCamera.Priority += priorityBoostAmount;
         reticleAim.enabled = true;
         reticleHip.enabled = false;
+
     }
 
     private void CancelAim()

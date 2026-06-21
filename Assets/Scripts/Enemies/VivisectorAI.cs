@@ -101,7 +101,7 @@ public class VivisectorAI : MonoBehaviour
 
         agent.SetDestination(transform.position);
         transform.LookAt(player);
-        //stop on spot, and look at the player
+    //stop on spot, and look at the player
 
         if (!alreadyAttacked)
         {
@@ -135,6 +135,7 @@ public class VivisectorAI : MonoBehaviour
         vAnimator.SetTrigger("vDie");
         StartCoroutine(DestroyEnemy());
 
+        Debug.Log("");
         Debug.Log("Enemy killed");
 
         vivisectorsKilled++;
@@ -146,5 +147,4 @@ public class VivisectorAI : MonoBehaviour
         Destroy(gameObject);
 
     }
-
 }

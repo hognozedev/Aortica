@@ -11,8 +11,8 @@ public class GunData : ScriptableObject
     public int fireRate;
     public int bulletDamage;
 
-    //public float bulletSpread;
-    //public float bulletPenetration;
+    public float bulletSpread;
+    public float bulletPenetration;
 
     [Header("Reload Stats")]
     public int magSize;

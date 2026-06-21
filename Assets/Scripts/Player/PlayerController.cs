@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravityValue = -9.81f, lookSensitivity = 100f;
     [SerializeField] private GameObject interactPrompt, h75, h50, h25;
     public bool inLobby;
+    public CinemachineInputAxisController camInputs;
 
     //other privs
     private CharacterController controller;
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         currentHealth = maxHealth;
+
     }
 
     void Update()
@@ -105,7 +108,7 @@ public class PlayerController : MonoBehaviour
             {
                 stamina.playerSprinting = false;
             }
-            // end of stamina code
+        //end of stamina code
 
         }        
         
@@ -123,7 +126,7 @@ public class PlayerController : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
-        // gravity
+    //gravity
 
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x, 0, input.y);
@@ -131,11 +134,11 @@ public class PlayerController : MonoBehaviour
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
-        // use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
+    //use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
-        // player will move in direction the camera faces
+    //player will move in direction the camera faces
 
     }
 
@@ -198,19 +201,31 @@ public class PlayerController : MonoBehaviour
 
                     if (currentHealth <= 0)
                     {
-                        Debug.Log("YOU DIED");
-                        StartCoroutine(PlayerDeath());
+                        PlayerDeath();
 
                     }
                 }
             }
+
         }
+
     }
 
-    IEnumerator PlayerDeath()
+    void PlayerDeath()
     {
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("MainMenu");
+        Debug.Log("YOU DIE");
+    }
+
+    public void InMenu()
+    {
+        camInputs.enabled = false;
+        playerInput.enabled = false;
+    }
+
+    public void ExitedMenu()
+    {
+        camInputs.enabled = true;
+        playerInput.enabled = true;
     }
 
 }
