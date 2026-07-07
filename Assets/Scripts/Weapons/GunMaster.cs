@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static PlayerData;
 
 public class GunMaster : MonoBehaviour
 {
-    public PlayerController playerController;
+    private PlayerController playerController;
     [HideInInspector] public Transform cameraTransform;
 
     public GunData gunData;
@@ -36,6 +37,11 @@ public class GunMaster : MonoBehaviour
 
     public void Update()
     {
+        //if (playerController.inLobby)
+        //{
+        //    if(playe)
+        //}
+
         if (isShooting)
         {
             TryShoot();
@@ -123,20 +129,23 @@ public class GunMaster : MonoBehaviour
             bulletController.target = hit.point;
             bulletController.hit = true;
 
-            /*
-            if(hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vComponent))
+            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                Debug.Log("");
-                Debug.Log("You hit " + hit.transform.name);
-                vComponent.TakeDamage(gunData.bulletDamage);
+                if(hit.collider.TryGetComponent<VivisectorAI>(out VivisectorAI vEnemy))
+                {
+                    vEnemy.TakeDamage(gunData.bulletDamage);
+
+                }
+
             }
-            */
+    
         }
 
         else
         {
             bulletController.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
             bulletController.hit = true;
+
         }
 
     }

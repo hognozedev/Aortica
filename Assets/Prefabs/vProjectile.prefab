@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9017986472066116157}
   - component: {fileID: -3262633191033304064}
   - component: {fileID: 5641523898484312932}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: vProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,4 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00320bf742f69a478b002ece56b6a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
-  vDamage: 10
+  vDamage: 0
+  dmgMin: 10
+  dmgMax: 50

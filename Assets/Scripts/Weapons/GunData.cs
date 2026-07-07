@@ -5,17 +5,23 @@ public class GunData : ScriptableObject
 {
     public LayerMask targetLayerMask;
     public string gunName;
+    public Sprite gunIcon;
 
-    [Header("Fire Stats")]
+    [Header("Fire")]
     public int shootingRange;
     public int fireRate;
     public int bulletDamage;
 
     public float bulletSpread;
     public float bulletPenetration;
+    public float bulletDrop;
 
-    [Header("Reload Stats")]
+    [Header("Reload")]
     public int magSize;
     public float reloadTime;
+
+    [Header("Error")]
+    public int jamChance = 15;
+    public float jamFix = 2f;
 
 }

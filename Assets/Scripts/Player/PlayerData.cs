@@ -8,23 +8,19 @@ public static class PlayerData
     public static int maxHealth = 100, currentHealth;
 
     //stamina
-    public static float maxStamina = 20;
-    public static float staminaLoss = 10;
-    public static float regenSpeed = 5;
-    public static float regenDelay = 2;
-    public static float sprintSpeed = 6;
-    public static float walkSpeed = 3;
+    public static float maxStamina = 20, staminaLoss = 10, regenSpeed = 5, regenDelay = 2;
+
+    //movement
+    public static float sprintSpeed = 6, walkSpeed = 3;
+    public static float camShake;
 
     //currency
     public static int playerSalv, playerEnm;
 
-    //enemies
-    public static int vivisectorsKilled, waveEnemyKills;
-
     //inventory
-    public static int iRifle, iBandage;
+    public static int iRifle, iBandage, iRifleAmmo;
 
-    //states
-    public static bool playerCanMove = true;
+    //level data
+    public static int vivisectorsKilled, waveEnemyKills;
 
 }

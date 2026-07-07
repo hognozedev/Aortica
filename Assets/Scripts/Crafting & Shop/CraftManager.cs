@@ -3,30 +3,24 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using static PlayerData;
 
 [System.Serializable]
 public class CraftItems
 {
     public ItemData itemData;
-    public int salvCost;
 }
 
 public class CraftManager : MonoBehaviour, IInteractable
 {
+    [Header("Items")]
     [SerializeField] private List <CraftItems> craftItems;
     [SerializeField] private CraftSlots[] craftSlots;
 
-    //interact
-    [SerializeField] private GameObject interactPrompt = null;
-    [SerializeField] private CanvasGroup canvasGroup = null;
-    [SerializeField] private GameObject playerHUD = null;
-
-    [SerializeField] private ScrapMill scrapMill;
-    [SerializeField] private PlayerController playerController;
-
-    [SerializeField] private bool isEnabled = true;
-    public bool CanInteract() => isEnabled;
+    [Header("References")]
+    [SerializeField] private GameObject interactPrompt;
+    [SerializeField] private CanvasGroup canvasGroup;
+    public GameObject inventoryUI;
+    public PlayerController playerController;
 
 
     private void Start()
@@ -38,10 +32,18 @@ public class CraftManager : MonoBehaviour, IInteractable
     public void Interact()
     {
         playerController.InMenu();
-
         canvasGroup.gameObject.SetActive(true);
-        playerHUD.gameObject.SetActive(false);
-        Cursor.visible = true;
+        inventoryUI.SetActive(true);
+    }
+
+    public void Update()
+    {
+        if (playerController.cancelAction.WasPerformedThisFrame())
+        {
+            playerController.ExitedMenu();
+            OnFocusLost();
+        }
+
     }
 
 
@@ -50,7 +52,7 @@ public class CraftManager : MonoBehaviour, IInteractable
         for (int i = 0; i < craftItems.Count && i < craftSlots.Length; i++)
         {
             CraftItems craftItem = craftItems[i];
-            craftSlots[i].Initialize(craftItem.itemData, craftItem.salvCost);
+            craftSlots[i].Initialize(craftItem.itemData, craftItem.itemData.itemCost);
             craftSlots[i].gameObject.SetActive(true);
         }
 
@@ -62,15 +64,17 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void TryBuyItem(ItemData itemData, int cost)
     {
-        if(itemData != null && PlayerData.playerSalv >= cost)
+        if(PlayerData.playerSalv >= cost)
         {
+            Debug.Log("bought");
+
             //CHECK if(HasInventorySpace)
             PlayerData.playerSalv -= cost;        
 
         }
         //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
 
-        else if(itemData != null && PlayerData.playerSalv <= cost)
+        else if (PlayerData.playerSalv < cost)
         {
             Debug.Log("");
             Debug.Log("Not enough Salvage");
@@ -86,10 +90,9 @@ public class CraftManager : MonoBehaviour, IInteractable
     public void OnFocusLost()
     {
         playerController.ExitedMenu();
-
         canvasGroup.gameObject.SetActive(false);
-        playerHUD.gameObject.SetActive(true);
         interactPrompt.gameObject.SetActive(false);
-        Cursor.visible = false;
+        inventoryUI.SetActive(false);
+
     }
 }

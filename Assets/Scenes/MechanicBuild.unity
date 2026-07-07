@@ -373906,8 +373906,8 @@ MonoBehaviour:
   h75: {fileID: 1121131660}
   h50: {fileID: 1291728252}
   h25: {fileID: 1406416776}
-  blackScreen: {fileID: 0}
   inLobby: 0
+  camInputs: {fileID: 0}
   gunMaster: {fileID: 1342556083}
   dialogueScript: {fileID: 0}
   stamina: {fileID: 100979458}
@@ -375918,7 +375918,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681001509}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.032855995, y: -0.1433362, z: -0.0047612693, w: 0.9891171}
+  m_LocalRotation: {x: -0.03285673, y: -0.1431832, z: -0.0047561866, w: 0.98913926}
   m_LocalPosition: {x: 0, y: 0, z: -7.1428566}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -379209,6 +379209,7 @@ MonoBehaviour:
   canvasGroup: {fileID: 845344669}
   playerHUD: {fileID: 413290497}
   scrapMill: {fileID: 57948313}
+  playerController: {fileID: 0}
   isEnabled: 1
 --- !u!1 &1278170543
 GameObject:

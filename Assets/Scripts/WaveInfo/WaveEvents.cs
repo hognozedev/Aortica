@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static PlayerData;
 
 public class WaveEvents : MonoBehaviour
@@ -18,6 +19,11 @@ public class WaveEvents : MonoBehaviour
             PlayerData.iRifle = 8;
             Debug.Log("Press 'Tab' to see current inventory.");
         }
+    }
+
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 }

@@ -5,13 +5,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using static PlayerData;
 
 interface IInteractable
 {
-    public bool CanInteract();
     public void Interact();
     public void OnFocusGained();
     public void OnFocusLost();
@@ -20,33 +17,40 @@ interface IInteractable
 [RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
-    //inspector variables
-    [SerializeField] private float gravityValue = -9.81f, lookSensitivity = 100f;
-    [SerializeField] private GameObject interactPrompt, h75, h50, h25;
+    [Header("Player Variables")]
+    public float lookSensitivity = 100f;
+    [SerializeField] private LayerMask interactableLayers;
     public bool inLobby;
-    public CinemachineInputAxisController camInputs;
 
-    //other privs
-    private CharacterController controller;
+    [Header("References")]
+    public CinemachineInputAxisController camInputs;
+    [SerializeField] private GameObject interactPrompt, h75, h50, h25;
+    public GameObject playerHUD;
+
+    [Header("Scripts")]
+    public DeathScreen deathScreen;
+    public CameraSwitching camSwitcher;
+    public GunMaster gunMaster;
+
+
+    //movement
+    private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraTransform;
     private float playerSpeed;
-
+    private bool hasRun;
+    
     //script refs
-    public GunMaster gunMaster;
-    public Dialogue dialogueScript;
-    public PlayerStamina stamina;
-    public CameraSwitching camSwitcher;
+    private PlayerStamina stamina;
+    private CharacterController controller;
 
     //inputs
     private PlayerInput playerInput;
-    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction;
-    private InputAction attackAction, reloadAction, interactAction;
+    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction;
 
     //collision
-    [SerializeField] private float radius = 1f;
-    [SerializeField] private LayerMask intLayers;
+    private float radius = 1f;
     private Collider[] buffer = new Collider[32];
     private IInteractable focused;
 
@@ -55,14 +59,17 @@ public class PlayerController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
+        stamina = GetComponent<PlayerStamina>();
 
         moveAction = playerInput.actions["Move"];
         sprintAction = playerInput.actions["Sprint"];
         attackAction = playerInput.actions["Attack"];
         reloadAction = playerInput.actions["Reload"];
         interactAction = playerInput.actions["Interact"];
-        clickAction = playerInput.actions["Click"];
         inventoryAction = playerInput.actions["Inventory"];
+        clickAction = playerInput.actions["Click"];
+        cancelAction = playerInput.actions["Cancel"];
+        debugAction = playerInput.actions["DEBUG"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -76,10 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         IInteractable nearest = FindNearestInteractable();
         UpdateFocus(nearest);
-        if(focused != null && interactAction.WasPressedThisFrame())
-        {
-            if(focused.CanInteract()) focused.Interact();
-        }
+        if(focused != null && interactAction.WasPressedThisFrame()) focused.Interact();
 
         bool walkForward = moveAction.IsPressed();
         bool isSprinting = sprintAction.IsPressed();
@@ -89,10 +93,7 @@ public class PlayerController : MonoBehaviour
             gunMaster.isShooting = attackAction.WasPerformedThisFrame();
             gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
 
-            if (walkForward)
-            {
-                playerSpeed = walkSpeed;
-            }
+            if (walkForward) playerSpeed = walkSpeed;
 
             if (isSprinting & walkForward & !camSwitcher.aiming)
             {
@@ -108,21 +109,15 @@ public class PlayerController : MonoBehaviour
             {
                 stamina.playerSprinting = false;
             }
-        //end of stamina code
-
-        }        
-        
-            if (inLobby == true)
-        {
-            playerSpeed = walkSpeed;
 
         }
 
+        if (debugAction.WasPerformedThisFrame()) Debug.Log("you have " + playerSalv + " salvage.");
+
+        if (inLobby == true) playerSpeed = walkSpeed;
         groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
-        {
-            playerVelocity.y = 0f;
-        }
+
+        if (groundedPlayer && playerVelocity.y < 0) playerVelocity.y = 0f;
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
@@ -144,7 +139,7 @@ public class PlayerController : MonoBehaviour
 
     private IInteractable FindNearestInteractable()
     {
-        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, buffer, intLayers, QueryTriggerInteraction.Collide);
+        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, buffer, interactableLayers, QueryTriggerInteraction.Collide);
         IInteractable nearest = null;
 
         float bestDistSq = float.MaxValue;
@@ -156,7 +151,6 @@ public class PlayerController : MonoBehaviour
             IInteractable interactable = col.GetComponentInParent<IInteractable>();
 
             if(interactable == null) continue;
-            if(!interactable.CanInteract()) continue;
 
             float distSq = (col.transform.position - transform.position).sqrMagnitude;
             if (distSq < bestDistSq)
@@ -206,26 +200,37 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-
         }
-
     }
 
     void PlayerDeath()
     {
-        Debug.Log("YOU DIE");
+        if (!hasRun)
+        {
+            Debug.Log("dead");
+            deathScreen.gameObject.SetActive(true);
+
+            camInputs.enabled = false;
+            playerInput.enabled = false;
+
+            hasRun = true;
+        }
     }
 
     public void InMenu()
     {
         camInputs.enabled = false;
         playerInput.enabled = false;
+        Cursor.visible = true;
+        playerHUD.SetActive(false);
     }
 
     public void ExitedMenu()
     {
         camInputs.enabled = true;
         playerInput.enabled = true;
+        Cursor.visible = false;
+        playerHUD.SetActive(true);
     }
 
 }

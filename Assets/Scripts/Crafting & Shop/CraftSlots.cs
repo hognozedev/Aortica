@@ -12,6 +12,7 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public ItemData itemData;
     public TMP_Text itemNameText;
     public TMP_Text costText;
+    public Image itemImg;
 
     private int cost;
 
@@ -21,9 +22,10 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void Initialize(ItemData newItemData, int cost)
     {
         itemData = newItemData;
-        itemNameText.text = itemData.name;
-        this.cost = cost;
+        itemNameText.text = itemData.itemName;
+        itemData.itemCost = cost;
         costText.text = cost.ToString();
+        itemImg.sprite = itemData.itemImage;
 
     }
 

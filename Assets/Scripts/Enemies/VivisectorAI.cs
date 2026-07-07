@@ -5,40 +5,44 @@ using static PlayerData;
 
 public class VivisectorAI : MonoBehaviour
 {
+    [Header("References")]
     public NavMeshAgent agent;
     public Transform player;
+    public Transform enemy;
+    public Animator vAnimator;
+    public EnemyProjectile vProjectile;
+
+    [Header("Variables")]
+    public int hMin;
+    public int hMax;
+    public float sightRange, attackRange;
     public LayerMask groundMask, playerMask;
 
+    //enemy
+    bool isOpen, isClose;
+    private int enemyHealth;
+
     //patrol
-    public Vector3 walkPoint;
+    private Vector3 walkPoint;
     bool walkPointSet;
-    public float walkPointRange;
+    float walkPointRange = 50f;
 
     //attack
     bool alreadyAttacked;
-    public GameObject projectile;
-    public float enemyHealth;
+    bool inSightRange, inAttackRange;
 
-    //ranges
-    public float sightRange, attackRange;
-    public bool inSightRange, inAttackRange;
 
-    //special
-    private Animator vAnimator;
-    private bool isOpen, isClose;
-    
-
-    private void Awake()
+    private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        vAnimator = GetComponent<Animator>();   
+        enemyHealth = Random.Range(hMin, hMax);
 
     }
 
+
     private void Update()
     {
-        inSightRange = Physics.CheckSphere(transform.position, sightRange, playerMask);
-        inAttackRange = Physics.CheckSphere(transform.position, attackRange, playerMask);
+        inSightRange = Physics.CheckSphere(enemy.position, sightRange, playerMask);
+        inAttackRange = Physics.CheckSphere(enemy.position, attackRange, playerMask);
 
         if (!inSightRange && !inAttackRange) Patrol();
         if (inSightRange && !inAttackRange) Chase();
@@ -53,13 +57,11 @@ public class VivisectorAI : MonoBehaviour
         if(walkPointSet)
             agent.SetDestination(walkPoint);
 
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        Vector3 distanceToWalkPoint = enemy.position - walkPoint;
 
         if(distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
-
     //find a walk point, move to it, then repeat
-
     }
 
     private void SearchWalkPoint()
@@ -73,21 +75,18 @@ public class VivisectorAI : MonoBehaviour
 
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
-        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        walkPoint = new Vector3(enemy.position.x + randomX, enemy.position.y, enemy.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, groundMask))
+        if (Physics.Raycast(walkPoint, -enemy.up, 2f, groundMask))
             walkPointSet = true;
     //get the enemy to go to a random point (that is above ground)
-
     }
-
 
     private void Chase()
     {
         agent.SetDestination(player.position);
-        transform.LookAt(player);
+        enemy.LookAt(player);
     //move to the player
-
     }
 
     private void Attack()
@@ -99,23 +98,24 @@ public class VivisectorAI : MonoBehaviour
             isClose = false;
         }
 
-        agent.SetDestination(transform.position);
-        transform.LookAt(player);
-    //stop on spot, and look at the player
+        agent.SetDestination(enemy.position);
+        enemy.LookAt(player);
+        //stop on spot, and look at the player
 
         if (!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            Rigidbody rb = Instantiate(vProjectile, enemy.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(enemy.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(enemy.up * 8f, ForceMode.Impulse);
 
             ///
-            
+
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));       
+            Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));
 
         }
     }
+
 
     private void ResetAttack()
     {
@@ -135,16 +135,14 @@ public class VivisectorAI : MonoBehaviour
         vAnimator.SetTrigger("vDie");
         StartCoroutine(DestroyEnemy());
 
-        Debug.Log("");
-        Debug.Log("Enemy killed");
-
-        vivisectorsKilled++;
+        vivisectorsKilled+=1;
+        waveEnemyKills+=1;
     }
 
     IEnumerator DestroyEnemy()
     {
         yield return new WaitForSeconds(1);
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
 
     }
 }

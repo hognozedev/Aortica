@@ -16,8 +16,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   gunName: Mauser
+  gunIcon: {fileID: 21300000, guid: 247c0c88040dbc4489a8281aa69efb5c, type: 3}
   shootingRange: 100
   fireRate: 4
-  bulletDamage: 10
+  bulletDamage: 50
+  bulletSpread: 0
+  bulletPenetration: 0
+  bulletDrop: 0
   magSize: 5
   reloadTime: 2.5
+  jamChance: 15
+  jamFix: 2

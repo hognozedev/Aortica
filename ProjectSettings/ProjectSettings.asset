@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: HognozeDev
   productName: Aortica
-  defaultCursor: {fileID: 2800000, guid: 06fffc1b134b4a748a92be76002e547d, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 4bd0c23b054284c4cbf55328a0acc2d8, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -41,8 +41,6 @@ PlayerSettings:
     height: 1
   m_SplashScreenLogos:
   - logo: {fileID: 10404, guid: 0000000000000000f000000000000000, type: 0}
-    duration: 2
-  - logo: {fileID: 21300000, guid: 59891d5fa2b6b1b468500267c9e11b00, type: 3}
     duration: 2
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
