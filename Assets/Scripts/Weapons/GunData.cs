@@ -6,6 +6,8 @@ public class GunData : ScriptableObject
     public LayerMask targetLayerMask;
     public string gunName;
     public Sprite gunIcon;
+    public int currentAmmo;
+    public ItemData ammoType;
 
     [Header("Fire")]
     public int shootingRange;

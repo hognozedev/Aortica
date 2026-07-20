@@ -153,6 +153,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00320bf742f69a478b002ece56b6a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
-  vDamage: 0
   dmgMin: 10
   dmgMax: 50

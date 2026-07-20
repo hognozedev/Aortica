@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static PlayerData;
+using static ItemData;
 
 public class GunMaster : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class GunMaster : MonoBehaviour
 
     public GunData gunData;
 
-    private float currentAmmo = 0;
+    private int currentAmmo;
     private float NextTimeToFire = 0;
+    private ItemData ammoType;
 
     public bool isReloading = false;
     public bool isShooting = false;
@@ -29,7 +31,7 @@ public class GunMaster : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         cameraTransform = Camera.main.transform;
 
-        currentAmmo = gunData.magSize;
+        currentAmmo = gunData.currentAmmo;
         isShooting = false;
         isReloading = false;
 
@@ -37,11 +39,6 @@ public class GunMaster : MonoBehaviour
 
     public void Update()
     {
-        //if (playerController.inLobby)
-        //{
-        //    if(playe)
-        //}
-
         if (isShooting)
         {
             TryShoot();
@@ -51,6 +48,7 @@ public class GunMaster : MonoBehaviour
         {
             TryReload();
         }
+
     }
 
     public void TryReload()
@@ -68,22 +66,28 @@ public class GunMaster : MonoBehaviour
                 Debug.Log("");
                 Debug.Log("Already full");
             }
+
         }
+
     }
 
     private IEnumerator Reload()
     {
+        
         yield return new WaitForSeconds(gunData.reloadTime);
 
-        if(PlayerData.iRifle < gunData.magSize)
+        /*
+        if(ItemData.quantity < gunData.magSize)
         {
-            currentAmmo = PlayerData.iRifle;
+            currentAmmo = ammoType;
         }
 
         else
         {
-            currentAmmo = gunData.magSize;
+            
+        currentAmmo = gunData.magSize;
         }
+        */
 
         isReloading = false;
         Debug.Log("");
@@ -110,8 +114,9 @@ public class GunMaster : MonoBehaviour
 
     private void HandleShoot()
     {
-        currentAmmo--;
-        PlayerData.iRifle--;
+    //FIX HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        //currentAmmo--;
+        //PlayerData.iRifle--;
         Debug.Log("");
         Debug.Log(currentAmmo + " bullets left");
         Shoot();
@@ -148,6 +153,11 @@ public class GunMaster : MonoBehaviour
 
         }
 
+    }
+
+    public void ChangeGun()
+    {
+        
     }
 
 }

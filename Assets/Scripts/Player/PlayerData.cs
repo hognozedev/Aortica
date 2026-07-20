@@ -15,10 +15,11 @@ public static class PlayerData
     public static float camShake;
 
     //currency
-    public static int playerSalv, playerEnm;
+    public static int playerSalv = 5, playerEnm;
 
     //inventory
-    public static int iRifle, iBandage, iRifleAmmo;
+    public static Action<ItemData, int, int> OnItemTaken;
+    public static Action<ItemData> OnModify;
 
     //level data
     public static int vivisectorsKilled, waveEnemyKills;

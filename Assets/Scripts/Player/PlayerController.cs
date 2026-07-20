@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (debugAction.WasPerformedThisFrame()) Debug.Log("you have " + playerSalv + " salvage.");
+        if (debugAction.WasPerformedThisFrame()) Debug.Log("you have ");
 
         if (inLobby == true) playerSpeed = walkSpeed;
         groundedPlayer = controller.isGrounded;

@@ -62,11 +62,13 @@ public class ShopManager : MonoBehaviour, IInteractable
     {
         if(itemData != null && PlayerData.playerEnm >= cost)
         {
-            //CHECK if(HasInventorySpace)
+            //check if player has space
             PlayerData.playerEnm -= cost;
 
+            //OnItemTaken?.Invoke(itemData, cost, amount);
+
         }
-        //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
+    //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
 
         else if(itemData != null && PlayerData.playerEnm <= cost)
         {

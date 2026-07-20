@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Hormone B
   itemDescription: A drug that increases stamina.
-  itemImage: {fileID: 0}
-  itemRarity: 0
+  itemImage: {fileID: 21300000, guid: 59891d5fa2b6b1b468500267c9e11b00, type: 3}
+  itemRarity: 5
   itemCost: 25
+  stackSize: 1
+  shopAmount: 1
+  useable: 1
+  isModifier: 1
+  isHealing: 0

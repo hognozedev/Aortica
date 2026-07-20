@@ -14,8 +14,6 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public TMP_Text costText;
     public Image itemImg;
 
-    private int cost;
-
     [SerializeField] private CraftManager craftManager;
     [SerializeField] private ItemPopup itemPopup;
 
@@ -31,7 +29,7 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void BuyButtonClicked()
     {
-        craftManager.TryBuyItem(itemData, cost);
+        craftManager.TryBuyItem(itemData, itemData.itemCost, itemData.shopAmount);
 
     }
 

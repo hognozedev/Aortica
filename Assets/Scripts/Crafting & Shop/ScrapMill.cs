@@ -1,7 +1,8 @@
+using NUnit.Framework.Interfaces;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using static PlayerData;
 
 public class ScrapMill : MonoBehaviour, IInteractable
@@ -10,6 +11,9 @@ public class ScrapMill : MonoBehaviour, IInteractable
     public TextMeshProUGUI playerCount;
     public TextMeshProUGUI salvCount;
     [SerializeField] private GameObject interactPrompt = null;
+
+    //scripts
+    public InventorySlot inventorySlot;
 
     //scrap variables
     private float decimalSalvAmount;
@@ -92,6 +96,8 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     private void MillCollection()
     {
+        inventorySlot.UpdateInv();
+
         PlayerData.playerSalv += salvAmount;
         salvAmount = 0;
         decimalSalvAmount = 0;

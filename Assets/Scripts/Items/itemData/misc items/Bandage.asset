@@ -16,4 +16,9 @@ MonoBehaviour:
   itemDescription: 'A cloth bandage that can compress bleeding. '
   itemImage: {fileID: 21300000, guid: dcdedbff065953e458fbc260eedfcb83, type: 3}
   itemRarity: 0
-  itemCost: 8
+  itemCost: 15
+  stackSize: 3
+  shopAmount: 1
+  useable: 1
+  isModifier: 0
+  isHealing: 1

@@ -12,15 +12,6 @@ public class WaveEvents : MonoBehaviour
         playerController.inLobby = false;
     }
 
-    public void Start()
-    {
-        if(waveNumber == 1)
-        {
-            PlayerData.iRifle = 8;
-            Debug.Log("Press 'Tab' to see current inventory.");
-        }
-    }
-
     public void ExitToMenu()
     {
         SceneManager.LoadScene("MainMenu");

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static PlayerData;
 
 [System.Serializable]
 public class CraftItems
@@ -62,17 +63,24 @@ public class CraftManager : MonoBehaviour, IInteractable
         }
     }
 
-    public void TryBuyItem(ItemData itemData, int cost)
+    public void TryBuyItem(ItemData itemData, int cost, int amount)
     {
+        if(itemData.isModifier == true && PlayerData.playerSalv >= cost)
+        {
+            PlayerData.playerSalv -= cost;
+            OnModify?.Invoke(itemData);
+            return;
+        }
+
         if(PlayerData.playerSalv >= cost)
         {
+            PlayerData.playerSalv -= cost;
+            OnItemTaken?.Invoke(itemData, cost, amount);
+
             Debug.Log("bought");
-
-            //CHECK if(HasInventorySpace)
-            PlayerData.playerSalv -= cost;        
-
         }
         //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
+
 
         else if (PlayerData.playerSalv < cost)
         {

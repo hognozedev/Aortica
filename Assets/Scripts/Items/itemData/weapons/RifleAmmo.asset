@@ -16,4 +16,7 @@ MonoBehaviour:
   itemDescription: '5 rounds of 8mm ammo for a Mauser Gewehr 98. '
   itemImage: {fileID: 21300000, guid: d37984f2af7ec764eb495c251db6aec6, type: 3}
   itemRarity: 0
-  itemCost: 5
+  itemCost: 10
+  stackSize: 25
+  shopAmount: 5
+  useable: 0
