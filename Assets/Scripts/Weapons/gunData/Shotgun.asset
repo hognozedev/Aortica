@@ -15,8 +15,10 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  gunName: 
+  gunName: Shotgun
   gunIcon: {fileID: 21300000, guid: 5f92e97d51140fa4e9ec641aea1a017b, type: 3}
+  currentAmmo: 0
+  ammoType: {fileID: 0}
   shootingRange: 0
   fireRate: 0
   bulletDamage: 0
@@ -25,5 +27,5 @@ MonoBehaviour:
   bulletDrop: 0
   magSize: 0
   reloadTime: 0
-  jamChance: 15
+  jamChance: 50
   jamFix: 2

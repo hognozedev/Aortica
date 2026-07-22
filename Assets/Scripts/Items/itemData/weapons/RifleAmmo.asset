@@ -19,4 +19,8 @@ MonoBehaviour:
   itemCost: 10
   stackSize: 25
   shopAmount: 5
+  playerHas: 0
   useable: 0
+  isModifier: 0
+  isHealing: 0
+  isAmmo: 1

@@ -12,7 +12,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public TextMeshProUGUI salvText;
     public TextMeshProUGUI descText;
     public PlayerInventory playerInventory;
-
+    public GunMaster gunMaster;
 
     public void UpdateSalv()
     {
@@ -28,7 +28,13 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             itemIcon.sprite = itemData.itemImage;
             itemIcon.gameObject.SetActive(true);
-            quantityText.text = amount.ToString();
+            quantityText.text = amount.ToString();     
+
+            if (itemData.isAmmo)
+            {
+                gunMaster.UpdateHUD();
+            }
+
         }
 
         else
@@ -36,7 +42,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             itemIcon.gameObject.SetActive(false);
             quantityText.text = "";
         }
-
+       
     } 
 
     public void OnPointerEnter(PointerEventData eventData)

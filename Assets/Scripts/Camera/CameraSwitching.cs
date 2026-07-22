@@ -37,10 +37,7 @@ public class CameraSwitching : MonoBehaviour
 
     private void StartAim()
     {
-        Debug.Log("pressed");
-
         aiming = true;
-
         aimCamera.Priority += priorityBoostAmount;
         reticleAim.enabled = true;
         reticleHip.enabled = false;
@@ -55,6 +52,6 @@ public class CameraSwitching : MonoBehaviour
         reticleAim.enabled = false;
         reticleHip.enabled = true;
     }
-    // adds 10 to the priority order in order to ensure it is well above the current highest (which is 2)
+// adds 10 to the priority order in order to ensure it is well above the current highest (which is 2)
 
 }

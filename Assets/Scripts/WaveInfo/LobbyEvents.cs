@@ -31,6 +31,7 @@ public class LobbyEvents : MonoBehaviour
         Debug.Log("Sprint - Shift");
         Debug.Log("Aim - RMB");
         Debug.Log("Shoot - LMB");
+        Debug.Log("Inventory - Tab (DONT USE IN LOBBY)");
 
     }
 

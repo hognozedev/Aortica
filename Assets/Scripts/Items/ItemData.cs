@@ -13,8 +13,10 @@ public class ItemData : ScriptableObject
     public int itemCost;
     public int stackSize;
     public int shopAmount;
+    public int playerHas;
 
     public bool useable;
     public bool isModifier;
     public bool isHealing;
+    public bool isAmmo;
 }

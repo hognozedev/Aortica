@@ -15,7 +15,7 @@ public static class PlayerData
     public static float camShake;
 
     //currency
-    public static int playerSalv = 5, playerEnm;
+    public static int playerSalv = 250, playerEnm;
 
     //inventory
     public static Action<ItemData, int, int> OnItemTaken;

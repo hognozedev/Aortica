@@ -79,10 +79,14 @@ public class PlayerInventory : MonoBehaviour
                     slot.amount += amountToAdd;
                     amount -= amountToAdd;
 
-                    slot.UpdateInv();
+                itemData.playerHas += amountToAdd;    
+
+                slot.UpdateInv();
 
                     if (amount <= 0) return;
+
                 }
+
             }
 
             foreach (var slot in invSlots)
@@ -94,12 +98,12 @@ public class PlayerInventory : MonoBehaviour
                     slot.itemData = itemData;
                     slot.amount = amount;
                     slot.UpdateInv();
-
+                    
                     return;
                 }
 
             }
-        
+
     }
 
     public void ModItem(ItemData itemData)

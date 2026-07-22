@@ -1,24 +1,24 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static PlayerData;
-using static ItemData;
 
 public class GunMaster : MonoBehaviour
 {
     private PlayerController playerController;
     [HideInInspector] public Transform cameraTransform;
 
+    //public
     public GunData gunData;
-
-    private int currentAmmo;
-    private float NextTimeToFire = 0;
-    private ItemData ammoType;
-
+    public TextMeshProUGUI currentAmmoText, totalAmmoText;
     public bool isReloading = false;
     public bool isShooting = false;
+
+    //private
+    private int currentAmmo;
+    private float NextTimeToFire = 0;
+    private int totalAmmo;
+    private float val;
+    private bool isJammed;
 
     // bullet behaviour
     [SerializeField] private GameObject bulletPrefab;
@@ -31,20 +31,21 @@ public class GunMaster : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         cameraTransform = Camera.main.transform;
 
-        currentAmmo = gunData.currentAmmo;
         isShooting = false;
         isReloading = false;
+        isJammed = false;
 
+        UpdateHUD();
     }
 
     public void Update()
     {
-        if (isShooting)
+        if (isShooting && isJammed == false)
         {
             TryShoot();
         }
 
-        if (isReloading)
+        if (isReloading && isJammed == false)
         {
             TryReload();
         }
@@ -55,16 +56,14 @@ public class GunMaster : MonoBehaviour
     {
         if (isReloading)
         {
-            if (currentAmmo < gunData.magSize)
+            if (currentAmmo < gunData.magSize && gunData.ammoType.playerHas > 0)
             {
-                Debug.Log("");
-                Debug.Log("reloading...");
+                Debug.Log("rldng...");
                 StartCoroutine(Reload());
             }
-            else
+            else if(gunData.ammoType.playerHas <= 0 )
             {
-                Debug.Log("");
-                Debug.Log("Already full");
+                Debug.Log("already full/ no more ammo");
             }
 
         }
@@ -72,56 +71,75 @@ public class GunMaster : MonoBehaviour
     }
 
     private IEnumerator Reload()
-    {
-        
+    {     
         yield return new WaitForSeconds(gunData.reloadTime);
 
-        /*
-        if(ItemData.quantity < gunData.magSize)
+        if(gunData.ammoType.playerHas >= gunData.magSize)
         {
-            currentAmmo = ammoType;
+            currentAmmo = gunData.magSize;
+            gunData.ammoType.playerHas -= gunData.magSize;
+
         }
 
-        else
+        else if(gunData.ammoType.playerHas < gunData.magSize)
         {
-            
-        currentAmmo = gunData.magSize;
+            currentAmmo = gunData.ammoType.playerHas;
+            gunData.ammoType.playerHas = 0;
         }
-        */
 
         isReloading = false;
-        Debug.Log("");
-        Debug.Log(gunData.gunName + " reload complete.");
+        UpdateHUD();
+
+        Debug.Log(gunData.gunName + " rld done.");
+
     }
 
     public void TryShoot()
     {
         if (currentAmmo <= 0f)
         {
-            Debug.Log("");
-            Debug.Log("Reload " + gunData.gunName + " with 'R'");
+            Debug.Log("reload " + gunData.gunName + " with 'R'");
             return;
         }
 
-        if (Time.time >= NextTimeToFire)
+        val = Random.Range(0, 100);
+        
+        if (val >= gunData.jamChance)
+        {
+            Debug.Log("jammed");
+            isJammed = true;
+            StartCoroutine(UnJam());
+            return;
+        }
+
+        else if (Time.time >= NextTimeToFire)
         {
             NextTimeToFire = Time.time + (1 / gunData.fireRate);
-            // e.g. if fire rate is 2 then wait between is 0.5 secs
+        // e.g. if fire rate is 2 then wait between is 0.5 secs
+
             HandleShoot();
         }
 
     }
 
+    private IEnumerator UnJam()
+    {
+        yield return new WaitForSeconds(gunData.jamFix);
+        Debug.Log("unjammed");
+        isJammed = false;
+
+    }
+
     private void HandleShoot()
     {
-    //FIX HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-        //currentAmmo--;
-        //PlayerData.iRifle--;
-        Debug.Log("");
         Debug.Log(currentAmmo + " bullets left");
+
+        currentAmmo--;
+        UpdateHUD();
         Shoot();
     }
     // things that still need to happen when firing, even if no hit target like recoil/ screen shake, etc.
+
 
     private void Shoot()
     {
@@ -153,6 +171,12 @@ public class GunMaster : MonoBehaviour
 
         }
 
+    }
+
+    public void UpdateHUD()
+    {
+        totalAmmoText.text = gunData.ammoType.playerHas.ToString();
+        currentAmmoText.text = currentAmmo.ToString();
     }
 
     public void ChangeGun()

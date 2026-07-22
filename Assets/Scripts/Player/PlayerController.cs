@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
@@ -32,7 +33,6 @@ public class PlayerController : MonoBehaviour
     public CameraSwitching camSwitcher;
     public GunMaster gunMaster;
 
-
     //movement
     private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
@@ -53,7 +53,6 @@ public class PlayerController : MonoBehaviour
     private float radius = 1f;
     private Collider[] buffer = new Collider[32];
     private IInteractable focused;
-
 
     private void Awake()
     {
@@ -76,14 +75,13 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         currentHealth = maxHealth;
-
     }
 
     void Update()
     {
         IInteractable nearest = FindNearestInteractable();
         UpdateFocus(nearest);
-        if(focused != null && interactAction.WasPressedThisFrame()) focused.Interact();
+        if (focused != null && interactAction.WasPressedThisFrame()) focused.Interact();
 
         bool walkForward = moveAction.IsPressed();
         bool isSprinting = sprintAction.IsPressed();
@@ -112,7 +110,10 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (debugAction.WasPerformedThisFrame()) Debug.Log("you have ");
+        if (debugAction.WasPerformedThisFrame())
+        {
+            Debug.Log("");
+        }
 
         if (inLobby == true) playerSpeed = walkSpeed;
         groundedPlayer = controller.isGrounded;

@@ -35,7 +35,6 @@ public class VivisectorAI : MonoBehaviour
     private void Start()
     {
         enemyHealth = Random.Range(hMin, hMax);
-
     }
 
 
