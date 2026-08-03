@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GunMaster : MonoBehaviour
 {
-    private PlayerController playerController;
     [HideInInspector] public Transform cameraTransform;
 
     //public
@@ -16,7 +15,6 @@ public class GunMaster : MonoBehaviour
     //private
     private int currentAmmo;
     private float NextTimeToFire = 0;
-    private int totalAmmo;
     private float val;
     private bool isJammed;
 
@@ -28,7 +26,6 @@ public class GunMaster : MonoBehaviour
 
     private void Start()
     {
-        playerController = GetComponent<PlayerController>();
         cameraTransform = Camera.main.transform;
 
         isShooting = false;
@@ -177,11 +174,6 @@ public class GunMaster : MonoBehaviour
     {
         totalAmmoText.text = gunData.ammoType.playerHas.ToString();
         currentAmmoText.text = currentAmmo.ToString();
-    }
-
-    public void ChangeGun()
-    {
-        
     }
 
 }

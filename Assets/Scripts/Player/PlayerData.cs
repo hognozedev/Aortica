@@ -22,6 +22,6 @@ public static class PlayerData
     public static Action<ItemData> OnModify;
 
     //level data
-    public static int vivisectorsKilled, waveEnemyKills;
+    public static int vivisectorsKilled, waveEnemyKills, waifsKilled;
 
 }

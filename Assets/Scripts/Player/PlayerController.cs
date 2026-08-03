@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
     [Header("Scripts")]
     public DeathScreen deathScreen;
     public CameraSwitching camSwitcher;
-    public GunMaster gunMaster;
 
     //movement
     private float gravityValue = -9.81f;
@@ -44,10 +43,11 @@ public class PlayerController : MonoBehaviour
     //script refs
     private PlayerStamina stamina;
     private CharacterController controller;
+    public GunMaster gunMaster;
 
     //inputs
     private PlayerInput playerInput;
-    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction;
+    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction;
 
     //collision
     private float radius = 1f;
@@ -69,6 +69,10 @@ public class PlayerController : MonoBehaviour
         clickAction = playerInput.actions["Click"];
         cancelAction = playerInput.actions["Cancel"];
         debugAction = playerInput.actions["DEBUG"];
+        scrollAction = playerInput.actions["Scroll"];
+        oneAction = playerInput.actions["Key1"];
+        twoAction = playerInput.actions["Key2"];
+        threeAction = playerInput.actions["Key3"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;

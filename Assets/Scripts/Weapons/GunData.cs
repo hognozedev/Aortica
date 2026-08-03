@@ -3,10 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GunData", menuName = "Scriptable Objects/GunData")]
 public class GunData : ScriptableObject
 {
+    [Header("Refs")]
+    public GameObject inSceneObj;
+    public ItemData ammoType;
+
     public LayerMask targetLayerMask;
     public string gunName;
     public Sprite gunIcon;
-    public ItemData ammoType;
 
     [Header("Fire")]
     public int shootingRange;

@@ -19,4 +19,5 @@ public class ItemData : ScriptableObject
     public bool isModifier;
     public bool isHealing;
     public bool isAmmo;
+    public bool isWeapon;
 }
