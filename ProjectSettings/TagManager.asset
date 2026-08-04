@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Floor
+  - Hoarfrost
   layers:
   - Default
   - TransparentFX
