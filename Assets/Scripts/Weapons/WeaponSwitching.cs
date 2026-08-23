@@ -47,7 +47,12 @@ public class WeaponSwitching : MonoBehaviour
         int i = 0;
         foreach(Transform weapon in transform)
         {
-            if (i == currentWeapon) weapon.gameObject.SetActive(true);
+            if (i == currentWeapon)
+            {
+                weapon.gameObject.SetActive(true);
+                weapon.gameObject.TryGetComponent<GunMaster>(out GunMaster gunMaster); gunMaster.UpdateHUD();
+            //show correct weapon name/ ammo UI overlay
+            }
 
             else weapon.gameObject.SetActive(false);
 

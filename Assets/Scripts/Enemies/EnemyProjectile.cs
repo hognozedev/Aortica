@@ -1,20 +1,21 @@
 using UnityEngine;
+using VolFx;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    int vDamage;
-    public int dmgMin, dmgMax;
+    public EnemyData enemyData;
+    float vDamage;
 
     public void Start()
     {
-        vDamage = Random.Range(dmgMin, dmgMax);
+        vDamage = enemyData.enemyDamage * Random.Range(0.8f, 1.2f);
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.TryGetComponent<PlayerController>(out PlayerController playerController))
         {
-            playerController.UpdatePlayerHealth(vDamage); Destroy(gameObject);
+            playerController.UpdatePlayerHealth((int)vDamage); Destroy(gameObject);
         }
 
     //if other enemies get hit then do other things below.

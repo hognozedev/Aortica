@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
     //script refs
     private PlayerStamina stamina;
     private CharacterController controller;
-    public GunMaster gunMaster;
 
     //inputs
     private PlayerInput playerInput;
@@ -92,9 +91,6 @@ public class PlayerController : MonoBehaviour
 
         if (inLobby == false)
         {
-            gunMaster.isShooting = attackAction.WasPerformedThisFrame();
-            gunMaster.isReloading = reloadAction.WasPerformedThisFrame();
-
             if (walkForward) playerSpeed = walkSpeed;
 
             if (isSprinting & walkForward & !camSwitcher.aiming)

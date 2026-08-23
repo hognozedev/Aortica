@@ -5,11 +5,14 @@ using static PlayerData;
 
 public class WaifAI : MonoBehaviour
 {
+    public EnemyData enemyData;
+
     [Header("References")]
     public NavMeshAgent agent;
     public Transform player;
     public Transform enemy;
-    //public Animator vAnimator;
+    public Animator vAnimator;
+    private PlayerController playerController;
 
     [Header("Variables")]
     public float attackRange;
@@ -17,16 +20,13 @@ public class WaifAI : MonoBehaviour
     public LayerMask groundMask, playerMask;
 
     [Header("Body Parts")]
-    public Collider body;
     public Collider head;
-
-    //enemy
-    private int enemyHealth;
 
     //patrol
     private Vector3 walkPoint;
     bool walkPointSet;
     float walkPointRange = 50f;
+    private int enemyHealth;
 
     //attack
     bool alreadyAttacked;
@@ -35,7 +35,11 @@ public class WaifAI : MonoBehaviour
 
     private void Start()
     {
-        enemyHealth = Random.Range(50,70);
+        float eHFloat = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
+        enemyHealth = (int)eHFloat;
+
+        playerController = player.GetComponent<PlayerController>();
+
     }
 
 
@@ -79,31 +83,27 @@ public class WaifAI : MonoBehaviour
     private void Chase()
     {
         agent.SetDestination(player.position);
-        enemy.LookAt(player);
-    //move to the player
+        //enemy.LookAt(player); this looks weird maybe use with finished animations ?
+
     }
 
     
     private void Attack()
     {
-        Debug.Log("attacking");
-
-        alreadyAttacked = true;
-        Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));     
         agent.SetDestination(enemy.position);
-    //stop on spot
+    //stop on spot, and look at the player
 
-        /*
         if (!alreadyAttacked)
         {
-            Rigidbody rb = Instantiate(vProjectile, enemy.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(enemy.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(enemy.up * 8f, ForceMode.Impulse);
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));
 
+            float randomDmg = enemyData.enemyDamage * Random.Range(0.8f, 1.2f);
+            playerController.UpdatePlayerHealth((int)randomDmg);
+
+            Debug.Log(randomDmg);
         }
-        */
     }
-
 
     private void ResetAttack()
     {
@@ -111,10 +111,17 @@ public class WaifAI : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Collider col)
     {
-        enemyHealth -= damage;
-        if(enemyHealth <= 0) EnemyDeath();
+        if (!inSightRange && !inAttackRange) Chase();
+
+        float hsFloat = damage * 0.25f;
+        int headshotDmg = (int) hsFloat;
+
+        if (col == head) enemyHealth -= damage + headshotDmg;
+        else enemyHealth -= damage;
+
+        if (enemyHealth <= 0) EnemyDeath();
 
     }
 
@@ -130,7 +137,8 @@ public class WaifAI : MonoBehaviour
     IEnumerator DestroyEnemy()
     {
         yield return new WaitForSeconds(1);
-        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
 
     }
+
 }

@@ -30,11 +30,6 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             itemIcon.gameObject.SetActive(true);
             quantityText.text = amount.ToString();     
 
-            if (itemData.isAmmo)
-            {
-                gunMaster.UpdateHUD();
-            }
-
         }
 
         else

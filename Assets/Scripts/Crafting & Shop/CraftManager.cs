@@ -22,6 +22,7 @@ public class CraftManager : MonoBehaviour, IInteractable
     [SerializeField] private CanvasGroup canvasGroup;
     public GameObject inventoryUI;
     public PlayerController playerController;
+    public GunMaster gunMaster;
 
 
     private void Start()
@@ -78,6 +79,8 @@ public class CraftManager : MonoBehaviour, IInteractable
             OnItemTaken?.Invoke(itemData, cost, amount);
 
             Debug.Log("bought");
+            gunMaster.UpdateHUD();
+
         }
         //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
 

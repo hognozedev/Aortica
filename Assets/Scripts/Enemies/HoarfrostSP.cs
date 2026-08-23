@@ -4,59 +4,51 @@ public class HoarfrostSP : MonoBehaviour
 {
     [Header("References")]
     public GameObject[] spawnPoints;
-    public GameObject enemyPrefab;
-    public int spawnRate = 2;
+    public Transform player;
 
+    [Header("Variables")]
+    public int maxAmount;
+    public LayerMask playerMask;
+    public int spawnRate = 2;
+    public int startDelay = 5;
+    public float enemyRadius;
+
+    private bool inSpawnRange;
     private GameObject[] enemies;
     private int currentEnemies;
+    private GameObject chosenEnemy;
+
 
     void Start()
     {
-        InvokeRepeating("CheckSP", 2f, spawnRate);
-
+        InvokeRepeating("CheckSP", startDelay, spawnRate);
     }
-
-
-    void Update()
-    {
-
-    }
-
 
     void CheckSP()
     {
         enemies = GameObject.FindGameObjectsWithTag("Hoarfrost");
-        foreach(GameObject gameObject in enemies) currentEnemies++;     
+        foreach(GameObject gameObject in enemies) currentEnemies++;
 
-        if(currentEnemies <= 2)
+        int index = Random.Range(0, spawnPoints.Length);
+        chosenEnemy = spawnPoints[index];
+
+        //Debug.Log(chosenEnemy);
+
+        inSpawnRange = Physics.CheckSphere(chosenEnemy.transform.position, enemyRadius, playerMask);
+
+        if (currentEnemies <= maxAmount && !chosenEnemy.activeInHierarchy && inSpawnRange)
         {
-            SpawnEnemy();
+            SpawnEnemy(chosenEnemy);
         }
 
         currentEnemies = 0;
-
     }
+    // pick a random spawn point, see if the player is close enough to it, and if so set gameobj to visible.
 
-    void SpawnEnemy()
+
+    void SpawnEnemy(GameObject chosenRef)
     {
-        /*
-        for (int i = 0; i < craftItems.Count && i < craftSlots.Length; i++)
-        {
-            CraftItems craftItem = craftItems[i];
-            craftSlots[i].Initialize(craftItem.itemData, craftItem.itemData.itemCost);
-            craftSlots[i].gameObject.SetActive(true);
-        }
-        
-                for (int i = craftItems.Count; i < craftSlots.Length; i++)
-        {
-            craftSlots[i].gameObject.SetActive(false);
-        }
-
-
-        //GameObject spawnAt = Random.gameObject(spawnPoints);
-        spawnAt.SetActive(true);
-        */
+        chosenRef.SetActive(true);
     }
-
 
 }

@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969520c20844fef48a870aecd9eef9df, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::GunData
+  inSceneObj: {fileID: 0}
+  ammoType: {fileID: 11400000, guid: 98900bbd4cd64a5479c6c1d7137b1cd2, type: 2}
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   gunName: Shotgun
   gunIcon: {fileID: 21300000, guid: 5f92e97d51140fa4e9ec641aea1a017b, type: 3}
-  ammoType: {fileID: 0}
   shootingRange: 2
   fireRate: 2
   bulletDamage: 2
@@ -28,3 +29,4 @@ MonoBehaviour:
   reloadTime: 2
   jamChance: 50
   jamFix: 2
+  meleeDmg: 15

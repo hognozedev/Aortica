@@ -5,6 +5,8 @@ using static PlayerData;
 
 public class VivisectorAI : MonoBehaviour
 {
+    public EnemyData enemyData;
+
     [Header("References")]
     public NavMeshAgent agent;
     public Transform player;
@@ -13,14 +15,13 @@ public class VivisectorAI : MonoBehaviour
     public EnemyProjectile vProjectile;
 
     [Header("Variables")]
-    public int hMin;
-    public int hMax;
     public float sightRange, attackRange;
     public LayerMask groundMask, playerMask;
+    public Collider critSpot;
 
     //enemy
     bool isOpen, isClose;
-    private int enemyHealth;
+    private float enemyHealth;
 
     //patrol
     private Vector3 walkPoint;
@@ -29,12 +30,14 @@ public class VivisectorAI : MonoBehaviour
 
     //attack
     bool alreadyAttacked;
-    bool inSightRange, inAttackRange;
+    bool inSightRange;
+    bool inAttackRange;
 
 
     private void Start()
     {
-        enemyHealth = Random.Range(hMin, hMax);
+        float eh = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
+        enemyHealth = (int)eh;
     }
 
 
@@ -122,10 +125,16 @@ public class VivisectorAI : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Collider col)
     {
-        enemyHealth -= damage;
-        if(enemyHealth <= 0) EnemyDeath();
+        if (enemyHealth <= 0) EnemyDeath();
+
+        if (col == critSpot)
+        {
+            Debug.Log("col");
+            enemyHealth -= damage;
+
+        }
 
     }
 

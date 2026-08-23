@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969520c20844fef48a870aecd9eef9df, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: Assembly-CSharp::GunData
+  inSceneObj: {fileID: 0}
+  ammoType: {fileID: 11400000, guid: 1bb60ef36f2be9947963e39286ce4efb, type: 2}
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   gunName: Pistol
   gunIcon: {fileID: 21300000, guid: 2cd234a4515296f4e9b14b18e1b2e160, type: 3}
-  ammoType: {fileID: 0}
   shootingRange: 1
   fireRate: 1
   bulletDamage: 1
@@ -28,3 +29,4 @@ MonoBehaviour:
   reloadTime: 1
   jamChance: 0
   jamFix: 0
+  meleeDmg: 10

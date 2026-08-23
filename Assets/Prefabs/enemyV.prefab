@@ -102,8 +102,6 @@ GameObject:
   - component: {fileID: 3203237880821166002}
   - component: {fileID: 3452176233945049459}
   - component: {fileID: 238994792255270296}
-  - component: {fileID: 6837125498138644691}
-  - component: {fileID: 8618056110425716787}
   m_Layer: 9
   m_Name: critSpot
   m_TagString: Untagged
@@ -183,50 +181,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6837125498138644691
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 794506510086442453}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
-  m_Center: {x: 0.0000009536743, y: 0.00000023841858, z: 0}
---- !u!114 &8618056110425716787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 794506510086442453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ad843b4d3cbf094b9de36d70ff0087b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VivisectorAI
-  agent: {fileID: 2036602852282249570}
-  player: {fileID: 0}
-  enemy: {fileID: 4463770432004705453}
-  vAnimator: {fileID: 349674421619029606}
-  vProjectile: {fileID: 5641523898484312932, guid: 239ea4d4fc9c441439254b77662c7ca4, type: 3}
-  dmgMin: 0
-  dmgMax: 0
-  hMin: 0
-  hMax: 0
-  sightRange: 0
-  attackRange: 0
 --- !u!1 &4132709796845662857
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +451,8 @@ GameObject:
   - component: {fileID: 4463770432004705453}
   - component: {fileID: 2036602852282249570}
   - component: {fileID: 349674421619029606}
+  - component: {fileID: 2365399880825957316}
+  - component: {fileID: 8914914897268469162}
   - component: {fileID: 7834297185446000700}
   m_Layer: 0
   m_Name: enemyV
@@ -567,6 +523,54 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2365399880825957316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7640079446950226130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad843b4d3cbf094b9de36d70ff0087b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VivisectorAI
+  enemyData: {fileID: 11400000, guid: fd6f4f466b16b884fb3f4326ce15adb1, type: 2}
+  agent: {fileID: 2036602852282249570}
+  player: {fileID: 0}
+  enemy: {fileID: 4463770432004705453}
+  vAnimator: {fileID: 349674421619029606}
+  vProjectile: {fileID: 5641523898484312932, guid: 239ea4d4fc9c441439254b77662c7ca4, type: 3}
+  sightRange: 0
+  attackRange: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 128
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  critSpot: {fileID: 8914914897268469162}
+--- !u!65 &8914914897268469162
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7640079446950226130}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 90, y: 90, z: 90}
+  m_Center: {x: 0, y: 27.91, z: 15.29}
 --- !u!64 &7834297185446000700
 MeshCollider:
   m_ObjectHideFlags: 0

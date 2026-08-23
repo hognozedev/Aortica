@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class GunMaster : MonoBehaviour
@@ -7,8 +8,20 @@ public class GunMaster : MonoBehaviour
     [HideInInspector] public Transform cameraTransform;
 
     //public
+    [Header("Refs")]
     public GunData gunData;
-    public TextMeshProUGUI currentAmmoText, totalAmmoText;
+    public PlayerController player;
+    public MeleeMaster meleeMaster;
+
+    [Header("Vars")]
+    public TextMeshProUGUI currentAmmoText;
+    public TextMeshProUGUI totalAmmoText;
+    public TextMeshProUGUI currentWeaponName;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform barrelTransform;
+    [SerializeField] private float bulletMissDistance = 25f;
+
+    [Header("Bools")]
     public bool isReloading = false;
     public bool isShooting = false;
 
@@ -17,11 +30,7 @@ public class GunMaster : MonoBehaviour
     private float NextTimeToFire = 0;
     private float val;
     private bool isJammed;
-
-    // bullet behaviour
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private Transform barrelTransform;
-    [SerializeField] private float bulletMissDistance = 25f;
+    private bool isMeleeMode;
 
 
     private void Start()
@@ -31,12 +40,15 @@ public class GunMaster : MonoBehaviour
         isShooting = false;
         isReloading = false;
         isJammed = false;
-
+        
         UpdateHUD();
     }
 
     public void Update()
     {
+        isShooting = player.attackAction.WasPerformedThisFrame();
+        isReloading = player.reloadAction.WasPerformedThisFrame();
+
         if (isShooting && isJammed == false)
         {
             TryShoot();
@@ -45,6 +57,21 @@ public class GunMaster : MonoBehaviour
         if (isReloading && isJammed == false)
         {
             TryReload();
+        }
+
+
+        if (isShooting)
+        {
+            if (currentAmmo <= 0 && gunData.ammoType.playerHas <= 0)
+            {
+                meleeMaster.Attack(isMeleeMode = true, gunData.meleeDmg);
+            }
+
+            else if(currentAmmo > 0 && gunData.ammoType.playerHas > 0)
+            {
+                meleeMaster.Attack(isMeleeMode = false, gunData.meleeDmg);
+
+            }
         }
 
     }
@@ -151,13 +178,13 @@ public class GunMaster : MonoBehaviour
 
             if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                if(hit.collider.TryGetComponent<VivisectorAI>(out VivisectorAI vEnemy))
-                {
-                    vEnemy.TakeDamage(gunData.bulletDamage);
+                if (hit.collider.gameObject.TryGetComponent<WaifAI>(out WaifAI wEnemy)) wEnemy.TakeDamage(gunData.bulletDamage, hit.collider);
+                if (hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vEnemy)) vEnemy.TakeDamage(gunData.bulletDamage, hit.collider);
 
-                }
+                Debug.Log(hit.collider);
 
             }
+            
     
         }
 
@@ -174,6 +201,8 @@ public class GunMaster : MonoBehaviour
     {
         totalAmmoText.text = gunData.ammoType.playerHas.ToString();
         currentAmmoText.text = currentAmmo.ToString();
+        currentWeaponName.text = gunData.gunName.ToString();
+
     }
 
 }

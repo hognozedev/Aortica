@@ -24,11 +24,12 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        ContactPoint contact = other.GetContact(0);
+        ContactPoint contact = other.GetContact(0);      
         GameObject spawnedObject = Instantiate(bulletDecal, contact.point + contact.normal * .0001f, Quaternion.LookRotation(contact.normal));
         Destroy(spawnedObject, decalDestroy);
+
         Destroy(gameObject);
-    //spawn decal on point of contact then destroy after set time, bullet prefab destroy on contact.
+    //destroy bullet prefab //only spawn hole decal on environments (requires rigidbody)
 
     }
 

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c4f33ad4e0e5d479f90053a9842667, type: 3}
   m_Name: RifleAmmo
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  gunScriptInstance: {fileID: 0}
   itemName: Rifle Cartridge
   itemDescription: '5 rounds of 8mm ammo for a Mauser Gewehr 98. '
   itemImage: {fileID: 21300000, guid: d37984f2af7ec764eb495c251db6aec6, type: 3}
@@ -24,3 +25,4 @@ MonoBehaviour:
   isModifier: 0
   isHealing: 0
   isAmmo: 1
+  isWeapon: 0

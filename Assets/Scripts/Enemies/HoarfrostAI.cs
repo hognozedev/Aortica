@@ -7,4 +7,11 @@ public class HoarfrostAI : MonoBehaviour
         Debug.Log("Spawned!");
     }
     
+    private void EnemyDeath()
+    {
+        Debug.Log("hoarfrost killed");
+
+
+    }
+
 }

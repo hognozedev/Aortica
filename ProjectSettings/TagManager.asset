@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - Hoarfrost
+  - Env
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Interactable
   - Enemy
   - Projectile
-  - 
+  - Hoarfrost
   - 
   - 
   - 

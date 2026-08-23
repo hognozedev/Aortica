@@ -69,40 +69,41 @@ public class PlayerInventory : MonoBehaviour
 
     public void PopItem(ItemData itemData, int cost, int amount)
     {
-            foreach (var slot in invSlots)
+        foreach (var slot in invSlots)
+        {
+            if (slot.itemData == itemData && slot.amount < itemData.stackSize)
             {
-                if (slot.itemData == itemData && slot.amount < itemData.stackSize)
-                {
-                    int availableSpace = itemData.stackSize - slot.amount;
-                    int amountToAdd = Mathf.Min(availableSpace, amount);
+                int availableSpace = itemData.stackSize - slot.amount;
+                int amountToAdd = Mathf.Min(availableSpace, amount);
 
-                    slot.amount += amountToAdd;
-                    amount -= amountToAdd;
-
-                itemData.playerHas += amountToAdd;    
-
+                slot.amount += amountToAdd;
+                amount -= amountToAdd;
                 slot.UpdateInv();
 
-                    if (amount <= 0) return;
+                itemData.playerHas += amountToAdd;
 
-                }
+                if (amount <= 0) return;
 
             }
 
-            foreach (var slot in invSlots)
+        }
+
+        foreach (var slot in invSlots)
+        {
+            if (slot.itemData == null)
             {
-                if (slot.itemData == null)
-                {
-                    int amountToAdd = Mathf.Min(itemData.stackSize, amount);
+                int amountToAdd = Mathf.Min(itemData.stackSize, amount);
 
-                    slot.itemData = itemData;
-                    slot.amount = amount;
-                    slot.UpdateInv();
-                    
-                    return;
-                }
+                slot.itemData = itemData;
+                slot.amount = amount;
+                slot.UpdateInv();
 
+                itemData.playerHas += amountToAdd;
+
+                return;
             }
+
+        }
 
     }
 

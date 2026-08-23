@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6253366251354004100}
   - component: {fileID: 7450357509413131352}
   - component: {fileID: 7566711652786734178}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BulletPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5172844333555704337}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1814520722148300218}
   - component: {fileID: 8210355152868112406}
   - component: {fileID: 3747886172959631458}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BulletMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

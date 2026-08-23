@@ -8,7 +8,7 @@ AnimationClip:
   m_PrefabAsset: {fileID: 0}
   m_Name: WaifAnim
   serializedVersion: 7
-  m_Legacy: 0
+  m_Legacy: 1
   m_Compressed: 0
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
@@ -63,33 +63,8 @@ AnimationClip:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings:
-    - serializedVersion: 2
-      path: 0
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    pptrCurveMapping:
-    - {fileID: -1835633100, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -1207355985, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: 1056349251, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -1485287487, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -1548585370, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -1768377942, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -696660177, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -1863331740, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -648497840, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: 1405034267, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: 664859436, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: 133197461, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -670816303, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: 2127174136, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -727212523, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
-    - {fileID: -1619106129, guid: 84ed95dee25bd844895df08ce37a1d47, type: 3}
+    genericBindings: []
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
