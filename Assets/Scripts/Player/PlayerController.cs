@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     public DeathScreen deathScreen;
     public CameraSwitching camSwitcher;
 
+    public TextMeshProUGUI healthDebug;
+
     //movement
     private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         currentHealth = maxHealth;
+        UpdatePlayerHealth(0);
     }
 
     void Update()
@@ -175,6 +178,7 @@ public class PlayerController : MonoBehaviour
     public void UpdatePlayerHealth(int damage)
     {
         currentHealth -= damage;
+        healthDebug.text = currentHealth.ToString();
 
         if (currentHealth <= (maxHealth * 0.75))
         {

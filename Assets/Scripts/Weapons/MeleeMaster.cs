@@ -63,6 +63,11 @@ public class MeleeMaster : MonoBehaviour
         {
             if (hit.collider.gameObject.TryGetComponent<WaifAI>(out WaifAI wEnemy)) wEnemy.TakeDamage(meleeDamage, hit.collider);
             if (hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vEnemy)) vEnemy.TakeDamage(meleeDamage, hit.collider);
+            if (hit.collider.gameObject.TryGetComponent<nStage1>(out nStage1 n1Enemy)) n1Enemy.TakeDamage(meleeDamage, hit.collider);
+            if (hit.collider.gameObject.TryGetComponent<nStage2>(out nStage2 n2Enemy)) n2Enemy.TakeDamage(meleeDamage, hit.collider);
+            //if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(meleeDamage, hit.collider);
+
+            if (hit.collider.gameObject.TryGetComponent<HoarfrostAI>(out HoarfrostAI hfEnemy)) hfEnemy.TakeDamage(meleeDamage, hit.collider);
 
 
             HitTarget(hit.point);

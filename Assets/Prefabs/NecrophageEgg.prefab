@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 346272011392350543}
   - component: {fileID: 5769608450232365960}
   - component: {fileID: 7795192665611854758}
+  - component: {fileID: 7367059791362257815}
   - component: {fileID: 1369714400285410503}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NecrophageEgg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +114,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7367059791362257815
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924932298672588327}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 1
+  m_AngularDamping: 1
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!114 &1369714400285410503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,4 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::nStage1
   enemyData: {fileID: 11400000, guid: c1a8c119460af964284ed91813aaf846, type: 2}
-  lifespan: 5
+  stage2: {fileID: 2548622440487198551, guid: 94b138264e9ae6b46b928a06ee44bcb4, type: 3}
+  fallChance: 2

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 823e41f17dd851b4b86b194008462fbe, type: 3}
-  m_Name: NecroEgg
+  m_Name: NecroBaby
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: Necrophage Egg
-  enemyDamage: 0
-  enemyHealth: 40
+  enemyName: Fetal Necrophage
+  enemyDamage: 20
+  enemyHealth: 60

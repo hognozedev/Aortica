@@ -31,6 +31,7 @@ public class GunMaster : MonoBehaviour
     private float val;
     private bool isJammed;
     private bool isMeleeMode;
+    private bool firstTime;
 
 
     private void Start()
@@ -64,12 +65,14 @@ public class GunMaster : MonoBehaviour
         {
             if (currentAmmo <= 0 && gunData.ammoType.playerHas <= 0)
             {
-                meleeMaster.Attack(isMeleeMode = true, gunData.meleeDmg);
+                if(firstTime == false) meleeMaster.Attack(isMeleeMode = true, gunData.meleeDmg);
+                firstTime = false;
             }
 
             else if(currentAmmo > 0 && gunData.ammoType.playerHas > 0)
             {
                 meleeMaster.Attack(isMeleeMode = false, gunData.meleeDmg);
+                firstTime = true;
 
             }
         }
@@ -82,8 +85,8 @@ public class GunMaster : MonoBehaviour
         {
             if (currentAmmo < gunData.magSize && gunData.ammoType.playerHas > 0)
             {
-                Debug.Log("rldng...");
                 StartCoroutine(Reload());
+
             }
             else if(gunData.ammoType.playerHas <= 0 )
             {
@@ -113,8 +116,6 @@ public class GunMaster : MonoBehaviour
 
         isReloading = false;
         UpdateHUD();
-
-        Debug.Log(gunData.gunName + " rld done.");
 
     }
 
@@ -156,8 +157,6 @@ public class GunMaster : MonoBehaviour
 
     private void HandleShoot()
     {
-        Debug.Log(currentAmmo + " bullets left");
-
         currentAmmo--;
         UpdateHUD();
         Shoot();
@@ -180,8 +179,12 @@ public class GunMaster : MonoBehaviour
             {
                 if (hit.collider.gameObject.TryGetComponent<WaifAI>(out WaifAI wEnemy)) wEnemy.TakeDamage(gunData.bulletDamage, hit.collider);
                 if (hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vEnemy)) vEnemy.TakeDamage(gunData.bulletDamage, hit.collider);
+                if (hit.collider.gameObject.TryGetComponent<nStage1>(out nStage1 n1Enemy)) n1Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
+                if (hit.collider.gameObject.TryGetComponent<nStage2>(out nStage2 n2Enemy)) n2Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
+                //if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
+                //if (hit.collider.gameObject.TryGetComponent<HoarfrostAI>(out HoarfrostAI hfEnemy)) hfEnemy.TakeDamage(gunData.bulletDamage, hit.collider);
 
-                Debug.Log(hit.collider);
+                //Debug.Log(hit.collider);
 
             }
             

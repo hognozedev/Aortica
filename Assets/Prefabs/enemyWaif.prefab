@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d44e19420bfd6640add9eea9b5c6059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaifAI
+  enemyData: {fileID: 11400000, guid: 09d7466c10ca914478c371f62c3d5990, type: 2}
   agent: {fileID: 6613930476255871148}
   player: {fileID: 0}
   enemy: {fileID: 6349118224969685212}
   vAnimator: {fileID: 3225998923201912239}
-  enemyData: {fileID: 11400000, guid: 09d7466c10ca914478c371f62c3d5990, type: 2}
   attackRange: 2
   sightRange: 20
   groundMask:
@@ -62,7 +62,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   head: {fileID: 3052998511310936618}
-  enemyHealth: 0
 --- !u!195 &6613930476255871148
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -73,7 +72,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.5
-  m_Speed: 3.5
+  m_Speed: 2.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
