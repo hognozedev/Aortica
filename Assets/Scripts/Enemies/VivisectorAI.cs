@@ -9,10 +9,10 @@ public class VivisectorAI : MonoBehaviour
 
     [Header("References")]
     public NavMeshAgent agent;
-    public Transform player;
     public Transform enemy;
     public Animator vAnimator;
     public EnemyProjectile vProjectile;
+    [HideInInspector] public GameObject spawnPoint;
 
     [Header("Variables")]
     public float sightRange, attackRange;
@@ -21,7 +21,9 @@ public class VivisectorAI : MonoBehaviour
 
     //enemy
     bool isOpen, isClose;
-    private float enemyHealth;
+    private int enemyHealth;
+    private ViviMaster viviMaster;
+    private PlayerController player;
 
     //patrol
     private Vector3 walkPoint;
@@ -36,6 +38,8 @@ public class VivisectorAI : MonoBehaviour
 
     private void Start()
     {
+        player = FindFirstObjectByType<PlayerController>();
+
         float eh = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
         enemyHealth = (int)eh;
     }
@@ -86,8 +90,8 @@ public class VivisectorAI : MonoBehaviour
 
     private void Chase()
     {
-        agent.SetDestination(player.position);
-        enemy.LookAt(player);
+        agent.SetDestination(player.transform.position);
+        enemy.LookAt(player.transform.position);
     //move to the player
     }
 
@@ -101,7 +105,7 @@ public class VivisectorAI : MonoBehaviour
         }
 
         agent.SetDestination(enemy.position);
-        enemy.LookAt(player);
+        enemy.LookAt(player.transform);
         //stop on spot, and look at the player
 
         if (!alreadyAttacked)
@@ -149,6 +153,8 @@ public class VivisectorAI : MonoBehaviour
 
     IEnumerator DestroyEnemy()
     {
+        viviMaster.ResetSpawnPoint(spawnPoint);
+
         yield return new WaitForSeconds(1);
         Destroy(transform.parent.gameObject);
 

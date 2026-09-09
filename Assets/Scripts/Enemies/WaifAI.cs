@@ -12,6 +12,7 @@ public class WaifAI : MonoBehaviour
     public Transform enemy;
     public Animator vAnimator;
     private PlayerController player;
+    [HideInInspector] public GameObject spawnPoint;
 
     [Header("Variables")]
     public float attackRange;
@@ -26,6 +27,7 @@ public class WaifAI : MonoBehaviour
     bool walkPointSet;
     float walkPointRange = 50f;
     private int enemyHealth;
+    private WaifMaster waifMaster;
 
     //attack
     bool alreadyAttacked;
@@ -38,6 +40,7 @@ public class WaifAI : MonoBehaviour
         enemyHealth = (int)eHFloat;
 
         player = FindFirstObjectByType<PlayerController>();
+        waifMaster = FindFirstObjectByType<WaifMaster>();
 
     }
 
@@ -47,7 +50,7 @@ public class WaifAI : MonoBehaviour
         inSightRange = Physics.CheckSphere(enemy.position, sightRange, playerMask);
         inAttackRange = Physics.CheckSphere(enemy.position, attackRange, playerMask);
 
-        if (!inSightRange && !inAttackRange) Patrol();
+        if (!inSightRange) Patrol();
         if (inSightRange && !inAttackRange) Chase();
         if (inSightRange && inAttackRange) Attack();
     //when the enemy should run each different phase
@@ -57,8 +60,7 @@ public class WaifAI : MonoBehaviour
     private void Patrol()
     {
         if (!walkPointSet) SearchWalkPoint();
-        if(walkPointSet)
-            agent.SetDestination(walkPoint);
+        if(walkPointSet) agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = enemy.position - walkPoint;
 
@@ -135,6 +137,8 @@ public class WaifAI : MonoBehaviour
 
     IEnumerator DestroyEnemy()
     {
+        waifMaster.ResetSpawnPoint(spawnPoint);
+
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
 

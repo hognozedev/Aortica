@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WaifMaster : MonoBehaviour
+public class ViviMaster : MonoBehaviour
 {
     [Header("Refs")]
     public GameObject[] spawnPoints;
@@ -31,7 +31,7 @@ public class WaifMaster : MonoBehaviour
 
             GameObject currentInst;
             currentInst = Instantiate(prefab, chosenPoint.transform.position, Quaternion.identity);
-            currentInst.TryGetComponent<WaifAI>(out WaifAI wai); wai.spawnPoint = chosenPoint;
+            currentInst.TryGetComponent<VivisectorAI>(out VivisectorAI vai); vai.spawnPoint = chosenPoint;
 
         }
 

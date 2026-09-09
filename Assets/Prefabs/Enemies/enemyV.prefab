@@ -471,7 +471,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.75, z: 0}
-  m_LocalScale: {x: 0.45000002, y: 0.45000002, z: 0.45000002}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 81824089459021270}
@@ -537,12 +537,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VivisectorAI
   enemyData: {fileID: 11400000, guid: fd6f4f466b16b884fb3f4326ce15adb1, type: 2}
   agent: {fileID: 2036602852282249570}
-  player: {fileID: 0}
   enemy: {fileID: 4463770432004705453}
   vAnimator: {fileID: 349674421619029606}
   vProjectile: {fileID: 5641523898484312932, guid: 239ea4d4fc9c441439254b77662c7ca4, type: 3}
-  sightRange: 0
-  attackRange: 0
+  spawnPoint: {fileID: 0}
+  sightRange: 20
+  attackRange: 10
   groundMask:
     serializedVersion: 2
     m_Bits: 128
