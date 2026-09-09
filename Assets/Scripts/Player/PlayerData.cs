@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public static class PlayerData
 {
     //health
-    public static int maxHealth = 100, currentHealth;
+    public static int maxHealth = 2000, currentHealth;
 
     //stamina
     public static float maxStamina = 20, staminaLoss = 10, regenSpeed = 5, regenDelay = 2;

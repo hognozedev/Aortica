@@ -27,15 +27,24 @@ public class necroMaster : MonoBehaviour
         int index = Random.Range(0, spawnPoints.Length);
         GameObject chosenPoint = spawnPoints[index];
 
-        if (currentEnemies <= maxSpawns && !chosenPoint.activeInHierarchy)
+        if (currentEnemies <= maxSpawns && chosenPoint.activeInHierarchy)
         {
             currentEnemies++;
-            chosenPoint.SetActive(true);
+            chosenPoint.SetActive(false);
 
-            Instantiate(n1Prefab, chosenPoint.transform.position, Quaternion.identity);
+            GameObject currentInst;
+            currentInst = Instantiate(n1Prefab, chosenPoint.transform.position, Quaternion.identity);
+            currentInst.TryGetComponent<nStage1>(out nStage1 n1); n1.spawnPoint = chosenPoint;
         }
 
+    }
 
+    public void ResetSpawnPoint(GameObject spawnPoint)
+    {
+        Debug.Log("reset point");
+
+        currentEnemies--;
+        spawnPoint.SetActive(true);
     }
 
 }

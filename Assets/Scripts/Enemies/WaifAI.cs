@@ -9,10 +9,9 @@ public class WaifAI : MonoBehaviour
 
     [Header("References")]
     public NavMeshAgent agent;
-    public Transform player;
     public Transform enemy;
     public Animator vAnimator;
-    private PlayerController playerController;
+    private PlayerController player;
 
     [Header("Variables")]
     public float attackRange;
@@ -38,7 +37,7 @@ public class WaifAI : MonoBehaviour
         float eHFloat = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
         enemyHealth = (int)eHFloat;
 
-        playerController = player.GetComponent<PlayerController>();
+        player = FindFirstObjectByType<PlayerController>();
 
     }
 
@@ -82,7 +81,7 @@ public class WaifAI : MonoBehaviour
 
     private void Chase()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(player.transform.position);
         //enemy.LookAt(player); this looks weird maybe use with finished animations ?
 
     }
@@ -99,7 +98,7 @@ public class WaifAI : MonoBehaviour
             Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));
 
             float randomDmg = enemyData.enemyDamage * Random.Range(0.8f, 1.2f);
-            playerController.UpdatePlayerHealth((int)randomDmg);
+            player.UpdatePlayerHealth((int)randomDmg);
 
             Debug.Log(randomDmg);
         }

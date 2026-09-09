@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Necrophage
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Necrophage
-  enemyDamage: 0
-  enemyHealth: 0
+  enemyDamage: 20
+  enemyHealth: 100
+  enemyDamageRanged: 10

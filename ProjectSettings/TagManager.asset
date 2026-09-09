@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - Hoarfrost
   - Env
+  - Hole
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Enemy
   - Projectile
   - Hoarfrost
-  - 
+  - Hole
   - 
   - 
   - 

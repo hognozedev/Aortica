@@ -1,6 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.Multiplayer.PlayMode;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 using static PlayerData;
 
 public class nStage2 : MonoBehaviour
@@ -10,17 +13,19 @@ public class nStage2 : MonoBehaviour
     [Header("References")]
     public NavMeshAgent agent;
     public Transform enemy;
-    public GameObject[] hideyHoles;
+    public GameObject stage3;
+    public MeshRenderer mesh;
 
     [Header("Variables")]
     public float attackRange;
-    public LayerMask groundMask, playerMask;
+    public LayerMask groundMask, playerMask, holeMask;
 
-    bool inAttackRange;
-    bool alreadyAttacked;
+    bool inAttackRange, alreadyAttacked, retreating;
     private PlayerController player;
     private int enemyHealth;
-    private float enemyRadius = 250;
+    private GameObject closestHide;
+    private List<GameObject> holeList = new List<GameObject>();
+
 
     void Start()
     {
@@ -28,16 +33,14 @@ public class nStage2 : MonoBehaviour
 
         float eHFloat = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
         enemyHealth = (int)eHFloat;
-
     }
 
     private void Update()
     {
         inAttackRange = Physics.CheckSphere(enemy.position, attackRange, playerMask);
 
-        if (!inAttackRange) Chase();
-        if (inAttackRange) Attack();
-
+        if (!inAttackRange && !retreating) Chase();
+        if (inAttackRange && !retreating) Attack();
     }
 
     void Chase()
@@ -54,23 +57,54 @@ public class nStage2 : MonoBehaviour
         if (!alreadyAttacked)
         {
             alreadyAttacked = true;
-            Invoke(nameof(Retreat), Random.Range(0.5f, 2));
+            Retreat();
 
             float randomDmg = enemyData.enemyDamage * Random.Range(0.8f, 1.2f);
             player.UpdatePlayerHealth((int)randomDmg);
-
-            Debug.Log(randomDmg);
         }
     }
 
     private void Retreat()
     {
-        Debug.Log("attacked");
+        holeList = GameObject.FindGameObjectsWithTag("Hole").ToList();
+        float lowestDist = Mathf.Infinity;
 
-        //GameObject closestHide = Physics.CheckSphere(enemy.position, enemyRadius)
 
-        //agent.SetDestination(closestHide.transform.position);
+        for (int i = 0; i < holeList.Count; i++)
+        {
+            float dist = Vector3.Distance(holeList[i].transform.position, transform.position);
 
+            if (dist < lowestDist)
+            {
+                lowestDist = dist;
+                closestHide = holeList[i];
+            }
+        }
+
+        retreating = true;
+        agent.SetDestination(closestHide.transform.position);
+    }
+
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Hole"))
+        {
+            float timeToIncubate = Random.Range(5,10);
+            mesh.enabled = false;
+
+            StartCoroutine(Incubate(timeToIncubate));
+        }
+    }
+
+    IEnumerator Incubate(float wait)
+    {
+        Debug.Log("running ienum");
+
+        yield return new WaitForSeconds(wait);
+        Instantiate(stage3, closestHide.transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
     }
 
     public void TakeDamage(int damage, Collider col)
@@ -84,15 +118,9 @@ public class nStage2 : MonoBehaviour
     private void EnemyDeath()
     {
         //vAnimator.SetTrigger("vDie");
-        StartCoroutine(DestroyEnemy());
-
         necroBabyKilled += 1;
         waveEnemyKills += 1;
-    }
 
-    IEnumerator DestroyEnemy()
-    {
-        yield return new WaitForSeconds(1);
         Destroy(gameObject);
 
     }

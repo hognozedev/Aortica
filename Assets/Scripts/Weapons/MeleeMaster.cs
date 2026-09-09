@@ -15,26 +15,6 @@ public class MeleeMaster : MonoBehaviour
     private int meleeDamage;
     private bool isAttacking;
 
-
-    public void CheckMelee()
-    {
-        /*
-        foreach (Transform gun in gunHolder)
-        {
-            if (gun.gameObject.activeInHierarchy)
-            {
-                GameObject currentGun = gun.gameObject;
-                Debug.Log(currentGun.name);
-                Attack();
-            }
-
-        //if a gun is out and active, update it as the current one being held.
-
-        }
-        */
-
-    }
-
     public void Attack(bool canGunMelee, int meleeDmg)
     {
         if(!isAttacking && canGunMelee)
@@ -65,8 +45,7 @@ public class MeleeMaster : MonoBehaviour
             if (hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vEnemy)) vEnemy.TakeDamage(meleeDamage, hit.collider);
             if (hit.collider.gameObject.TryGetComponent<nStage1>(out nStage1 n1Enemy)) n1Enemy.TakeDamage(meleeDamage, hit.collider);
             if (hit.collider.gameObject.TryGetComponent<nStage2>(out nStage2 n2Enemy)) n2Enemy.TakeDamage(meleeDamage, hit.collider);
-            //if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(meleeDamage, hit.collider);
-
+            if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(meleeDamage, hit.collider);
             if (hit.collider.gameObject.TryGetComponent<HoarfrostAI>(out HoarfrostAI hfEnemy)) hfEnemy.TakeDamage(meleeDamage, hit.collider);
 
 

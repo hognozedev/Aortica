@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Vivisector
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Vivisector
-  enemyDamage: 25
+  enemyDamage: 0
   enemyHealth: 75
+  enemyDamageRanged: 25

@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class GunMaster : MonoBehaviour
@@ -30,7 +29,7 @@ public class GunMaster : MonoBehaviour
     private float NextTimeToFire = 0;
     private float val;
     private bool isJammed;
-    private bool isMeleeMode;
+    bool isMeleeMode;
     private bool firstTime;
 
 
@@ -181,14 +180,11 @@ public class GunMaster : MonoBehaviour
                 if (hit.collider.gameObject.TryGetComponent<VivisectorAI>(out VivisectorAI vEnemy)) vEnemy.TakeDamage(gunData.bulletDamage, hit.collider);
                 if (hit.collider.gameObject.TryGetComponent<nStage1>(out nStage1 n1Enemy)) n1Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
                 if (hit.collider.gameObject.TryGetComponent<nStage2>(out nStage2 n2Enemy)) n2Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
-                //if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
-                //if (hit.collider.gameObject.TryGetComponent<HoarfrostAI>(out HoarfrostAI hfEnemy)) hfEnemy.TakeDamage(gunData.bulletDamage, hit.collider);
+                if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
 
                 //Debug.Log(hit.collider);
 
-            }
-            
-    
+            } 
         }
 
         else

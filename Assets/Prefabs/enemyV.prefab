@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 81824089459021270}
   - component: {fileID: 234151096315154624}
   - component: {fileID: 7133845352858289118}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 8547303811366530215}
   - component: {fileID: 5631683756010734459}
   - component: {fileID: 3707915094151154803}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: polySurface9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5060686396267363868}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 6877342371163068496}
   - component: {fileID: 4591113064676212871}
   - component: {fileID: 8627327438805238025}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: polySurface8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 2365399880825957316}
   - component: {fileID: 8914914897268469162}
   - component: {fileID: 7834297185446000700}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: enemyV
   m_TagString: Untagged
   m_Icon: {fileID: 0}

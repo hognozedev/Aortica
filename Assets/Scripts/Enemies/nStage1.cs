@@ -1,5 +1,6 @@
 using UnityEngine;
 using static PlayerData;
+using static necroMaster;
 
 public class nStage1 : MonoBehaviour
 {
@@ -14,12 +15,13 @@ public class nStage1 : MonoBehaviour
     private int enemyHealth;
     private bool isGrounded = false;
     private Vector3 currentPlace;
-    private PlayerController player;
+    [HideInInspector] public GameObject spawnPoint;
+    private necroMaster necroMaster;
 
 
     void Start()
     {
-        player = FindFirstObjectByType<PlayerController>();
+        necroMaster = FindFirstObjectByType<necroMaster>();
 
         float eHFloat = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
         enemyHealth = (int)eHFloat;
@@ -52,10 +54,13 @@ public class nStage1 : MonoBehaviour
 
     void Evolve()
     {
+        necroMaster.ResetSpawnPoint(spawnPoint);
+
         Instantiate(stage2, currentPlace, Quaternion.identity);
         Destroy(gameObject);
 
     }
+    //when evolving, make the spawn point useable again for the spawner script
 
     public void TakeDamage(int damage, Collider col)
     {

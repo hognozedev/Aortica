@@ -10,7 +10,7 @@ public class AspectRatioLock : MonoBehaviour
 
     public void Adjust()
     {
-        float targetaspect = 4.0f / 3.0f;
+        float targetaspect = 4f / 3f;
         // the ratio size that i want is 4:3
 
         float windowaspect = (float)Screen.width / (float)Screen.height;

@@ -153,5 +153,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00320bf742f69a478b002ece56b6a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
-  dmgMin: 5
-  dmgMax: 20
+  enemyData: {fileID: 11400000, guid: fd6f4f466b16b884fb3f4326ce15adb1, type: 2}
