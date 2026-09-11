@@ -28,7 +28,6 @@ public class CraftManager : MonoBehaviour, IInteractable
     private void Start()
     {
         PopulateCraftItems();
-        canvasGroup.gameObject.SetActive(false);
     }
 
     public void Interact()

@@ -11,6 +11,8 @@ public class GunMaster : MonoBehaviour
     public GunData gunData;
     public PlayerController player;
     public MeleeMaster meleeMaster;
+    public AudioSource audioSource;
+    public AudioClip jamSound;
 
     [Header("Vars")]
     public TextMeshProUGUI currentAmmoText;
@@ -29,7 +31,7 @@ public class GunMaster : MonoBehaviour
     private float NextTimeToFire = 0;
     private float val;
     private bool isJammed;
-    bool isMeleeMode;
+    private bool isMeleeMode;
     private bool firstTime;
 
 
@@ -130,6 +132,8 @@ public class GunMaster : MonoBehaviour
         
         if (val >= gunData.jamChance)
         {
+            audioSource.PlayOneShot(jamSound);
+
             Debug.Log("jammed");
             isJammed = true;
             StartCoroutine(UnJam());

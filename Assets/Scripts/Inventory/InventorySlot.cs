@@ -16,6 +16,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void UpdateSalv()
     {
+        Debug.Log("update");
         salvText.text = PlayerData.playerSalv.ToString();
 
     }

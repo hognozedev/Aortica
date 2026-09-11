@@ -6,23 +6,48 @@ public class MeleeMaster : MonoBehaviour
     public Transform gunHolder;
     public Transform cameraRef;
     public Animator meleeAnim;
+    public MeleeData meleeData;
+    public PlayerController playerController;
 
     [Header("Vars")]
     public float meleeDistance, meleeDelay, meleeSpeed;
     public LayerMask meleeLayer;
 
+    [Header("Bools")]
+    public bool isOnWeapon;
+
     //prvs
     private int meleeDamage;
     private bool isAttacking;
+    private bool meleePress;
+
+    public void Update()
+    {
+        meleePress = playerController.attackAction.WasPerformedThisFrame();
+        if (meleePress) MeleeWeaponAttack();
+    }
 
     public void Attack(bool canGunMelee, int meleeDmg)
     {
         if(!isAttacking && canGunMelee)
         {
             meleeDamage = meleeDmg;
-
             meleeAnim.SetTrigger("meleeTest");
+
             isAttacking = true;
+
+            Invoke(nameof(ResetAttack), meleeSpeed);
+            Invoke(nameof(AttackCast), meleeDelay);
+
+        }
+
+    }
+    public void MeleeWeaponAttack()
+    {
+        if (meleePress && isOnWeapon && meleeData != null)
+        {
+            meleeDamage = meleeData.meleeDmg;
+            meleeAnim.SetTrigger("meleeTest");
 
             Invoke(nameof(ResetAttack), meleeSpeed);
             Invoke(nameof(AttackCast), meleeDelay);
@@ -34,7 +59,6 @@ public class MeleeMaster : MonoBehaviour
     public void ResetAttack()
     {
         isAttacking = false;
-
     }
 
     public void AttackCast()

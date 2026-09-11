@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969520c20844fef48a870aecd9eef9df, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: Assembly-CSharp::GunData
+  inSceneObj: {fileID: 0}
+  ammoType: {fileID: 11400000, guid: 98900bbd4cd64a5479c6c1d7137b1cd2, type: 2}
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  gunName: Shotgun
+  gunIcon: {fileID: 21300000, guid: 5f92e97d51140fa4e9ec641aea1a017b, type: 3}
+  shootingRange: 2
+  fireRate: 2
+  bulletDamage: 2
+  bulletSpread: 2
+  bulletPenetration: 2
+  bulletDrop: 2
+  magSize: 2
+  reloadTime: 2
+  jamChance: 50
+  jamFix: 2
+  meleeDmg: 15

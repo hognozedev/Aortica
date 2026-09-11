@@ -8,8 +8,7 @@ using static PlayerData;
 public class ScrapMill : MonoBehaviour, IInteractable
 {
     //player variables
-    public TextMeshProUGUI playerCount;
-    public TextMeshProUGUI salvCount;
+    public TextMeshPro salvCount;
     [SerializeField] private GameObject interactPrompt = null;
 
     //scripts
@@ -96,12 +95,11 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     private void MillCollection()
     {
-        inventorySlot.UpdateInv();
+        inventorySlot.UpdateSalv();
 
         PlayerData.playerSalv += salvAmount;
         salvAmount = 0;
         decimalSalvAmount = 0;
-        playerCount.text = PlayerData.playerSalv.ToString();
 
     }
 

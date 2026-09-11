@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     //inputs
     private PlayerInput playerInput;
-    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction;
+    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction;
 
     //collision
     private float radius = 1f;
@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
         oneAction = playerInput.actions["Key1"];
         twoAction = playerInput.actions["Key2"];
         threeAction = playerInput.actions["Key3"];
+        escapeAction = playerInput.actions["PauseMenu"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -111,11 +112,6 @@ public class PlayerController : MonoBehaviour
                 stamina.playerSprinting = false;
             }
 
-        }
-
-        if (debugAction.WasPerformedThisFrame())
-        {
-            Debug.Log("");
         }
 
         if (inLobby == true) playerSpeed = walkSpeed;
@@ -178,7 +174,7 @@ public class PlayerController : MonoBehaviour
     public void UpdatePlayerHealth(int damage)
     {
         currentHealth -= damage;
-        healthDebug.text = currentHealth.ToString();
+        //healthDebug.text = currentHealth.ToString();
 
         if (currentHealth <= (maxHealth * 0.75))
         {

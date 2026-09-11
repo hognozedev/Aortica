@@ -1,6 +1,7 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.ProBuilder.Shapes;
 using static PlayerData;
 
 public class WaifAI : MonoBehaviour
@@ -10,7 +11,6 @@ public class WaifAI : MonoBehaviour
     [Header("References")]
     public NavMeshAgent agent;
     public Transform enemy;
-    public Animator vAnimator;
     private PlayerController player;
     [HideInInspector] public GameObject spawnPoint;
 
@@ -21,6 +21,9 @@ public class WaifAI : MonoBehaviour
 
     [Header("Body Parts")]
     public Collider head;
+
+    [Header("Animation")]
+    public Animator bloodAnim;
 
     //patrol
     private Vector3 walkPoint;
@@ -114,6 +117,8 @@ public class WaifAI : MonoBehaviour
 
     public void TakeDamage(int damage, Collider col)
     {
+        bloodAnim.SetTrigger("PlayHit");
+
         if (!inSightRange && !inAttackRange) Chase();
 
         float hsFloat = damage * 0.25f;
@@ -128,7 +133,6 @@ public class WaifAI : MonoBehaviour
 
     private void EnemyDeath()
     {
-        //vAnimator.SetTrigger("vDie");
         StartCoroutine(DestroyEnemy());
 
         waifsKilled+=1;

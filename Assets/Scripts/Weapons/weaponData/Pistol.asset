@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969520c20844fef48a870aecd9eef9df, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: Assembly-CSharp::GunData
+  inSceneObj: {fileID: 0}
+  ammoType: {fileID: 11400000, guid: 1bb60ef36f2be9947963e39286ce4efb, type: 2}
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  gunName: Pistol
+  gunIcon: {fileID: 21300000, guid: 2cd234a4515296f4e9b14b18e1b2e160, type: 3}
+  shootingRange: 1
+  fireRate: 1
+  bulletDamage: 1
+  bulletSpread: 1
+  bulletPenetration: 1
+  bulletDrop: 1
+  magSize: 1
+  reloadTime: 1
+  jamChance: 0
+  jamFix: 0
+  meleeDmg: 10

@@ -37,6 +37,8 @@ public class CameraSwitching : MonoBehaviour
 
     private void StartAim()
     {
+        if (Time.timeScale == 0) return;
+
         aiming = true;
         aimCamera.Priority += priorityBoostAmount;
         reticleAim.enabled = true;
