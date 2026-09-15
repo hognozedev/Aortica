@@ -68,7 +68,7 @@ public class nStage1 : MonoBehaviour
         if (enemyHealth <= 0) EnemyDeath();
     }
 
-    void EnemyDeath()
+    public void EnemyDeath()
     {
         Destroy(gameObject);
 

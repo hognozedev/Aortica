@@ -5,6 +5,7 @@ public class DeathScreen : MonoBehaviour
 {
     public TextMeshProUGUI flavourText;
     public string[] options = { "" };
+    public PlayerController player;
 
     private void Start()
     {

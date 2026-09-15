@@ -50,8 +50,13 @@ public class WeaponSwitching : MonoBehaviour
             if (i == currentWeapon)
             {
                 weapon.gameObject.SetActive(true);
-                //weapon.gameObject.TryGetComponent<GunMaster>(out GunMaster gunMaster); gunMaster.UpdateHUD();
-            //show correct weapon name/ ammo UI overlay
+
+                weapon.gameObject.TryGetComponent<GunMaster>(out GunMaster gunMaster); 
+                if(gunMaster != null) gunMaster.UpdateHUD();
+
+                weapon.gameObject.TryGetComponent<MeleeMaster>(out MeleeMaster meleeMaster);
+                if(meleeMaster != null) meleeMaster.UpdateHUD();
+                //show correct weapon name/ ammo UI overlay
             }
 
             else weapon.gameObject.SetActive(false);

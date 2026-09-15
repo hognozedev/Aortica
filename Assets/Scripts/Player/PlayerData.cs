@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public static class PlayerData
 {
     //health
-    public static int maxHealth = 2000, currentHealth;
+    public static int maxHealth = 100, currentHealth;
 
     //stamina
     public static float maxStamina = 20, staminaLoss = 10, regenSpeed = 5, regenDelay = 2;
@@ -15,7 +15,7 @@ public static class PlayerData
     public static float camShake;
 
     //currency
-    public static int playerSalv = 250, playerEnm;
+    public static int playerSalv = 25, playerEnm;
 
     //inventory
     public static Action<ItemData, int, int> OnItemTaken;

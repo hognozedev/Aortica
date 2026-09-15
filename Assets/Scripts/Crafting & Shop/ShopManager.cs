@@ -20,6 +20,8 @@ public class ShopManager : MonoBehaviour, IInteractable
     //interact
     [SerializeField] private GameObject interactPrompt = null;
     [SerializeField] private CanvasGroup canvasGroup = null;
+    [SerializeField] private GameObject canvasGroup1;
+    [SerializeField] private GameObject canvasGroup2;
 
     [SerializeField] private PlayerController playerController;
 
@@ -31,6 +33,15 @@ public class ShopManager : MonoBehaviour, IInteractable
     {
         PopulateCraftItems();
         canvasGroup.gameObject.SetActive(false);
+
+    }
+    public void Update()
+    {
+        if (playerController.cancelAction.WasPerformedThisFrame())
+        {
+            playerController.ExitedMenu();
+            OnFocusLost();
+        }
 
     }
 
@@ -76,6 +87,12 @@ public class ShopManager : MonoBehaviour, IInteractable
             Debug.Log("Not enough Enmity");
         }
 
+    }
+
+    public void ChangePage()
+    {
+        canvasGroup1.SetActive(false);
+        canvasGroup2.SetActive(true);
     }
 
     public void OnFocusGained()

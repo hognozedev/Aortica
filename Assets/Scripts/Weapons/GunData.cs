@@ -4,7 +4,6 @@ using UnityEngine;
 public class GunData : ScriptableObject
 {
     [Header("Refs")]
-    public GameObject inSceneObj;
     public ItemData ammoType;
     public LayerMask targetLayerMask;
     public string gunName;
@@ -14,10 +13,8 @@ public class GunData : ScriptableObject
     public int shootingRange;
     public int fireRate;
     public int bulletDamage;
-
     public float bulletSpread;
     public float bulletPenetration;
-    public float bulletDrop;
 
     [Header("Reload")]
     public int magSize;
@@ -29,5 +26,4 @@ public class GunData : ScriptableObject
 
     [Header("Melee")]
     public int meleeDmg;
-
 }

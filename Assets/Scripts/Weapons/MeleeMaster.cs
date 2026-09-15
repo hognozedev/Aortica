@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class MeleeMaster : MonoBehaviour
@@ -8,6 +9,7 @@ public class MeleeMaster : MonoBehaviour
     public Animator meleeAnim;
     public MeleeData meleeData;
     public PlayerController playerController;
+    public TextMeshProUGUI currentWeaponName;
 
     [Header("Vars")]
     public float meleeDistance, meleeDelay, meleeSpeed;
@@ -81,6 +83,11 @@ public class MeleeMaster : MonoBehaviour
     void HitTarget(Vector3 pos)
     {
         //play any sound/ visual effects/ decal here
+
+    }
+    public void UpdateHUD()
+    {
+        currentWeaponName.text = meleeData.meleeName.ToString();
 
     }
 

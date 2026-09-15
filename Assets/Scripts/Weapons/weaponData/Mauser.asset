@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969520c20844fef48a870aecd9eef9df, type: 3}
   m_Name: Mauser
   m_EditorClassIdentifier: Assembly-CSharp::GunData
-  inSceneObj: {fileID: 0}
   ammoType: {fileID: 11400000, guid: 6e5902f022d94514ebe0a16c4aa65811, type: 2}
   targetLayerMask:
     serializedVersion: 2
@@ -24,9 +23,8 @@ MonoBehaviour:
   bulletDamage: 50
   bulletSpread: 0
   bulletPenetration: 0
-  bulletDrop: 0
-  magSize: 5
+  magSize: 6
   reloadTime: 2.5
-  jamChance: 50
+  jamChance: 80
   jamFix: 2
-  meleeDmg: 25
+  meleeDmg: 35

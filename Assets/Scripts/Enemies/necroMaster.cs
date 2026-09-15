@@ -18,7 +18,8 @@ public class necroMaster : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnNecro", startDelay, spawnRate * Random.Range(0.8f, 1.2f));
+        Invoke("SpawnNecro", 15);
+        Invoke("SpawnNecro", 30);
 
     }  
 

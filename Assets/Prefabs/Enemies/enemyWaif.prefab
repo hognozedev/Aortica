@@ -51,10 +51,9 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 09d7466c10ca914478c371f62c3d5990, type: 2}
   agent: {fileID: 6613930476255871148}
   enemy: {fileID: 6349118224969685212}
-  widle: {fileID: 3225998923201912239}
   spawnPoint: {fileID: 0}
   attackRange: 3
-  sightRange: 15
+  sightRange: 35
   groundMask:
     serializedVersion: 2
     m_Bits: 128

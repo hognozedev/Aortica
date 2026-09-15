@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: NecroBaby
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Fetal Necrophage
-  enemyDamage: 20
+  enemyDamage: 26
   enemyHealth: 60
+  enemyDamageRanged: 0

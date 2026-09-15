@@ -26,9 +26,8 @@ public class HoarfrostAI : MonoBehaviour
 
     }
 
-    private void EnemyDeath()
+    public void EnemyDeath()
     {
-        //vAnimator.SetTrigger("vDie");
         gameObject.SetActive(false);
 
         hoarfrostsKilled += 1;

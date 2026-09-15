@@ -13,6 +13,7 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     //scripts
     public InventorySlot inventorySlot;
+    public AudioSource metalSound;
 
     //scrap variables
     private float decimalSalvAmount;
@@ -62,7 +63,9 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if(isJammed == true)
+        //inventorySlot.UpdateSalv();
+
+        if (isJammed == true)
         {
             Debug.Log("");
             Debug.Log("Mill will restart soon.");
@@ -81,6 +84,8 @@ public class ScrapMill : MonoBehaviour, IInteractable
     private void MillRestart()
     {
         StartCoroutine(Running());
+        metalSound.Play();
+
     }
 
     private IEnumerator Running()
@@ -95,12 +100,11 @@ public class ScrapMill : MonoBehaviour, IInteractable
 
     private void MillCollection()
     {
-        inventorySlot.UpdateSalv();
-
         PlayerData.playerSalv += salvAmount;
         salvAmount = 0;
         decimalSalvAmount = 0;
 
+        inventorySlot.UpdateSalv();
     }
 
     public void OnFocusGained()

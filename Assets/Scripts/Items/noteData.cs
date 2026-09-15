@@ -27,6 +27,7 @@ public class noteData : MonoBehaviour, IInteractable
         player.InMenu();
         noteUI.SetActive(true);
 
+        noteImageRef.preserveAspect = true;
         noteImageRef.sprite = noteImage;
         noteTextRef.text = noteText;
     }

@@ -131,19 +131,19 @@ public class WaifAI : MonoBehaviour
 
     }
 
-    private void EnemyDeath()
+    public void EnemyDeath()
     {
-        StartCoroutine(DestroyEnemy());
+        StartCoroutine(DestroyEnemy(1));
 
         waifsKilled+=1;
         waveEnemyKills+=1;
     }
 
-    IEnumerator DestroyEnemy()
+    public IEnumerator DestroyEnemy(int wait)
     {
         waifMaster.ResetSpawnPoint(spawnPoint);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(wait);
         Destroy(gameObject);
 
     }

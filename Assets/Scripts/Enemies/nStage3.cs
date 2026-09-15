@@ -160,16 +160,15 @@ public class nStage3 : MonoBehaviour
 
     private void EnemyDeath()
     {
-        //vAnimator.SetTrigger("vDie");
-        StartCoroutine(DestroyEnemy());
+        StartCoroutine(DestroyEnemy(1));
 
         necrophagesKilled += 1;
         waveEnemyKills += 1;
     }
 
-    IEnumerator DestroyEnemy()
+    public IEnumerator DestroyEnemy(int wait)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(wait);
         Destroy(gameObject);
     }
 }

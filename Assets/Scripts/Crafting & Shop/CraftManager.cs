@@ -44,7 +44,6 @@ public class CraftManager : MonoBehaviour, IInteractable
             playerController.ExitedMenu();
             OnFocusLost();
         }
-
     }
 
 

@@ -7,15 +7,16 @@ public class WaifMaster : MonoBehaviour
     public GameObject prefab;
 
     [Header("Vars")]
-    public int startDelay = 2;
-    public int spawnRate = 2;
+    public int startDelay;
+    public int spawnRate;
     public int maxSpawns;
+    public AudioSource spawnSound;
 
     private int currentEnemies = 0;
 
     void Start()
     {
-        InvokeRepeating("Spawn", startDelay, spawnRate * Random.Range(0.8f, 1.2f));
+        InvokeRepeating("Spawn", startDelay, spawnRate); //* Random.Range(0.8f, 1.2f));
 
     }
 
@@ -26,6 +27,8 @@ public class WaifMaster : MonoBehaviour
 
         if (currentEnemies <= maxSpawns && chosenPoint.activeInHierarchy)
         {
+            spawnSound.Play();
+
             currentEnemies++;
             chosenPoint.SetActive(false);
 
@@ -39,8 +42,6 @@ public class WaifMaster : MonoBehaviour
 
     public void ResetSpawnPoint(GameObject spawnPoint)
     {
-        Debug.Log("reset point");
-
         currentEnemies--;
         spawnPoint.SetActive(true);
     }

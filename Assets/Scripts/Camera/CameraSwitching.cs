@@ -14,7 +14,7 @@ public class CameraSwitching : MonoBehaviour
     [HideInInspector] public InputAction aimAction;
     [HideInInspector] public bool aiming;
 
-    private void Awake()
+    public void Awake()
     {
         aimCamera = GetComponent<CinemachineCamera>();
         aimAction = playerInput.actions["Aim"];
@@ -22,13 +22,13 @@ public class CameraSwitching : MonoBehaviour
         reticleAim.enabled = false;
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         aimAction.performed += _ => StartAim();
         aimAction.canceled += _ => CancelAim();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         aimAction.performed -= _ => StartAim();
         aimAction.canceled -= _ => CancelAim();

@@ -39,6 +39,7 @@ public class VivisectorAI : MonoBehaviour
     private void Start()
     {
         player = FindFirstObjectByType<PlayerController>();
+        viviMaster = FindFirstObjectByType<ViviMaster>();
 
         float eh = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
         enemyHealth = (int)eh;
@@ -139,24 +140,23 @@ public class VivisectorAI : MonoBehaviour
             enemyHealth -= damage;
 
         }
-
     }
 
     private void EnemyDeath()
     {
         vAnimator.SetTrigger("vDie");
-        StartCoroutine(DestroyEnemy());
+        StartCoroutine(DestroyEnemy(1));
 
-        vivisectorsKilled+=1;
         waveEnemyKills+=1;
     }
 
-    IEnumerator DestroyEnemy()
+    public IEnumerator DestroyEnemy(int wait)
     {
         viviMaster.ResetSpawnPoint(spawnPoint);
 
-        yield return new WaitForSeconds(1);
-        Destroy(transform.parent.gameObject);
+        yield return new WaitForSeconds(wait);
+        vivisectorsKilled += 1;
+        Destroy(gameObject);
 
     }
 }

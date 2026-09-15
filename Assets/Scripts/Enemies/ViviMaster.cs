@@ -40,7 +40,6 @@ public class ViviMaster : MonoBehaviour
     public void ResetSpawnPoint(GameObject spawnPoint)
     {
         Debug.Log("reset point");
-
         currentEnemies--;
         spawnPoint.SetActive(true);
     }

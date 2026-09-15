@@ -19,7 +19,7 @@ interface IInteractable
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Variables")]
-    public float lookSensitivity = 100f;
+    public float lookSensitivity;
     [SerializeField] private LayerMask interactableLayers;
     public bool inLobby;
 
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public CinemachineInputAxisController camInputs;
     [SerializeField] private GameObject interactPrompt, h75, h50, h25;
     public GameObject playerHUD;
+    public CharacterController cc;
 
     [Header("Scripts")]
     public DeathScreen deathScreen;
@@ -40,14 +41,14 @@ public class PlayerController : MonoBehaviour
     private bool groundedPlayer;
     private Transform cameraTransform;
     private float playerSpeed;
-    private bool hasRun;
+    public bool hasRun;
     
     //script refs
     private PlayerStamina stamina;
     private CharacterController controller;
 
     //inputs
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
     [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction;
 
     //collision
@@ -81,11 +82,14 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = true;
 
         currentHealth = maxHealth;
-        UpdatePlayerHealth(0);
+        if(inLobby == false) UpdatePlayerHealth(0);
     }
 
     void Update()
     {
+        bool debug = debugAction.WasPerformedThisFrame();
+        if (debug) Debug.Log(currentHealth);
+
         IInteractable nearest = FindNearestInteractable();
         UpdateFocus(nearest);
         if (focused != null && interactAction.WasPressedThisFrame()) focused.Interact();
@@ -132,7 +136,7 @@ public class PlayerController : MonoBehaviour
     //use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookSensitivity * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, (lookSensitivity * 100) * Time.deltaTime);
     //player will move in direction the camera faces
 
     }
@@ -174,42 +178,57 @@ public class PlayerController : MonoBehaviour
     public void UpdatePlayerHealth(int damage)
     {
         currentHealth -= damage;
-        //healthDebug.text = currentHealth.ToString();
+
+        if (currentHealth >= maxHealth)
+        {
+            Debug.Log("full");
+
+            h75.SetActive(false);
+            h50.SetActive(false);
+            h25.SetActive(false);
+        }
 
         if (currentHealth <= (maxHealth * 0.75))
         {
+            Debug.Log("75");
+
             h75.SetActive(true);
             h50.SetActive(false);
             h25.SetActive(false);
+        }
 
-            if(currentHealth <= (maxHealth * 0.5))
+        if (currentHealth <= (maxHealth * 0.5))
+        {
+            Debug.Log("5");
+
+            h75.SetActive(false);
+            h50.SetActive(true);
+            h25.SetActive(false);
+        }
+
+        if (currentHealth <= (maxHealth * 0.25))
+        {
+            Debug.Log("25");
+
+            h75.SetActive(false);
+            h50.SetActive(false);
+            h25.SetActive(true);
+        }
+
+        if (currentHealth <= 0)
             {
-                h75.SetActive(false);
-                h50.SetActive(true);
-                h25.SetActive(false);
-
-                if (currentHealth <= (maxHealth * 0.25))
-                {
-                    h75.SetActive(false);
-                    h50.SetActive(false);
-                    h25.SetActive(true);
-
-                    if (currentHealth <= 0)
-                    {
-                        PlayerDeath();
-
-                    }
-                }
+                PlayerDeath();
             }
         }
-    }
 
-    void PlayerDeath()
+    public void PlayerDeath()
     {
         if (!hasRun)
         {
-            Debug.Log("dead");
             deathScreen.gameObject.SetActive(true);
+            Time.timeScale = 0;
+
+            Cursor.visible = true;
 
             camInputs.enabled = false;
             playerInput.enabled = false;
@@ -223,7 +242,7 @@ public class PlayerController : MonoBehaviour
         camInputs.enabled = false;
         playerInput.enabled = false;
         Cursor.visible = true;
-        playerHUD.SetActive(false);
+        if(playerHUD != null) playerHUD.SetActive(false);
     }
 
     public void ExitedMenu()
@@ -231,7 +250,6 @@ public class PlayerController : MonoBehaviour
         camInputs.enabled = true;
         playerInput.enabled = true;
         Cursor.visible = false;
-        playerHUD.SetActive(true);
+        if (playerHUD != null) playerHUD.SetActive(true);
     }
-
 }

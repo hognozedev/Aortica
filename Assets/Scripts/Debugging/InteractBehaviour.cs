@@ -4,21 +4,22 @@ using UnityEngine.SceneManagement;
 public class InteractBehaviour : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject interactPrompt;
-    private bool warned = false;
-
+    public GameObject popup;
+    public PlayerController player;
 
     public bool CanInteract() => true;
 
     public void Interact()
     {
-        if (warned == true)
-        {
-            SceneManager.LoadScene("WaveScene1");
-        }
+        popup.SetActive(true);
+    }
 
-        Debug.Log("");
-        Debug.Log("Start first wave? You can't go back.");
-        warned = true;
+    public void Update()
+    {
+        if (player.cancelAction.WasPerformedThisFrame()) popup.SetActive(false);
+
+        if (player.attackAction.WasPerformedThisFrame() && popup.activeInHierarchy) SceneManager.LoadScene("TD_WaveScene1");
+
     }
 
     public void OnFocusGained()

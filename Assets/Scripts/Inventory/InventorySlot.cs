@@ -16,9 +16,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void UpdateSalv()
     {
-        Debug.Log("update");
         salvText.text = PlayerData.playerSalv.ToString();
-
     }
 
     public void UpdateInv()
@@ -30,7 +28,6 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             itemIcon.sprite = itemData.itemImage;
             itemIcon.gameObject.SetActive(true);
             quantityText.text = amount.ToString();     
-
         }
 
         else

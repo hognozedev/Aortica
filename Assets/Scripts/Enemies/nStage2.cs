@@ -117,7 +117,6 @@ public class nStage2 : MonoBehaviour
 
     private void EnemyDeath()
     {
-        //vAnimator.SetTrigger("vDie");
         necroBabyKilled += 1;
         waveEnemyKills += 1;
 

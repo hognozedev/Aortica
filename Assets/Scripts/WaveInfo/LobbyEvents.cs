@@ -22,17 +22,6 @@ public class LobbyEvents : MonoBehaviour
         waveText.CrossFadeAlpha(0, 3, false);
         blackScreen.CrossFadeAlpha(0, 5, false);
         StartCoroutine(DialogueWait());
-
-        Debug.Log("RESPONSE WILL BE DISPLAYED HERE, PLEASE CHECK.");
-        Debug.Log("");
-        Debug.Log("");
-        Debug.Log("Move - WASD");
-        Debug.Log("Interact - E");
-        Debug.Log("Sprint - Shift");
-        Debug.Log("Aim - RMB");
-        Debug.Log("Shoot - LMB");
-        Debug.Log("Inventory - Tab (DONT USE IN LOBBY)");
-
     }
 
     IEnumerator DialogueWait()
