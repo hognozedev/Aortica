@@ -9,30 +9,21 @@ public class LobbyEvents : MonoBehaviour
     public Image blackScreen;
     public TextMeshProUGUI waveText;
     public Dialogue dialogue;
+    public int waveNum;
 
     public void Awake()
     {
-        Debug.Log("this is wave " + "");
         playerController.inLobby = true;
-
     }
 
     public void Start()
     {
-        waveText.CrossFadeAlpha(0, 3, false);
-        blackScreen.CrossFadeAlpha(0, 5, false);
-        StartCoroutine(DialogueWait());
-
-        Debug.Log("RESPONSE WILL BE DISPLAYED HERE, PLEASE CHECK.");
-        Debug.Log("");
-        Debug.Log("");
-        Debug.Log("Move - WASD");
-        Debug.Log("Interact - E");
-        Debug.Log("Sprint - Shift");
-        Debug.Log("Aim - RMB");
-        Debug.Log("Shoot - LMB");
-        Debug.Log("Inventory - Tab (DONT USE IN LOBBY)");
-
+        if(waveNum == 1)
+        {
+            waveText.CrossFadeAlpha(0, 3, false);
+            blackScreen.CrossFadeAlpha(0, 5, false);
+            StartCoroutine(DialogueWait());
+        }
     }
 
     IEnumerator DialogueWait()

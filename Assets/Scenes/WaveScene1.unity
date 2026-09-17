@@ -4899,7 +4899,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveEvents
   player: {fileID: 1804133734}
-  waveNumber: 1
   pauseMenu: {fileID: 2105200232}
   filmFX: {fileID: 1997673979}
 --- !u!1 &376611118
@@ -15520,8 +15519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0a35234df73514b8b4841e00a0cde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraSwitching
-  playerInput: {fileID: 1804133741}
-  priorityBoostAmount: 10
+  player: {fileID: 1804133734}
   reticleHip: {fileID: 643468917}
   reticleAim: {fileID: 1724658205}
   aimAction:
@@ -15533,7 +15531,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  aiming: 0
+  isAiming: 0
 --- !u!114 &1238869683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18120,7 +18118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1410596182
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21934,8 +21932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0a35234df73514b8b4841e00a0cde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 1804133741}
-  priorityBoostAmount: 10
+  player: {fileID: 0}
   reticleHip: {fileID: 643468917}
   reticleAim: {fileID: 1724658205}
   aimAction:
@@ -21947,7 +21944,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  aiming: 0
+  isAiming: 0
 --- !u!114 &1777726178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23080,6 +23077,15 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 92dcdbef-1baf-4565-9ace-162e7657c4c0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  aimAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fd44e0b0-f27e-49e3-b75f-d0a962ff2548
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []

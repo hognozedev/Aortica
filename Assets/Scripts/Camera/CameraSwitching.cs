@@ -5,33 +5,29 @@ using UnityEngine.UI;
 
 public class CameraSwitching : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private int priorityBoostAmount = 10;
-    [SerializeField] private Image reticleHip;
-    [SerializeField] private Image reticleAim;
+    public PlayerController player;
+    public Image reticleHip;
+    public Image reticleAim;
 
     private CinemachineCamera aimCamera;
     [HideInInspector] public InputAction aimAction;
-    [HideInInspector] public bool aiming;
+    [HideInInspector] public bool isAiming;
+
+    int priorityBoostAmount = 10;
 
     private void Awake()
     {
         aimCamera = GetComponent<CinemachineCamera>();
-        aimAction = playerInput.actions["Aim"];
+
+        isAiming = false;
         reticleHip.enabled = true;
         reticleAim.enabled = false;
     }
 
-    private void OnEnable()
+    public void Update()
     {
-        aimAction.performed += _ => StartAim();
-        aimAction.canceled += _ => CancelAim();
-    }
-
-    private void OnDisable()
-    {
-        aimAction.performed -= _ => StartAim();
-        aimAction.canceled -= _ => CancelAim();
+        if (player.aimAction.WasPressedThisFrame() && !isAiming) StartAim();
+        if (player.aimAction.WasReleasedThisFrame() && isAiming) CancelAim();
 
     }
 
@@ -39,7 +35,7 @@ public class CameraSwitching : MonoBehaviour
     {
         if (Time.timeScale == 0) return;
 
-        aiming = true;
+        isAiming = true;
         aimCamera.Priority += priorityBoostAmount;
         reticleAim.enabled = true;
         reticleHip.enabled = false;
@@ -48,7 +44,7 @@ public class CameraSwitching : MonoBehaviour
 
     private void CancelAim()
     {
-        aiming = false; 
+        isAiming = false; 
 
         aimCamera.Priority -= priorityBoostAmount;
         reticleAim.enabled = false;

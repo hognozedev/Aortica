@@ -8,7 +8,6 @@ using static PlayerData;
 public class WaveEvents : MonoBehaviour
 {
     public PlayerController player;
-    public int waveNumber;
     public GameObject pauseMenu;
     public Volume filmFX;
 

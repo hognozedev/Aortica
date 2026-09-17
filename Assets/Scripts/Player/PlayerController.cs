@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     //inputs
     private PlayerInput playerInput;
-    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction;
+    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, aimAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction;
 
     //collision
     private float radius = 1f;
@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
         twoAction = playerInput.actions["Key2"];
         threeAction = playerInput.actions["Key3"];
         escapeAction = playerInput.actions["PauseMenu"];
+        aimAction = playerInput.actions["Aim"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
         {
             if (walkForward) playerSpeed = walkSpeed;
 
-            if (isSprinting & walkForward & !camSwitcher.aiming)
+            if (isSprinting & walkForward & !camSwitcher.isAiming)
             {
                 if (stamina.currentStamina > 0)
                 {
