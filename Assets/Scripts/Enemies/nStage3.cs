@@ -88,8 +88,6 @@ public class nStage3 : MonoBehaviour
 
     private void RangeAttack()
     {
-        Debug.Log("ranged");
-
         agent.SetDestination(enemy.position);
         enemy.LookAt(player.transform);
         //stop on spot, and look at the player
@@ -119,8 +117,6 @@ public class nStage3 : MonoBehaviour
 
     private void MeleeAttack()
     {
-        Debug.Log("melee");
-
         if (inMeleeRange)
         {
             agent.SetDestination(enemy.position);

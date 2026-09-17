@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CameraSwitching : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput;
+    public PlayerController player;
     [SerializeField] private int priorityBoostAmount = 10;
     [SerializeField] private Image reticleHip;
     [SerializeField] private Image reticleAim;
@@ -17,23 +17,28 @@ public class CameraSwitching : MonoBehaviour
     public void Awake()
     {
         aimCamera = GetComponent<CinemachineCamera>();
-        aimAction = playerInput.actions["Aim"];
         reticleHip.enabled = true;
         reticleAim.enabled = false;
     }
 
+    public void Update()
+    {
+        if (player.aimAction.WasPressedThisFrame() && !aiming)
+        {
+            Debug.Log("pressed"); StartAim();
+        }
+
+        if (player.aimAction.WasReleasedThisFrame() && aiming)
+        {
+            Debug.Log("pressed"); CancelAim();
+        }
+    }
+
     public void OnEnable()
     {
-        aimAction.performed += _ => StartAim();
-        aimAction.canceled += _ => CancelAim();
-    }
-
-    public void OnDisable()
-    {
-        aimAction.performed -= _ => StartAim();
-        aimAction.canceled -= _ => CancelAim();
 
     }
+
 
     private void StartAim()
     {

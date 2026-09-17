@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Waif
   enemyDamage: 25
-  enemyHealth: 150
+  enemyHealth: 100
+  enemyDamageRanged: 0

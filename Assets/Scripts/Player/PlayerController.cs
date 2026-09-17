@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     //inputs
     public PlayerInput playerInput;
-    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction;
+    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, attackAction, reloadAction, cancelAction, interactAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction, aimAction;
 
     //collision
     private float radius = 1f;
@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
         twoAction = playerInput.actions["Key2"];
         threeAction = playerInput.actions["Key3"];
         escapeAction = playerInput.actions["PauseMenu"];
+        aimAction = playerInput.actions["Aim"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
@@ -181,8 +182,6 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth >= maxHealth)
         {
-            Debug.Log("full");
-
             h75.SetActive(false);
             h50.SetActive(false);
             h25.SetActive(false);
@@ -190,8 +189,6 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= (maxHealth * 0.75))
         {
-            Debug.Log("75");
-
             h75.SetActive(true);
             h50.SetActive(false);
             h25.SetActive(false);
@@ -199,8 +196,6 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= (maxHealth * 0.5))
         {
-            Debug.Log("5");
-
             h75.SetActive(false);
             h50.SetActive(true);
             h25.SetActive(false);
@@ -208,8 +203,6 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= (maxHealth * 0.25))
         {
-            Debug.Log("25");
-
             h75.SetActive(false);
             h50.SetActive(false);
             h25.SetActive(true);
@@ -252,4 +245,5 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         if (playerHUD != null) playerHUD.SetActive(true);
     }
+
 }

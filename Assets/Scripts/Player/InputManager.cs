@@ -16,8 +16,9 @@ public class InputManager : MonoBehaviour
 
     private PlayerControls playerControls;
 
-    private void Awake()
+    void Awake()
     {
+        Debug.Log("enabled");
         playerControls = new PlayerControls();
 
         if (_instance != null && _instance != this)
@@ -28,7 +29,7 @@ public class InputManager : MonoBehaviour
         {
             _instance = this;
         }
-    //make sure that this script only exists once, and if not to assign the variable to this script.
+        //make sure that this script only exists once, and if not to assign the variable to this script.
     }
 
     private void OnEnable()

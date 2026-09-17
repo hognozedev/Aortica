@@ -29,8 +29,8 @@ public class WaveEvents : MonoBehaviour
     public void Awake()
     {
         Cursor.visible = false;
-
         Time.timeScale = 1;
+
         player.inLobby = false;
         if (filmFX == true) fxOn = true;
     }
@@ -38,7 +38,7 @@ public class WaveEvents : MonoBehaviour
     public void Update()
     {
         escPressed = player.escapeAction.WasPerformedThisFrame();
-        if (escPressed && !menuOpen) PauseMenu();
+        if (escPressed && !menuOpen && death.activeInHierarchy == false) PauseMenu();
         else if (escPressed && menuOpen) Resume();
 
         if (waifsKilled >=1)
@@ -108,7 +108,7 @@ public class WaveEvents : MonoBehaviour
     public void RespawnS1()
     {
         waifsKilled = 0;
-        currentHealth = 100;
+        currentHealth = maxHealth;
         player.UpdatePlayerHealth(0);
 
         player.cc.enabled = false;
@@ -130,7 +130,7 @@ public class WaveEvents : MonoBehaviour
     public void RespawnS2()
     {
         vivisectorsKilled = 0;
-        currentHealth = 100;
+        currentHealth = maxHealth;
         player.UpdatePlayerHealth(0);
 
         player.cc.enabled = false;
@@ -154,8 +154,7 @@ public class WaveEvents : MonoBehaviour
 
     public void RespawnS3()
     {
-        necrophagesKilled = 0;
-        currentHealth = 100;
+        currentHealth = maxHealth;
         player.UpdatePlayerHealth(0);
 
         player.cc.enabled = false;
@@ -163,13 +162,13 @@ public class WaveEvents : MonoBehaviour
         player.cc.enabled = true;
 
         phage1 = FindFirstObjectByType<nStage1>();
-        if(phage1 != null) Destroy(phage2.gameObject);
+        if(phage1 != null) Destroy(phage1.gameObject);
 
         phage2 = FindFirstObjectByType<nStage2>();
         if (phage2 != null) Destroy(phage2.gameObject);
 
         phage3 = FindFirstObjectByType<nStage3>();
-        if (phage2 != null) StartCoroutine(phage3.DestroyEnemy(0));
+        if (phage3 != null) StartCoroutine(phage3.DestroyEnemy(0));
 
         Instantiate(nMaster);
 

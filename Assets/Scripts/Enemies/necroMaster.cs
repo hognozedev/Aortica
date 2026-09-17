@@ -19,7 +19,7 @@ public class necroMaster : MonoBehaviour
     void Start()
     {
         Invoke("SpawnNecro", 15);
-        Invoke("SpawnNecro", 30);
+        Invoke("SpawnNecro", 20);
 
     }  
 

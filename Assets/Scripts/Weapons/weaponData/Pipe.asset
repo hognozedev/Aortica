@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Pipe
   m_EditorClassIdentifier: Assembly-CSharp::MeleeData
   meleeName: Rusty Pipe
-  meleeDmg: 25
+  meleeDmg: 40

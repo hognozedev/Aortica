@@ -70,6 +70,7 @@ public class nStage1 : MonoBehaviour
 
     public void EnemyDeath()
     {
+        necroMaster.ResetSpawnPoint(spawnPoint);
         Destroy(gameObject);
 
         necroEggKilled += 1;

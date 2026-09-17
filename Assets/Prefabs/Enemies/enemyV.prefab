@@ -541,7 +541,7 @@ MonoBehaviour:
   vAnimator: {fileID: 349674421619029606}
   vProjectile: {fileID: 5641523898484312932, guid: 239ea4d4fc9c441439254b77662c7ca4, type: 3}
   spawnPoint: {fileID: 0}
-  sightRange: 20
+  sightRange: 50
   attackRange: 10
   groundMask:
     serializedVersion: 2
