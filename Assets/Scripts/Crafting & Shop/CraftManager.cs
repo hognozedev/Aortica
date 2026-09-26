@@ -1,9 +1,7 @@
-using NUnit.Framework;
-using TMPro;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using static PlayerData;
+using static InputStatic;
 
 [System.Serializable]
 public class CraftItems
@@ -39,14 +37,13 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void Update()
     {
-        if (playerController.cancelAction.WasPerformedThisFrame())
+        if (cancelAction.WasPerformedThisFrame())
         {
             playerController.ExitedMenu();
             OnFocusLost();
         }
 
     }
-
 
     public void PopulateCraftItems()
     {
@@ -61,6 +58,7 @@ public class CraftManager : MonoBehaviour, IInteractable
         {
             craftSlots[i].gameObject.SetActive(false);
         }
+
     }
 
     public void TryBuyItem(ItemData itemData, int cost, int amount)
@@ -79,10 +77,8 @@ public class CraftManager : MonoBehaviour, IInteractable
 
             Debug.Log("bought");
             gunMaster.UpdateHUD();
-
         }
         //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
-
 
         else if (PlayerData.playerSalv < cost)
         {
@@ -103,6 +99,5 @@ public class CraftManager : MonoBehaviour, IInteractable
         canvasGroup.gameObject.SetActive(false);
         interactPrompt.gameObject.SetActive(false);
         inventoryUI.SetActive(false);
-
     }
 }

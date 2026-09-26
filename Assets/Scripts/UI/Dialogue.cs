@@ -1,7 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static InputStatic;
 
 public class Dialogue : MonoBehaviour
 {
@@ -11,7 +11,6 @@ public class Dialogue : MonoBehaviour
 
     private int index;
     public bool isClicking = false;
-    public PlayerController playerController;
 
 
     void Start()
@@ -22,7 +21,7 @@ public class Dialogue : MonoBehaviour
 
     void Update()
     {    
-        if(playerController.clickAction.WasPressedThisFrame())
+        if(clickAction.WasPressedThisFrame())
         {           
             if(dialogueText.text == lines[index])
             {
@@ -34,9 +33,7 @@ public class Dialogue : MonoBehaviour
                 StopAllCoroutines();
                 dialogueText.text = lines[index];
             }
-
         }
-
     }
 
     public void StartDialogue()

@@ -8,7 +8,6 @@ using static PlayerData;
 public class ScrapMill : MonoBehaviour, IInteractable
 {
     //player variables
-    public TextMeshPro salvCount;
     [SerializeField] private GameObject interactPrompt = null;
 
     //scripts
@@ -46,8 +45,6 @@ public class ScrapMill : MonoBehaviour, IInteractable
             {
                 decimalSalvAmount += Time.deltaTime * genSpeed;
                 salvAmount = Mathf.RoundToInt(decimalSalvAmount);
-
-                salvCount.text = salvAmount.ToString();
             }
 
             else

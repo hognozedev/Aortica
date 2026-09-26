@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static InputStatic;
 
 public class WeaponSwitching : MonoBehaviour
 {
     public int currentWeapon = 0;
-    public PlayerController playerController;
 
     void Start()
     {
@@ -19,7 +18,7 @@ public class WeaponSwitching : MonoBehaviour
 
     void Update()
     {
-        float y = playerController.scrollAction.ReadValue<float>();
+        float y = scrollAction.ReadValue<float>();
         int previousWeapon = currentWeapon;
 
         if (y > 0)
@@ -34,9 +33,9 @@ public class WeaponSwitching : MonoBehaviour
             else    currentWeapon--;
         }
 
-        if (playerController.oneAction.WasPressedThisFrame()) currentWeapon = 0;
-        if (playerController.twoAction.WasPressedThisFrame() && transform.childCount >= 2 ) currentWeapon = 1;
-        if (playerController.threeAction.WasPressedThisFrame() && transform.childCount >= 3 ) currentWeapon = 2;
+        if (oneAction.WasPressedThisFrame()) currentWeapon = 0;
+        if (twoAction.WasPressedThisFrame() && transform.childCount >= 2 ) currentWeapon = 1;
+        if (threeAction.WasPressedThisFrame() && transform.childCount >= 3 ) currentWeapon = 2;
 
         if (previousWeapon != currentWeapon) SelectWeapon();
 

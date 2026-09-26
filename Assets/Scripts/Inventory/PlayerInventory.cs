@@ -1,8 +1,5 @@
-using NUnit.Framework.Interfaces;
-using System;
-using System.Text;
-using TMPro;
 using UnityEngine;
+using static InputStatic;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -50,14 +47,14 @@ public class PlayerInventory : MonoBehaviour
 
     void Update()
     {
-        if (playerController.inventoryAction.WasPressedThisFrame() && !invOpen) 
+        if (inventoryAction.WasPressedThisFrame() && !invOpen) 
         {
             playerController.InMenu();
             inventoryUI.gameObject.SetActive(true);
             invOpen = true;
         }
 
-        if (playerController.cancelAction.WasPressedThisFrame() && invOpen)
+        if (cancelAction.WasPressedThisFrame() && invOpen)
         {
             invOpen = false;
             playerController.ExitedMenu();

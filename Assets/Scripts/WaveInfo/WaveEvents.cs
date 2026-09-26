@@ -2,8 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using static PlayerData;
+using static InputStatic;
 
 public class WaveEvents : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class WaveEvents : MonoBehaviour
 
     public void Update()
     {
-        escPressed = player.escapeAction.WasPerformedThisFrame();
+        escPressed = escapeAction.WasPerformedThisFrame();
         if (escPressed && !menuOpen) PauseMenu();
         else if (escPressed && menuOpen) Resume();
     }

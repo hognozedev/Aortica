@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using static InputStatic;
 
 public class GunMaster : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class GunMaster : MonoBehaviour
     //public
     [Header("Refs")]
     public GunData gunData;
-    public PlayerController player;
     public MeleeMaster meleeMaster;
     public AudioSource audioSource;
     public AudioClip jamSound;
@@ -25,13 +25,13 @@ public class GunMaster : MonoBehaviour
     [Header("Bools")]
     public bool isReloading = false;
     public bool isShooting = false;
+    public bool isMeleeMode;
 
     //private
     private int currentAmmo;
     private float NextTimeToFire = 0;
     private float val;
     private bool isJammed;
-    private bool isMeleeMode;
     private bool firstTime;
 
 
@@ -48,8 +48,8 @@ public class GunMaster : MonoBehaviour
 
     public void Update()
     {
-        isShooting = player.attackAction.WasPerformedThisFrame();
-        isReloading = player.reloadAction.WasPerformedThisFrame();
+        isShooting = attackAction.WasPerformedThisFrame();
+        isReloading = reloadAction.WasPerformedThisFrame();
 
         if (isShooting && isJammed == false)
         {
@@ -74,7 +74,6 @@ public class GunMaster : MonoBehaviour
             {
                 meleeMaster.Attack(isMeleeMode = false, gunData.meleeDmg);
                 firstTime = true;
-
             }
         }
 
@@ -106,7 +105,6 @@ public class GunMaster : MonoBehaviour
         {
             currentAmmo = gunData.magSize;
             gunData.ammoType.playerHas -= gunData.magSize;
-
         }
 
         else if(gunData.ammoType.playerHas < gunData.magSize)
@@ -155,7 +153,6 @@ public class GunMaster : MonoBehaviour
         yield return new WaitForSeconds(gunData.jamFix);
         Debug.Log("unjammed");
         isJammed = false;
-
     }
 
     private void HandleShoot()
@@ -195,9 +192,7 @@ public class GunMaster : MonoBehaviour
         {
             bulletController.target = cameraTransform.position + cameraTransform.forward * bulletMissDistance;
             bulletController.hit = true;
-
         }
-
     }
 
     public void UpdateHUD()
@@ -205,7 +200,6 @@ public class GunMaster : MonoBehaviour
         totalAmmoText.text = gunData.ammoType.playerHas.ToString();
         currentAmmoText.text = currentAmmo.ToString();
         currentWeaponName.text = gunData.gunName.ToString();
-
     }
 
 }

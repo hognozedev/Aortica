@@ -1,12 +1,9 @@
-using NUnit.Framework.Interfaces;
-using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static PlayerData;
+using static InputStatic;
 
 interface IInteractable
 {
@@ -46,10 +43,6 @@ public class PlayerController : MonoBehaviour
     private PlayerStamina stamina;
     private CharacterController controller;
 
-    //inputs
-    private PlayerInput playerInput;
-    [HideInInspector] public InputAction moveAction, sprintAction, clickAction, inventoryAction, aimAction, attackAction, reloadAction, interactAction, cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction;
-
     //collision
     private float radius = 1f;
     private Collider[] buffer = new Collider[32];
@@ -58,24 +51,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        playerInput = GetComponent<PlayerInput>();
         stamina = GetComponent<PlayerStamina>();
-
-        moveAction = playerInput.actions["Move"];
-        sprintAction = playerInput.actions["Sprint"];
-        attackAction = playerInput.actions["Attack"];
-        reloadAction = playerInput.actions["Reload"];
-        interactAction = playerInput.actions["Interact"];
-        inventoryAction = playerInput.actions["Inventory"];
-        clickAction = playerInput.actions["Click"];
-        cancelAction = playerInput.actions["Cancel"];
-        debugAction = playerInput.actions["DEBUG"];
-        scrollAction = playerInput.actions["Scroll"];
-        oneAction = playerInput.actions["Key1"];
-        twoAction = playerInput.actions["Key2"];
-        threeAction = playerInput.actions["Key3"];
-        escapeAction = playerInput.actions["PauseMenu"];
-        aimAction = playerInput.actions["Aim"];
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;

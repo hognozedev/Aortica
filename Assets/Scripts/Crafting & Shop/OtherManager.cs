@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using static PlayerData;
+using static InputStatic;
 
 [System.Serializable]
 public class OtherItems
@@ -37,7 +37,7 @@ public class OtherManager : MonoBehaviour, IInteractable
     }
     public void Update()
     {
-        if (playerController.cancelAction.WasPerformedThisFrame())
+        if (cancelAction.WasPerformedThisFrame())
         {
             playerController.ExitedMenu();
             OnFocusLost();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static InputStatic;
 
 public class MeleeMaster : MonoBehaviour
 {
@@ -7,7 +8,6 @@ public class MeleeMaster : MonoBehaviour
     public Transform cameraRef;
     public Animator meleeAnim;
     public MeleeData meleeData;
-    public PlayerController playerController;
 
     [Header("Vars")]
     public float meleeDistance, meleeDelay, meleeSpeed;
@@ -23,7 +23,7 @@ public class MeleeMaster : MonoBehaviour
 
     public void Update()
     {
-        meleePress = playerController.attackAction.WasPerformedThisFrame();
+        meleePress = attackAction.WasPerformedThisFrame();
         if (meleePress) MeleeWeaponAttack();
     }
 

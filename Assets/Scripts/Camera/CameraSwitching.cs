@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using UnityEngine.UI;
+using static InputStatic;
 
 public class CameraSwitching : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class CameraSwitching : MonoBehaviour
     public Image reticleAim;
 
     private CinemachineCamera aimCamera;
-    [HideInInspector] public InputAction aimAction;
     [HideInInspector] public bool isAiming;
 
     int priorityBoostAmount = 10;
@@ -26,8 +26,8 @@ public class CameraSwitching : MonoBehaviour
 
     public void Update()
     {
-        if (player.aimAction.WasPressedThisFrame() && !isAiming) StartAim();
-        if (player.aimAction.WasReleasedThisFrame() && isAiming) CancelAim();
+        if (aimAction.WasPressedThisFrame() && !isAiming) StartAim();
+        if (aimAction.WasReleasedThisFrame() && isAiming) CancelAim();
 
     }
 
