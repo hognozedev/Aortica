@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using static InputStatic;
-
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
@@ -16,12 +14,11 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         dialogueText.text = string.Empty;
-
     }
 
     void Update()
     {    
-        if(clickAction.WasPressedThisFrame())
+        if(InputManager.instance.ClickInput)
         {           
             if(dialogueText.text == lines[index])
             {

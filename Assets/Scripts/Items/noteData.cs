@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static InputStatic;
 
 public class noteData : MonoBehaviour, IInteractable
 {
@@ -16,11 +15,10 @@ public class noteData : MonoBehaviour, IInteractable
 
     public void Update()
     {
-        if (cancelAction.WasPerformedThisFrame())
+        if (InputManager.instance.CancelInput)
         {
             OnFocusLost();
         }
-
     }
 
     public void Interact()

@@ -1,57 +1,83 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private static InputManager _instance;
-//this is the only input manager in the game so im defining it as a 'singleton'
+    /*
+    public Vector2 MoveInput { get; private set; }
+    public bool IsMoving { get; private set; }
+    public bool SprintInput { get; private set; }
+    public bool AttackInput { get; private set; }
+    public bool ReloadInput { get; private set; }
+    public bool InteractInput { get; private set; }
+    public bool InventoryInput { get; private set; }
+    public bool ClickInput { get; private set; }
+    public bool CancelInput { get; private set; }
+    public float ScrollInput { get; private set; }
+    public bool OneInput { get; private set; }
+    public bool TwoInput { get; private set; }
+    public bool ThreeInput { get; private set; }
+    public bool EscapeInput { get; private set; }
+    public bool AimInput { get; private set; }
+    public bool AimCancel { get; private set; }
+    public bool DebugInput { get; private set; }
 
-    public static InputManager Instance
-    {
-        get 
-        {
-            return _instance; 
-        }
-    }
-//this is called an 'accessor' meaning that whenever i call this function from another script it makes sure to use '_instance' correctly.
+    */
 
-    private PlayerControls playerControls;
+    public static InputManager instance;
+    public static PlayerInput playerInput;
+
+    private InputAction moveAction, sprintAction, clickAction, inventoryAction, aimAction, attackAction, reloadAction, interactAction;
+    private InputAction cancelAction, debugAction, scrollAction, oneAction, twoAction, threeAction, escapeAction;
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
-
-        if (_instance != null && _instance != this)
+        if (instance == null)
         {
-            Destroy(this.gameObject);
+            instance = this;
         }
-        else
-        {
-            _instance = this;
-        }
-    //make sure that this script only exists once, and if not to assign the variable to this script.
+
+        playerInput = GetComponent<PlayerInput>();
+
+        moveAction = playerInput.actions["Move"];
+        sprintAction = playerInput.actions["Sprint"];
+        attackAction = playerInput.actions["Attack"];
+        reloadAction = playerInput.actions["Reload"];
+        interactAction = playerInput.actions["Interact"];
+        inventoryAction = playerInput.actions["Inventory"];
+        clickAction = playerInput.actions["Click"];
+        cancelAction = playerInput.actions["Cancel"];
+        scrollAction = playerInput.actions["Scroll"];
+        oneAction = playerInput.actions["Key1"];
+        twoAction = playerInput.actions["Key2"];
+        threeAction = playerInput.actions["Key3"];
+        escapeAction = playerInput.actions["PauseMenu"];
+        aimAction = playerInput.actions["Aim"];
+        debugAction = playerInput.actions["DEBUG"];
     }
 
-    private void OnEnable()
+    /*
+    private void Update()
     {
-        playerControls.Enable();
-    }
+        MoveInput = moveAction.ReadValue<Vector2>();
+        IsMoving = moveAction.WasPressedThisFrame();
+        SprintInput = sprintAction.WasPressedThisFrame();
+        AttackInput = attackAction.WasPressedThisFrame();
+        ReloadInput = reloadAction.WasPressedThisFrame();
+        InteractInput = interactAction.WasPressedThisFrame();
+        InventoryInput = inventoryAction.WasPressedThisFrame();
+        ClickInput = clickAction.WasPressedThisFrame();
+        CancelInput = cancelAction.WasPressedThisFrame();
+        ScrollInput = scrollAction.ReadValue<float>();
+        OneInput = oneAction.WasPressedThisFrame();
+        TwoInput = twoAction.WasPressedThisFrame();
+        ThreeInput = threeAction.WasPressedThisFrame();
+        EscapeInput = escapeAction.WasPressedThisFrame();
+        AimInput = aimAction.WasPressedThisFrame();
+        AimCancel = aimAction.WasReleasedThisFrame();
 
-    public void OnDisable()
-    {
-        playerControls.Disable();
+        DebugInput = debugAction.WasReleasedThisFrame();
     }
-
-    public Vector2 GetPlayerMovement()
-    {
-        return playerControls.Player.Move.ReadValue<Vector2>(); 
-    }
-    public Vector2 GetMouseDelta()
-    {
-        return playerControls.Player.Look.ReadValue<Vector2>();
-    }
-    public Vector2 GetPlayerAttack()
-    {
-        return playerControls.Player.Attack.ReadValue<Vector2>();
-    }
+    */
 
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using static InputStatic;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -24,7 +23,6 @@ public class PlayerInventory : MonoBehaviour
     {
         PlayerData.OnItemTaken -= PopItem;
         PlayerData.OnModify -= ModItem;
-
     }
 
 
@@ -41,26 +39,24 @@ public class PlayerInventory : MonoBehaviour
         {
             slotm.UpdateMod();
         }
-
     }
 
 
     void Update()
     {
-        if (inventoryAction.WasPressedThisFrame() && !invOpen) 
+        if (InputManager.instance.InventoryInput && !invOpen) 
         {
             playerController.InMenu();
             inventoryUI.gameObject.SetActive(true);
             invOpen = true;
         }
 
-        if (cancelAction.WasPressedThisFrame() && invOpen)
+        if (InputManager.instance.InventoryInput && invOpen)
         {
             invOpen = false;
             playerController.ExitedMenu();
             inventoryUI.gameObject.SetActive(false);
         }
-
     }
 
 
@@ -80,9 +76,7 @@ public class PlayerInventory : MonoBehaviour
                 itemData.playerHas += amountToAdd;
 
                 if (amount <= 0) return;
-
             }
-
         }
 
         foreach (var slot in invSlots)
@@ -99,9 +93,7 @@ public class PlayerInventory : MonoBehaviour
 
                 return;
             }
-
         }
-
     }
 
     public void ModItem(ItemData itemData)
@@ -113,9 +105,7 @@ public class PlayerInventory : MonoBehaviour
                 slot.itemData = itemData;
                 slot.UpdateMod();
             }
-
         }
-
     }
 
     public void UseItem(InventorySlot slot)
@@ -125,7 +115,6 @@ public class PlayerInventory : MonoBehaviour
         slot.amount--;
         if (slot.amount <= 0) slot.itemData = null;
         slot.UpdateInv();
-
     }
 
 //put all item effects here!
@@ -134,9 +123,6 @@ public class PlayerInventory : MonoBehaviour
         if (slot.itemData.isHealing == true)
         {
             Debug.Log("there was a healing");
-
         }
-
     }
-
 }

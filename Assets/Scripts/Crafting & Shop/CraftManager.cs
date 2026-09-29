@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static PlayerData;
-using static InputStatic;
 
 [System.Serializable]
 public class CraftItems
@@ -37,7 +36,7 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void Update()
     {
-        if (cancelAction.WasPerformedThisFrame())
+        if (InputManager.instance.CancelInput)
         {
             playerController.ExitedMenu();
             OnFocusLost();

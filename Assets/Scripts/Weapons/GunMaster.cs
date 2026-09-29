@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using static InputStatic;
-
 public class GunMaster : MonoBehaviour
 {
     [HideInInspector] public Transform cameraTransform;
@@ -48,8 +46,8 @@ public class GunMaster : MonoBehaviour
 
     public void Update()
     {
-        isShooting = attackAction.WasPerformedThisFrame();
-        isReloading = reloadAction.WasPerformedThisFrame();
+        isShooting = InputManager.instance.AttackInput;
+        isReloading = InputManager.instance.ReloadInput;
 
         if (isShooting && isJammed == false)
         {
@@ -76,7 +74,6 @@ public class GunMaster : MonoBehaviour
                 firstTime = true;
             }
         }
-
     }
 
     public void TryReload()
@@ -86,15 +83,13 @@ public class GunMaster : MonoBehaviour
             if (currentAmmo < gunData.magSize && gunData.ammoType.playerHas > 0)
             {
                 StartCoroutine(Reload());
-
             }
+
             else if(gunData.ammoType.playerHas <= 0 )
             {
                 Debug.Log("already full/ no more ammo");
             }
-
         }
-
     }
 
     private IEnumerator Reload()
@@ -115,7 +110,6 @@ public class GunMaster : MonoBehaviour
 
         isReloading = false;
         UpdateHUD();
-
     }
 
     public void TryShoot()
@@ -145,7 +139,6 @@ public class GunMaster : MonoBehaviour
 
             HandleShoot();
         }
-
     }
 
     private IEnumerator UnJam()
@@ -162,7 +155,6 @@ public class GunMaster : MonoBehaviour
         Shoot();
     }
     // things that still need to happen when firing, even if no hit target like recoil/ screen shake, etc.
-
 
     private void Shoot()
     {
@@ -182,9 +174,6 @@ public class GunMaster : MonoBehaviour
                 if (hit.collider.gameObject.TryGetComponent<nStage1>(out nStage1 n1Enemy)) n1Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
                 if (hit.collider.gameObject.TryGetComponent<nStage2>(out nStage2 n2Enemy)) n2Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
                 if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(gunData.bulletDamage, hit.collider);
-
-                //Debug.Log(hit.collider);
-
             } 
         }
 
@@ -201,5 +190,4 @@ public class GunMaster : MonoBehaviour
         currentAmmoText.text = currentAmmo.ToString();
         currentWeaponName.text = gunData.gunName.ToString();
     }
-
 }

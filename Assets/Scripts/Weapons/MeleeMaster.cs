@@ -1,5 +1,4 @@
 using UnityEngine;
-using static InputStatic;
 
 public class MeleeMaster : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class MeleeMaster : MonoBehaviour
 
     public void Update()
     {
-        meleePress = attackAction.WasPerformedThisFrame();
+        meleePress = InputManager.instance.AttackInput;
         if (meleePress) MeleeWeaponAttack();
     }
 
@@ -38,10 +37,9 @@ public class MeleeMaster : MonoBehaviour
 
             Invoke(nameof(ResetAttack), meleeSpeed);
             Invoke(nameof(AttackCast), meleeDelay);
-
         }
-
     }
+
     public void MeleeWeaponAttack()
     {
         if (meleePress && isOnWeapon && meleeData != null)
@@ -51,9 +49,7 @@ public class MeleeMaster : MonoBehaviour
 
             Invoke(nameof(ResetAttack), meleeSpeed);
             Invoke(nameof(AttackCast), meleeDelay);
-
         }
-
     }
 
     public void ResetAttack()
@@ -71,17 +67,12 @@ public class MeleeMaster : MonoBehaviour
             if (hit.collider.gameObject.TryGetComponent<nStage2>(out nStage2 n2Enemy)) n2Enemy.TakeDamage(meleeDamage, hit.collider);
             if (hit.collider.gameObject.TryGetComponent<nStage3>(out nStage3 n3Enemy)) n3Enemy.TakeDamage(meleeDamage, hit.collider);
             if (hit.collider.gameObject.TryGetComponent<HoarfrostAI>(out HoarfrostAI hfEnemy)) hfEnemy.TakeDamage(meleeDamage, hit.collider);
-
-
             HitTarget(hit.point);
         }
-
     }
 
     void HitTarget(Vector3 pos)
     {
         //play any sound/ visual effects/ decal here
-
     }
-
 }

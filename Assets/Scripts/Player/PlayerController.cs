@@ -1,9 +1,7 @@
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static PlayerData;
-using static InputStatic;
 
 interface IInteractable
 {
@@ -12,7 +10,7 @@ interface IInteractable
     public void OnFocusLost();
 }
 
-[RequireComponent(typeof(PlayerController), typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerController))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Variables")]
@@ -28,8 +26,6 @@ public class PlayerController : MonoBehaviour
     [Header("Scripts")]
     public DeathScreen deathScreen;
     public CameraSwitching camSwitcher;
-
-    public TextMeshProUGUI healthDebug;
 
     //movement
     private float gravityValue = -9.81f;
@@ -65,10 +61,10 @@ public class PlayerController : MonoBehaviour
     {
         IInteractable nearest = FindNearestInteractable();
         UpdateFocus(nearest);
-        if (focused != null && interactAction.WasPressedThisFrame()) focused.Interact();
+        if (focused != null && InputManager.instance.InteractInput) focused.Interact();
 
-        bool walkForward = moveAction.IsPressed();
-        bool isSprinting = sprintAction.IsPressed();
+        bool walkForward = InputManager.instance.IsMoving;
+        bool isSprinting = InputManager.instance.SprintInput;
 
         if (inLobby == false)
         {
@@ -100,7 +96,7 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     //gravity
 
-        Vector2 input = moveAction.ReadValue<Vector2>();
+        Vector2 input = InputManager.instance.MoveInput;
         Vector3 move = new Vector3(input.x, 0, input.y);
 
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
@@ -151,7 +147,6 @@ public class PlayerController : MonoBehaviour
     public void UpdatePlayerHealth(int damage)
     {
         currentHealth -= damage;
-        //healthDebug.text = currentHealth.ToString();
 
         if (currentHealth <= (maxHealth * 0.75))
         {
@@ -174,7 +169,6 @@ public class PlayerController : MonoBehaviour
                     if (currentHealth <= 0)
                     {
                         PlayerDeath();
-
                     }
                 }
             }
@@ -189,7 +183,7 @@ public class PlayerController : MonoBehaviour
             deathScreen.gameObject.SetActive(true);
 
             camInputs.enabled = false;
-            playerInput.enabled = false;
+            InputManager.instance.enabled = false;
 
             hasRun = true;
         }
@@ -198,7 +192,7 @@ public class PlayerController : MonoBehaviour
     public void InMenu()
     {
         camInputs.enabled = false;
-        playerInput.enabled = false;
+        InputManager.instance.enabled = false;
         Cursor.visible = true;
         playerHUD.SetActive(false);
     }
@@ -206,9 +200,8 @@ public class PlayerController : MonoBehaviour
     public void ExitedMenu()
     {
         camInputs.enabled = true;
-        playerInput.enabled = true;
+        InputManager.instance.enabled = true;
         Cursor.visible = false;
         playerHUD.SetActive(true);
     }
-
 }

@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using UnityEngine.UI;
-using static InputStatic;
 
 public class CameraSwitching : MonoBehaviour
 {
@@ -26,8 +24,8 @@ public class CameraSwitching : MonoBehaviour
 
     public void Update()
     {
-        if (aimAction.WasPressedThisFrame() && !isAiming) StartAim();
-        if (aimAction.WasReleasedThisFrame() && isAiming) CancelAim();
+        if (InputManager.instance.AimInput && !isAiming) StartAim();
+        if (InputManager.instance.AimCancel && isAiming) CancelAim();
 
     }
 

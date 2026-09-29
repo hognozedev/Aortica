@@ -14627,11 +14627,11 @@ GameObject:
   - component: {fileID: 1804133744}
   - component: {fileID: 1804133743}
   - component: {fileID: 1804133742}
-  - component: {fileID: 1804133741}
   - component: {fileID: 1804133734}
   - component: {fileID: 1804133740}
   - component: {fileID: 1804133732}
   - component: {fileID: 1804133745}
+  - component: {fileID: 1804133746}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -21083,6 +21083,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::interactPrompt
   interactKey: {fileID: 690783779}
+  interactAction:
+    m_Name: Interact
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 9e9d073d-b761-465e-a3b8-842b5c1392a2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!225 &1697555079
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -23137,7 +23146,6 @@ MonoBehaviour:
   playerHUD: {fileID: 1018659760}
   deathScreen: {fileID: 1164667590}
   camSwitcher: {fileID: 1238869682}
-  healthDebug: {fileID: 302377781}
 --- !u!4 &1804133739
 Transform:
   m_ObjectHideFlags: 0
@@ -23173,36 +23181,6 @@ MonoBehaviour:
   stamSlider: {fileID: 1315744582}
   stamCanvasGroup: {fileID: 1025292539}
   playerSprinting: 0
---- !u!114 &1804133741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194616890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 60928690}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 1452025633}
 --- !u!143 &1804133742
 CharacterController:
   m_ObjectHideFlags: 0
@@ -23382,6 +23360,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1804133746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194616890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1805798170
 GameObject:
   m_ObjectHideFlags: 0
@@ -28258,63 +28266,6 @@ RectTransform:
   m_AnchoredPosition: {x: -2.6, y: -0.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &2131724336
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.83
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.48
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 7.246532
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98808956
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.1538798
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 17.704
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
-      propertyPath: m_Name
-      value: firstTrash
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5c9c27be03e8ef348965fc4c5168e259, type: 3}
 --- !u!114 &2137061698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28773,7 +28724,7 @@ PrefabInstance:
       objectReference: {fileID: 130755275}
     - target: {fileID: 2793158201272603468, guid: ecc591c05c1ca9844a26ba19d3f9460b, type: 3}
       propertyPath: m_VersionIndex
-      value: 1482
+      value: 1485
       objectReference: {fileID: 0}
     - target: {fileID: 3108078792532010883, guid: ecc591c05c1ca9844a26ba19d3f9460b, type: 3}
       propertyPath: gunMaster
@@ -29230,4 +29181,3 @@ SceneRoots:
   - {fileID: 5789469978538475983}
   - {fileID: 1734147402}
   - {fileID: 1532412976823974181}
-  - {fileID: 2131724336}
