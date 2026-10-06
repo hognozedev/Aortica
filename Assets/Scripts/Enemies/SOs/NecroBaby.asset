@@ -15,3 +15,7 @@ MonoBehaviour:
   enemyName: Fetal Necrophage
   enemyDamage: 20
   enemyHealth: 60
+  damageRanged: 0
+  attackWindup: 0
+  timeBetweenAttacks: 0
+  attackRange: 2

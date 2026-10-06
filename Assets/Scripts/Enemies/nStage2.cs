@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Multiplayer.PlayMode;
 using UnityEngine;
 using UnityEngine.AI;
 using static PlayerData;
@@ -17,7 +16,6 @@ public class nStage2 : MonoBehaviour
     public MeshRenderer mesh;
 
     [Header("Variables")]
-    public float attackRange;
     public LayerMask groundMask, playerMask, holeMask;
 
     bool inAttackRange, alreadyAttacked, retreating;
@@ -37,25 +35,35 @@ public class nStage2 : MonoBehaviour
 
     private void Update()
     {
-        inAttackRange = Physics.CheckSphere(enemy.position, attackRange, playerMask);
+        inAttackRange = Physics.CheckSphere(enemy.position, enemyData.attackRange, playerMask);
 
         if (!inAttackRange && !retreating) Chase();
-        if (inAttackRange && !retreating) Attack();
+        if (inAttackRange && !retreating) WindupAttack();
     }
 
     void Chase()
     {
         agent.SetDestination(player.transform.position);
+    }
 
+    private void WindupAttack()
+    {
+        agent.SetDestination(enemy.position);
+
+        Debug.Log("windup animation");
+
+        Invoke(nameof(Attack), enemyData.attackWindup);
     }
 
     private void Attack()
     {
         agent.SetDestination(enemy.position);
-        //stop on spot, and look at the player
+    //stop on spot, and look at the player
 
         if (!alreadyAttacked)
         {
+            Debug.Log("attack");
+
             alreadyAttacked = true;
             Retreat();
 
@@ -80,7 +88,6 @@ public class nStage2 : MonoBehaviour
                 closestHide = holeList[i];
             }
         }
-
         retreating = true;
         agent.SetDestination(closestHide.transform.position);
     }
@@ -112,17 +119,13 @@ public class nStage2 : MonoBehaviour
         enemyHealth -= damage;
 
         if (enemyHealth <= 0) EnemyDeath();
-
     }
 
     private void EnemyDeath()
     {
-        //vAnimator.SetTrigger("vDie");
         necroBabyKilled += 1;
         waveEnemyKills += 1;
 
         Destroy(gameObject);
-
     }
-
 }

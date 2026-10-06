@@ -13,6 +13,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public TextMeshProUGUI descText;
     public PlayerInventory playerInventory;
     public GunMaster gunMaster;
+    public Image slotBackground;
 
     public void UpdateSalv()
     {
@@ -28,15 +29,13 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             itemIcon.sprite = itemData.itemImage;
             itemIcon.gameObject.SetActive(true);
             quantityText.text = amount.ToString();     
-
         }
 
         else
         {
             itemIcon.gameObject.SetActive(false);
             quantityText.text = "";
-        }
-       
+        } 
     } 
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -51,12 +50,12 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerClick(PointerEventData eventData)
     {
-       if (amount > 0 && itemData != null && itemData.useable == true)
-       {
-            playerInventory.UseItem(this);
+       if (amount > 0 && itemData != null) //&& itemData.useable
+        {
+            Debug.Log("clicked");
 
+            playerInventory.slotSelected = true;
+            playerInventory.selectedItem = this;
        }
-
     }
-
 }

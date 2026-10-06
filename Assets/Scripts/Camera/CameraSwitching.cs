@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CameraSwitching : MonoBehaviour
 {
-    public PlayerController player;
+    private PlayerController player;
     public Image reticleHip;
     public Image reticleAim;
 
@@ -15,6 +15,7 @@ public class CameraSwitching : MonoBehaviour
 
     private void Awake()
     {
+        player = FindFirstObjectByType<PlayerController>();
         aimCamera = GetComponent<CinemachineCamera>();
 
         isAiming = false;
@@ -24,9 +25,9 @@ public class CameraSwitching : MonoBehaviour
 
     public void Update()
     {
-        if (InputManager.instance.AimInput && !isAiming) StartAim();
-        if (InputManager.instance.AimCancel && isAiming) CancelAim();
-
+        if (player.aimAction.WasPressedThisFrame() && !isAiming) StartAim();
+        if (player.aimAction.WasReleasedThisFrame() && isAiming) CancelAim();
+        if (player.inMenu && isAiming) CancelAim();
     }
 
     private void StartAim()
@@ -37,7 +38,6 @@ public class CameraSwitching : MonoBehaviour
         aimCamera.Priority += priorityBoostAmount;
         reticleAim.enabled = true;
         reticleHip.enabled = false;
-
     }
 
     private void CancelAim()
@@ -47,7 +47,5 @@ public class CameraSwitching : MonoBehaviour
         aimCamera.Priority -= priorityBoostAmount;
         reticleAim.enabled = false;
         reticleHip.enabled = true;
-    }
-// adds 10 to the priority order in order to ensure it is well above the current highest (which is 2)
-
+    }       // adds 10 to the priority order in order to ensure it is well above the current highest (which is 2)
 }

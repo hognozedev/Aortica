@@ -1,25 +1,30 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using static PlayerData;
+
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
-    public string[] lines;
+    private string[] lines;
     public float textSpeed;
 
     private int index;
     public bool isClicking = false;
-
+    private PlayerController player;
 
     void Start()
     {
+        lines = PlayerData.nextLobby.dialogueLines;
+      
+        player = FindFirstObjectByType<PlayerController>();
         dialogueText.text = string.Empty;
     }
 
     void Update()
     {    
-        if(InputManager.instance.ClickInput)
-        {           
+        if(player.clickAction.WasPressedThisFrame())
+        {
             if(dialogueText.text == lines[index])
             {
                 NextLine();

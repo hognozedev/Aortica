@@ -27,6 +27,6 @@ MonoBehaviour:
   bulletDrop: 0
   magSize: 5
   reloadTime: 2.5
-  jamChance: 50
+  jamChance: 95
   jamFix: 2
   meleeDmg: 25

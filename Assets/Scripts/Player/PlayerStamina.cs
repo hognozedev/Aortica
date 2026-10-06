@@ -60,32 +60,32 @@ public class PlayerStamina : MonoBehaviour
 
     IEnumerator RegenWait()
     {
-            yield return new WaitForSeconds(regenDelay);
-            currentStamina += regenSpeed * Time.deltaTime;
-            UpdateStamina(1);
+        yield return new WaitForSeconds(regenDelay);
+        currentStamina += regenSpeed * Time.deltaTime;
+        UpdateStamina(1);
     }
 
     public void Sprinting()
-	{
-			playerSprinting = true;
-            currentStamina -= staminaLoss * Time.deltaTime;
-			UpdateStamina(1);
-		// if the player has enough stamina and they are sprinting, lose over time and execute the visual bar decrease.
+    {
+        playerSprinting = true;
+        currentStamina -= staminaLoss * Time.deltaTime;
+        UpdateStamina(1);
+        // if the player has enough stamina and they are sprinting, lose over time and execute the visual bar decrease.
 
-	}
+    }
 
-	void UpdateStamina(int value) //checks when i ask instead of every frame
-	{
+    void UpdateStamina(int value) //checks when i ask instead of every frame
+    {
         stamSlider.fillAmount = currentStamina / maxStamina;
 
-		if (value == 0)
-		{
+        if (value == 0)
+        {
             stamCanvasGroup.alpha = 0;
-		}
+        }
 
-		if (value == 1)
-		{
+        if (value == 1)
+        {
             stamCanvasGroup.alpha = 1;
-		}
-	}
+        }
+    }
 }

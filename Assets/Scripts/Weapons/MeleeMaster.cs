@@ -19,10 +19,15 @@ public class MeleeMaster : MonoBehaviour
     private int meleeDamage;
     private bool isAttacking;
     private bool meleePress;
+    private PlayerController player;
+
+    void Awake()
+    {
+        player = FindFirstObjectByType<PlayerController>();
+    }
 
     public void Update()
     {
-        meleePress = InputManager.instance.AttackInput;
         if (meleePress) MeleeWeaponAttack();
     }
 

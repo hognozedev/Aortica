@@ -15,4 +15,7 @@ MonoBehaviour:
   enemyName: Vivisector
   enemyDamage: 0
   enemyHealth: 75
-  enemyDamageRanged: 25
+  damageRanged: 25
+  attackWindup: 0.5
+  timeBetweenAttacks: 0.5
+  attackRange: 10

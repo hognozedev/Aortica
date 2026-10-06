@@ -15,3 +15,7 @@ MonoBehaviour:
   enemyName: Waif
   enemyDamage: 25
   enemyHealth: 150
+  damageRanged: 0
+  attackWindup: 2
+  timeBetweenAttacks: 1
+  attackRange: 3

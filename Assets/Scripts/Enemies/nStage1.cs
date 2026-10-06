@@ -36,7 +36,6 @@ public class nStage1 : MonoBehaviour
         int chanceNum = Random.Range(1, 10);
         if (chanceNum <= fallChance) gameObject.GetComponent<Rigidbody>().useGravity = true;
         else return;
-
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -48,7 +47,6 @@ public class nStage1 : MonoBehaviour
             currentPlace = gameObject.transform.position;
 
             Evolve();
-
         }
     }
 
@@ -58,7 +56,6 @@ public class nStage1 : MonoBehaviour
 
         Instantiate(stage2, currentPlace, Quaternion.identity);
         Destroy(gameObject);
-
     }
     //when evolving, make the spawn point useable again for the spawner script
 
@@ -70,10 +67,10 @@ public class nStage1 : MonoBehaviour
 
     void EnemyDeath()
     {
+        necroMaster.ResetSpawnPoint(spawnPoint);
         Destroy(gameObject);
 
         necroEggKilled += 1;
         waveEnemyKills += 1;
     }
-
 }

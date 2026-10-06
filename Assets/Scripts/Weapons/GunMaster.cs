@@ -1,16 +1,16 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+
 public class GunMaster : MonoBehaviour
 {
-    [HideInInspector] public Transform cameraTransform;
-
     //public
     [Header("Refs")]
     public GunData gunData;
     public MeleeMaster meleeMaster;
     public AudioSource audioSource;
     public AudioClip jamSound;
+    [HideInInspector] public Transform cameraTransform;
 
     [Header("Vars")]
     public TextMeshProUGUI currentAmmoText;
@@ -31,10 +31,12 @@ public class GunMaster : MonoBehaviour
     private float val;
     private bool isJammed;
     private bool firstTime;
+    private PlayerController player;
 
 
     private void Start()
     {
+        player = FindFirstObjectByType<PlayerController>();
         cameraTransform = Camera.main.transform;
 
         isShooting = false;
@@ -46,8 +48,8 @@ public class GunMaster : MonoBehaviour
 
     public void Update()
     {
-        isShooting = InputManager.instance.AttackInput;
-        isReloading = InputManager.instance.ReloadInput;
+        isShooting = player.attackAction.WasPressedThisFrame();
+        isReloading = player.reloadAction.WasPressedThisFrame();
 
         if (isShooting && isJammed == false)
         {
@@ -114,11 +116,7 @@ public class GunMaster : MonoBehaviour
 
     public void TryShoot()
     {
-        if (currentAmmo <= 0f)
-        {
-            Debug.Log("reload " + gunData.gunName + " with 'R'");
-            return;
-        }
+        if (currentAmmo <= 0f) return;
 
         val = Random.Range(0, 100);
         
@@ -134,8 +132,7 @@ public class GunMaster : MonoBehaviour
 
         else if (Time.time >= NextTimeToFire)
         {
-            NextTimeToFire = Time.time + (1 / gunData.fireRate);
-        // e.g. if fire rate is 2 then wait between is 0.5 secs
+            NextTimeToFire = Time.time + (1 / gunData.fireRate);    // e.g. if fire rate is 2 then wait between is 0.5 secs
 
             HandleShoot();
         }
@@ -148,13 +145,12 @@ public class GunMaster : MonoBehaviour
         isJammed = false;
     }
 
-    private void HandleShoot()
+    private void HandleShoot()      // things that still need to happen when firing, even if no hit target like recoil/ screen shake, etc.
     {
         currentAmmo--;
         UpdateHUD();
         Shoot();
-    }
-    // things that still need to happen when firing, even if no hit target like recoil/ screen shake, etc.
+    }       
 
     private void Shoot()
     {

@@ -3,22 +3,18 @@ using UnityEngine;
 public class WeaponSwitching : MonoBehaviour
 {
     public int currentWeapon = 0;
+    private PlayerController player;
+
 
     void Start()
     {
-        //playerInput = GetComponent<PlayerInput>();
-        //scrollAction = playerInput.actions["Scroll"];
-
-        //playerController = GetComponent<PlayerController>();
-
+        player = FindFirstObjectByType<PlayerController>();
         SelectWeapon();
-
     }
 
     void Update()
     {
-        float y = InputManager.instance.ScrollInput;
-            //scrollAction.ReadValue<float>();
+        float y = player.scrollAction.ReadValue<float>();
         int previousWeapon = currentWeapon;
 
         if (y > 0)
@@ -33,12 +29,10 @@ public class WeaponSwitching : MonoBehaviour
             else    currentWeapon--;
         }
 
-        if (InputManager.instance.OneInput) currentWeapon = 0;
-        if (InputManager.instance.TwoInput && transform.childCount >= 2 ) currentWeapon = 1;
-        if (InputManager.instance.ThreeInput && transform.childCount >= 3 ) currentWeapon = 2;
-
+        if (player.oneAction.WasPressedThisFrame()) currentWeapon = 0;
+        if (player.twoAction.WasPressedThisFrame() && transform.childCount >= 2 ) currentWeapon = 1;
+        if (player.threeAction.WasPressedThisFrame() && transform.childCount >= 3 ) currentWeapon = 2;
         if (previousWeapon != currentWeapon) SelectWeapon();
-
     }
 
     void SelectWeapon()
@@ -58,7 +52,5 @@ public class WeaponSwitching : MonoBehaviour
             i++;
         }
     //loop through each weapon, see if it matches the current one (i), if so sets active, and if not hides it.
-
     }
-
 }

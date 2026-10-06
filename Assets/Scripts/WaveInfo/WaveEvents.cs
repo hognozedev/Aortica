@@ -1,65 +1,36 @@
+using Unity.VectorGraphics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 public class WaveEvents : MonoBehaviour
 {
     public PlayerController player;
     public GameObject pauseMenu;
-    public Volume filmFX;
 
     bool escPressed;
-    bool fxOn;
-    bool menuOpen;
+    [HideInInspector] public bool menuOpen;
 
     public void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         player.inLobby = false;
-        if (filmFX == true) fxOn = true;
     }
 
     public void Update()
     {
-        escPressed = InputManager.instance.EscapeInput;
+        escPressed = player.escapeAction.WasPressedThisFrame();
         if (escPressed && !menuOpen) PauseMenu();
-        else if (escPressed && menuOpen) Resume();
     }
 
     public void PauseMenu()
     {
-        Time.timeScale = 0;
-
         player.InMenu();
+        player.cancelAction.Disable();
+
         pauseMenu.SetActive(true);
         menuOpen = true;
-    }
-
-    public void Resume()
-    {
-        Time.timeScale = 1;
-
-        player.ExitedMenu();
-        pauseMenu.SetActive(false);
-        menuOpen = false;
-    }
-
-    public void ToggleFilter()
-    {
-        if (fxOn)
-        {
-            filmFX.enabled = false;
-            fxOn = false;
-        }
-
-        else if (!fxOn)
-        {
-            filmFX.enabled = true;
-            fxOn = true;
-        }
-    }
-
-    public void ExitToMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 0f;
     }
 }

@@ -15,7 +15,7 @@ public class VivisectorAI : MonoBehaviour
     [HideInInspector] public GameObject spawnPoint;
 
     [Header("Variables")]
-    public float sightRange, attackRange;
+    public float sightRange;
     public LayerMask groundMask, playerMask;
     public Collider critSpot;
 
@@ -31,7 +31,7 @@ public class VivisectorAI : MonoBehaviour
     float walkPointRange = 50f;
 
     //attack
-    bool alreadyAttacked;
+    bool alreadyAttacked, windingUp;
     bool inSightRange;
     bool inAttackRange;
 
@@ -39,6 +39,7 @@ public class VivisectorAI : MonoBehaviour
     private void Start()
     {
         player = FindFirstObjectByType<PlayerController>();
+        viviMaster = FindFirstObjectByType<ViviMaster>();
 
         float eh = enemyData.enemyHealth * Random.Range(0.8f, 1.2f);
         enemyHealth = (int)eh;
@@ -48,11 +49,11 @@ public class VivisectorAI : MonoBehaviour
     private void Update()
     {
         inSightRange = Physics.CheckSphere(enemy.position, sightRange, playerMask);
-        inAttackRange = Physics.CheckSphere(enemy.position, attackRange, playerMask);
+        inAttackRange = Physics.CheckSphere(enemy.position, enemyData.attackRange, playerMask);
 
         if (!inSightRange && !inAttackRange) Patrol();
         if (inSightRange && !inAttackRange) Chase();
-        if (inSightRange && inAttackRange) Attack();
+        if (inSightRange && inAttackRange && !windingUp) AttackWindup();
     //when the enemy should run each different phase
 
     }
@@ -74,7 +75,7 @@ public class VivisectorAI : MonoBehaviour
     {
         if (!isClose)
         {
-            vAnimator.SetTrigger("vClose");
+            //vAnimator.SetTrigger("vClose");
             isClose = true;
             isOpen = false;
         }
@@ -95,20 +96,25 @@ public class VivisectorAI : MonoBehaviour
     //move to the player
     }
 
+    private void AttackWindup()
+    {
+        windingUp = true;
+        agent.SetDestination(enemy.position);
+        enemy.LookAt(player.transform);
+
+        Invoke(nameof(Attack), enemyData.attackWindup);
+    }
+
     private void Attack()
     {
         if (!isOpen)
         {
-            vAnimator.SetTrigger("vOpen");
+            //vAnimator.SetTrigger("vOpen");
             isOpen = true;
             isClose = false;
         }
 
-        agent.SetDestination(enemy.position);
-        enemy.LookAt(player.transform);
-        //stop on spot, and look at the player
-
-        if (!alreadyAttacked)
+        if (!alreadyAttacked && inAttackRange)
         {
             Rigidbody rb = Instantiate(vProjectile, enemy.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(enemy.forward * 32f, ForceMode.Impulse);
@@ -117,16 +123,21 @@ public class VivisectorAI : MonoBehaviour
             ///
 
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), Random.Range(0.5f, 2));
+            Invoke(nameof(ResetAttack), enemyData.timeBetweenAttacks);
+        }
 
+        else if (!inAttackRange)
+        {
+            Debug.Log("attack anim no damage");
+
+            Invoke(nameof(ResetAttack), enemyData.timeBetweenAttacks);
         }
     }
-
 
     private void ResetAttack()
     {
         alreadyAttacked = false;
-
+        windingUp = false;
     }
 
     public void TakeDamage(int damage, Collider col)
@@ -135,16 +146,16 @@ public class VivisectorAI : MonoBehaviour
 
         if (col == critSpot)
         {
-            Debug.Log("col");
+            Debug.Log("taking damage");
             enemyHealth -= damage;
-
         }
-
     }
 
     private void EnemyDeath()
     {
-        vAnimator.SetTrigger("vDie");
+        Debug.Log("enemy death");
+
+        if(viviMaster != null) viviMaster.ResetSpawnPoint(spawnPoint);
         StartCoroutine(DestroyEnemy());
 
         vivisectorsKilled+=1;
@@ -153,10 +164,7 @@ public class VivisectorAI : MonoBehaviour
 
     IEnumerator DestroyEnemy()
     {
-        viviMaster.ResetSpawnPoint(spawnPoint);
-
         yield return new WaitForSeconds(1);
-        Destroy(transform.parent.gameObject);
-
+        Destroy(gameObject);
     }
 }

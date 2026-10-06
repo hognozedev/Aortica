@@ -5,16 +5,16 @@ using UnityEngine.InputSystem;
 public class interactPrompt : MonoBehaviour
 {
     public TextMeshProUGUI interactKey;
-    public InputAction interactAction;
     private string keyName;
-    private PlayerInput playerInput; 
+    private PlayerController player;
+    private InputAction intA;
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-        interactAction = playerInput.actions["Interact"];
+        player = FindFirstObjectByType<PlayerController>();
+        intA = player.interactAction;
 
-        keyName = interactAction.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
+        keyName = intA.GetBindingDisplayString(InputBinding.DisplayStringOptions.DontIncludeInteractions);
         interactKey.text = keyName;
     }
 }

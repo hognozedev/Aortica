@@ -1,15 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-
-    private PlayerController playerController;
+    private PlayerController player;
     private ItemUses itemUses;
 
     public InventorySlot[] invSlots;
     public ModifySlots[] modSlots;
     public GameObject inventoryUI;
 
+    public bool slotSelected;
+    public InventorySlot selectedItem;
     bool invOpen;
 
 
@@ -28,7 +30,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        playerController = GetComponent<PlayerController>();
+        player = GetComponent<PlayerController>();
 
         foreach (var slot in invSlots)
         {
@@ -44,21 +46,27 @@ public class PlayerInventory : MonoBehaviour
 
     void Update()
     {
-        if (InputManager.instance.InventoryInput && !invOpen) 
+        if (player.inventoryAction.WasPressedThisFrame() && !invOpen) 
         {
-            playerController.InMenu();
+            player.InMenu();
             inventoryUI.gameObject.SetActive(true);
             invOpen = true;
         }
 
-        if (InputManager.instance.InventoryInput && invOpen)
+        if (player.cancelAction.WasPressedThisFrame() && invOpen)
         {
-            invOpen = false;
-            playerController.ExitedMenu();
             inventoryUI.gameObject.SetActive(false);
+            invOpen = false;
+            player.ExitedMenu();
+        }
+
+        if(invOpen && slotSelected && player.menuInteractAction.WasPressedThisFrame())
+        {
+            Debug.Log("interacted with");
+            UseItem(selectedItem);
+            slotSelected = false;
         }
     }
-
 
     public void PopItem(ItemData itemData, int cost, int amount)
     {
@@ -110,19 +118,26 @@ public class PlayerInventory : MonoBehaviour
 
     public void UseItem(InventorySlot slot)
     {
-        ItemEffect(slot.itemData, slot);      
+        Debug.Log("used " + slot.itemData.itemName);
 
-        slot.amount--;
-        if (slot.amount <= 0) slot.itemData = null;
-        slot.UpdateInv();
+        if (slot.itemData.useable)
+        {
+            if (slot.itemData.isHeal)
+            {
+                //play healing animtaion
+                StartCoroutine(ItemEffect(slot));
+            }
+        }
+        else if (!slot.itemData.useable) Debug.Log(slot.itemData.itemName + " cant be used!");
     }
 
-//put all item effects here!
-    public void ItemEffect(ItemData itemData, InventorySlot slot)
+    private IEnumerator ItemEffect(InventorySlot slot2)
     {
-        if (slot.itemData.isHealing == true)
-        {
-            Debug.Log("there was a healing");
-        }
+        yield return new WaitForSeconds(slot2.itemData.healTime);
+
+        if(slot2 != null) player.UpdatePlayerHealth(-slot2.itemData.healAmount);
+        slot2.amount--;
+        if (slot2.amount <= 0) slot2.itemData = null;
+        slot2.UpdateInv();
     }
 }

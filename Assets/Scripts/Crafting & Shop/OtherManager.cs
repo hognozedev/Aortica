@@ -19,7 +19,7 @@ public class OtherManager : MonoBehaviour, IInteractable
     [SerializeField] private GameObject panel1;
     [SerializeField] private GameObject panel2;
 
-    [SerializeField] private PlayerController playerController;
+    private PlayerController player;
 
     [SerializeField] private bool isEnabled = true;
     public bool CanInteract() => isEnabled;
@@ -27,23 +27,23 @@ public class OtherManager : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        player = FindFirstObjectByType<PlayerController>();
         PopulateOtherItems();
         canvasGroup.gameObject.SetActive(false);
-
     }
+
     public void Update()
     {
-        if (InputManager.instance.CancelInput)
+        if (player.cancelAction.WasPressedThisFrame())
         {
-            playerController.ExitedMenu();
+            player.ExitedMenu();
             OnFocusLost();
         }
-
     }
 
     public void Interact()
     {
-        playerController.InMenu();
+        player.InMenu();
 
         canvasGroup.gameObject.SetActive(true);
         Cursor.visible = true;
@@ -67,28 +67,29 @@ public class OtherManager : MonoBehaviour, IInteractable
 
     public void TryBuyItem(ItemData itemData, int cost)
     {
-        if(itemData != null && PlayerData.playerEnm >= cost)
+        if (itemData != null && PlayerData.playerEnm >= cost)
         {
-            //check if player has space
             PlayerData.playerEnm -= cost;
 
             //OnItemTaken?.Invoke(itemData, cost, amount);
-
         }
-    //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
+        //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
 
-        else if(itemData != null && PlayerData.playerEnm <= cost)
+        else if (itemData != null && PlayerData.playerEnm <= cost)
         {
             Debug.Log("");
             Debug.Log("Not enough Enmity");
         }
-
     }
 
-    public void ChangePage()
+    public void ChangePage1()
     {
-        if (panel1) { panel2.SetActive(true); panel1.SetActive(false); }
-        if (panel2) { panel1.SetActive(true); panel2.SetActive(false); }
+        panel1.SetActive(true); panel2.SetActive(false);
+    }
+
+    public void ChangePage2()
+    {
+        panel2.SetActive(true); panel1.SetActive(false);
     }
 
     public void OnFocusGained()
@@ -98,7 +99,7 @@ public class OtherManager : MonoBehaviour, IInteractable
 
     public void OnFocusLost()
     {
-        playerController.ExitedMenu();
+        player.ExitedMenu();
 
         canvasGroup.gameObject.SetActive(false);
         interactPrompt.gameObject.SetActive(false);

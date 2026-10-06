@@ -18,30 +18,29 @@ public class CraftManager : MonoBehaviour, IInteractable
     [SerializeField] private GameObject interactPrompt;
     [SerializeField] private CanvasGroup canvasGroup;
     public GameObject inventoryUI;
-    public PlayerController playerController;
     public GunMaster gunMaster;
 
+    private PlayerController player;
 
     private void Start()
     {
+        player = FindFirstObjectByType<PlayerController>();
         PopulateCraftItems();
     }
 
     public void Interact()
     {
-        playerController.InMenu();
+        player.InMenu();
         canvasGroup.gameObject.SetActive(true);
         inventoryUI.SetActive(true);
     }
 
     public void Update()
     {
-        if (InputManager.instance.CancelInput)
+        if (player.cancelAction.WasPerformedThisFrame())
         {
-            playerController.ExitedMenu();
             OnFocusLost();
         }
-
     }
 
     public void PopulateCraftItems()
@@ -57,7 +56,6 @@ public class CraftManager : MonoBehaviour, IInteractable
         {
             craftSlots[i].gameObject.SetActive(false);
         }
-
     }
 
     public void TryBuyItem(ItemData itemData, int cost, int amount)
@@ -77,14 +75,13 @@ public class CraftManager : MonoBehaviour, IInteractable
             Debug.Log("bought");
             gunMaster.UpdateHUD();
         }
-        //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
+    //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
 
         else if (PlayerData.playerSalv < cost)
         {
             Debug.Log("");
             Debug.Log("Not enough Salvage");
         }
-
     }
 
     public void OnFocusGained()
@@ -94,7 +91,7 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void OnFocusLost()
     {
-        playerController.ExitedMenu();
+        player.ExitedMenu();
         canvasGroup.gameObject.SetActive(false);
         interactPrompt.gameObject.SetActive(false);
         inventoryUI.SetActive(false);

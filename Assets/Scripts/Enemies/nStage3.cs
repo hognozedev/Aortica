@@ -16,8 +16,7 @@ public class nStage3 : MonoBehaviour
     public float sightRange;
     public float attackRange;
     public float dashRange;
-    public float meleeRange;
-        //melee range should always be about half of attack range
+    public float meleeRange; //melee range should always be about half of attack range
     public LayerMask groundMask, playerMask;
 
     [Header("Body Parts")]

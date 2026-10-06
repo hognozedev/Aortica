@@ -6,16 +6,21 @@ public class noteData : MonoBehaviour, IInteractable
 {
     public string noteText;
     public Sprite noteImage;
-
     public Image noteImageRef;
     public TextMeshProUGUI noteTextRef;
     public GameObject prompts;
     public GameObject noteUI;
-    public PlayerController player;
+
+    private PlayerController player;
+
+    void Awake()
+    {
+        player = FindFirstObjectByType<PlayerController>();
+    }
 
     public void Update()
     {
-        if (InputManager.instance.CancelInput)
+        if (player.cancelAction.WasPressedThisFrame())
         {
             OnFocusLost();
         }
@@ -41,5 +46,4 @@ public class noteData : MonoBehaviour, IInteractable
         noteUI.SetActive(false);
         player.ExitedMenu();
     }
-
 }

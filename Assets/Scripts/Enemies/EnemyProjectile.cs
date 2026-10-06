@@ -8,7 +8,7 @@ public class EnemyProjectile : MonoBehaviour
 
     public void Start()
     {
-        vDamage = enemyData.enemyDamageRanged * Random.Range(0.8f, 1.2f);
+        vDamage = enemyData.damageRanged * Random.Range(0.8f, 1.2f);
     }
 
     private void OnCollisionEnter(Collision other)
