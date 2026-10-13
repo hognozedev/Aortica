@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using static PlayerData;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class CraftItems
@@ -67,15 +68,22 @@ public class CraftManager : MonoBehaviour, IInteractable
             return;
         }
 
-        if(PlayerData.playerSalv >= cost)
+        if(!itemData.isModifier && !itemData.isWeapon && PlayerData.playerSalv >= cost)
         {
             PlayerData.playerSalv -= cost;
             OnItemTaken?.Invoke(itemData, cost, amount);
 
             Debug.Log("bought");
-            gunMaster.UpdateHUD();
+            //gunMaster.UpdateHUD();
         }
-    //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
+        //check that the corresponding shop button has a valid itemData attached, and that the player has enough salvage to buy.
+
+        if (itemData.isWeapon)
+        {
+            PlayerData.playerSalv -= cost;
+            OnGunTaken?.Invoke(itemData, cost, amount);
+            //disable the button plez
+        }
 
         else if (PlayerData.playerSalv < cost)
         {

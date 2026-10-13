@@ -4,26 +4,27 @@ using UnityEngine;
 public class PlayerInventory : MonoBehaviour
 {
     private PlayerController player;
-    private ItemUses itemUses;
 
     public InventorySlot[] invSlots;
     public ModifySlots[] modSlots;
     public GameObject inventoryUI;
 
-    public bool slotSelected;
-    public InventorySlot selectedItem;
+    [HideInInspector] public bool slotSelected;
+    [HideInInspector] public InventorySlot selectedItem;
     bool invOpen;
 
 
     private void OnEnable()
     {
         PlayerData.OnItemTaken += PopItem;
+        PlayerData.OnGunTaken += GunHotb;
         PlayerData.OnModify += ModItem;
     }
 
     private void OnDisable()
     {
         PlayerData.OnItemTaken -= PopItem;
+        PlayerData.OnGunTaken -= GunHotb;
         PlayerData.OnModify -= ModItem;
     }
 
@@ -115,6 +116,12 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
+
+    public void GunHotb(ItemData itemData, int cost, int amount)
+    {
+        Debug.Log("gun in hotbar");
+    }
+
 
     public void UseItem(InventorySlot slot)
     {

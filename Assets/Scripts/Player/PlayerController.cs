@@ -51,8 +51,6 @@ public class PlayerController : MonoBehaviour
     private Collider[] buffer = new Collider[32];
     private IInteractable focused;
 
-    public LobbyData lobbyTest;
-
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -82,8 +80,6 @@ public class PlayerController : MonoBehaviour
 
         currentHealth = maxHealth;
         if (inLobby == false) UpdatePlayerHealth(0);
-
-        nextLobby = lobbyTest;
     }
 
     void Update()

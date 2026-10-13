@@ -16,12 +16,14 @@ MonoBehaviour:
   itemDescription: 
   itemImage: {fileID: 21300000, guid: 2cd234a4515296f4e9b14b18e1b2e160, type: 3}
   itemRarity: 0
-  itemCost: 0
+  itemCost: 5
   stackSize: 0
   shopAmount: 0
   playerHas: 0
   useable: 0
   isModifier: 0
-  isHealing: 0
+  isHeal: 0
+  healAmount: 0
+  healTime: 0
   isAmmo: 0
   isWeapon: 1

@@ -17,6 +17,7 @@ public static class PlayerData
 
     [Header("Inventory")]
     public static Action<ItemData, int, int> OnItemTaken;
+    public static Action<ItemData, int, int> OnGunTaken;
     public static Action<ItemData> OnModify;
 
     [Header("Level Data")]
