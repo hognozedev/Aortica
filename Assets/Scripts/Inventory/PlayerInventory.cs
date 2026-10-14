@@ -1,13 +1,17 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
+using static PlayerData;
 
 public class PlayerInventory : MonoBehaviour
 {
     private PlayerController player;
 
     public InventorySlot[] invSlots;
-    public ModifySlots[] modSlots;
+    public ModifySlot[] modSlots;
+    public HotbarSlot[] hbSlots;
     public GameObject inventoryUI;
+    public WeaponHandler handler;
 
     [HideInInspector] public bool slotSelected;
     [HideInInspector] public InventorySlot selectedItem;
@@ -42,6 +46,11 @@ public class PlayerInventory : MonoBehaviour
         {
             slotm.UpdateMod();
         }
+
+        foreach (var slothb in hbSlots)
+        {
+            slothb.UpdateHotbar();
+        }
     }
 
 
@@ -69,7 +78,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void PopItem(ItemData itemData, int cost, int amount)
+    public void PopItem(ItemData itemData, int amount)
     {
         foreach (var slot in invSlots)
         {
@@ -92,6 +101,8 @@ public class PlayerInventory : MonoBehaviour
         {
             if (slot.itemData == null)
             {
+                Debug.Log("new line");
+
                 int amountToAdd = Mathf.Min(itemData.stackSize, amount);
 
                 slot.itemData = itemData;
@@ -117,9 +128,45 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void GunHotb(ItemData itemData, int cost, int amount)
+    public void GunHotb(ItemData itemData)
     {
-        Debug.Log("gun in hotbar");
+        int maxAmount = 1;     //there cannot be more than 1 weapon of each type.
+        int maxWeapons = hbSlots.ToArray().Length;
+
+        foreach (var slot in hbSlots)
+        {
+            if (slot.itemData == itemData && itemData.playerHas < maxAmount)
+            {
+                int availableSpace = itemData.stackSize - maxAmount;
+                int amountToAdd = Mathf.Min(availableSpace, maxAmount);
+
+                slot.UpdateHotbar();
+
+                itemData.playerHas += amountToAdd;
+
+                if (maxAmount <= 0) return;
+            }
+        }
+
+        foreach (var slot in hbSlots)
+        {
+            if (slot.itemData == null)
+            {
+                int amountToAdd = Mathf.Min(itemData.stackSize);
+
+                slot.itemData = itemData;
+                slot.UpdateHotbar();
+
+                itemData.playerHas += amountToAdd;
+
+                return;
+
+
+            }
+        }
+
+        if (currentWeapons > maxWeapons) PopItem(itemData, 1);
+
     }
 
 

@@ -21,8 +21,8 @@ public class GunMaster : MonoBehaviour
     [SerializeField] private float bulletMissDistance = 25f;
 
     [Header("Bools")]
-    public bool isReloading = false;
-    public bool isShooting = false;
+    public bool isReloading;
+    public bool isShooting;
     public bool isMeleeMode;
 
     //private

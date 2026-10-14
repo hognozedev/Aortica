@@ -3,7 +3,7 @@ using UnityEngine;
 public static class PlayerData
 {
     [Header("Health")]
-    public static int maxHealth = 1000, currentHealth;
+    public static int maxHealth = 250, currentHealth;
 
     [Header("Stamina")]
     public static float maxStamina = 20, staminaLoss = 10, regenSpeed = 5, regenDelay = 2;
@@ -16,9 +16,11 @@ public static class PlayerData
     public static int playerSalv = 200, playerEnm;
 
     [Header("Inventory")]
-    public static Action<ItemData, int, int> OnItemTaken;
-    public static Action<ItemData, int, int> OnGunTaken;
+    public static Action<ItemData, int> OnItemTaken;
+    public static Action<ItemData> OnGunTaken;
     public static Action<ItemData> OnModify;
+    public static int currentWeapons;
+    //LAYOUT OF INVENTORY/ ITEMS IT CONTAINS
 
     [Header("Level Data")]
     public static int waveEnemyKills, vivisectorsKilled, waifsKilled, hoarfrostsKilled, necroEggKilled, necroBabyKilled, necrophagesKilled;

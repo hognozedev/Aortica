@@ -1,18 +1,21 @@
 using UnityEngine;
+using static PlayerData;
 
 public class MeleeSpawn : MonoBehaviour, IInteractable
 {
     public PlayerController playerController;
     [SerializeField] private GameObject interactPrompt = null;
-    public GameObject prefab;
-    public GameObject spawnPos;
-    public GameObject weaponHolder;
+    public WeaponHandler handler;
+    public ItemData itemData;
 
     public void Interact()
     {
-        var newPrefab = Instantiate(prefab, spawnPos.transform.position, Quaternion.identity);
-        newPrefab.transform.parent = weaponHolder.transform;
+        //var newPrefab = Instantiate(prefab, spawnPos.transform.position, Quaternion.identity);
+        //newPrefab.transform.parent = weaponHolder.transform;
 
+        //handler.AddWeaponToHand();
+
+        OnGunTaken?.Invoke(itemData);
         Destroy(gameObject);
     }
 

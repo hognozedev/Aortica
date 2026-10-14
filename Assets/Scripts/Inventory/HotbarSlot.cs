@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ModifySlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HotbarSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public ItemData itemData;
     public TextMeshProUGUI descText;
     public Image itemIcon;
 
-    public void UpdateMod()
+    public void UpdateHotbar()
     {
         if (itemData != null)
         {
@@ -33,6 +33,5 @@ public class ModifySlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         descText.text = "";
     }
-
 
 }

@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Rifle
-  itemDescription: 
+  itemDescription: a big scary gun kyaaaa
   itemImage: {fileID: 21300000, guid: 247c0c88040dbc4489a8281aa69efb5c, type: 3}
   itemRarity: 0
-  itemCost: 0
+  itemCost: 50
   stackSize: 0
   shopAmount: 0
   playerHas: 0
   useable: 0
   isModifier: 0
-  isHealing: 0
+  isHeal: 0
+  healAmount: 0
+  healTime: 0
   isAmmo: 0
   isWeapon: 1

@@ -1,15 +1,23 @@
 using UnityEngine;
 
-public class WeaponSwitching : MonoBehaviour
+public class WeaponHandler : MonoBehaviour
 {
     public int currentWeapon = 0;
     private PlayerController player;
+    public GameObject spawnPos;
+    public PlayerInventory inventory;
 
+    [Header("Prefab references")]
+    public GameObject pistol;
+    public GameObject rifle;
+    public GameObject shotgun;
+    public GameObject pipe;
 
     void Start()
     {
         player = FindFirstObjectByType<PlayerController>();
         SelectWeapon();
+
     }
 
     void Update()
@@ -34,6 +42,14 @@ public class WeaponSwitching : MonoBehaviour
         if (player.threeAction.WasPressedThisFrame() && transform.childCount >= 3 ) currentWeapon = 2;
         if (previousWeapon != currentWeapon) SelectWeapon();
     }
+
+    public void AddWeaponToHand()
+    {
+        //var newPrefab = Instantiate(prefab, spawnPos.transform.position, Quaternion.identity);
+        //newPrefab.transform.parent = this.transform;
+
+    }
+
 
     void SelectWeapon()
     {

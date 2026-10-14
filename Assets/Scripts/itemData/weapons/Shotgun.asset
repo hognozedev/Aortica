@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Shotgun
-  itemDescription: 
+  itemDescription: ghkjgh
   itemImage: {fileID: 21300000, guid: 5f92e97d51140fa4e9ec641aea1a017b, type: 3}
   itemRarity: 0
   itemCost: 0
@@ -22,6 +22,8 @@ MonoBehaviour:
   playerHas: 0
   useable: 0
   isModifier: 0
-  isHealing: 0
+  isHeal: 0
+  healAmount: 0
+  healTime: 0
   isAmmo: 0
   isWeapon: 1
