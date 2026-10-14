@@ -24,4 +24,5 @@ public class ItemData : ScriptableObject
     [Header("Weapon")]
     public bool isAmmo;
     public bool isWeapon;
+
 }

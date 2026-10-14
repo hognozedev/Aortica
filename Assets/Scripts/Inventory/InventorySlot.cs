@@ -28,7 +28,10 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             itemIcon.sprite = itemData.itemImage;
             itemIcon.gameObject.SetActive(true);
-            quantityText.text = amount.ToString();     
+            if (!itemData.isWeapon)
+            {
+                quantityText.text = amount.ToString();
+            }
         }
 
         else
