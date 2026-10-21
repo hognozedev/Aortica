@@ -3,33 +3,32 @@ using UnityEngine.SceneManagement;
 
 public class InteractBehaviour : MonoBehaviour, IInteractable
 {
-    [SerializeField] private GameObject interactPrompt;
-    private bool warned = false;
-
-
     public bool CanInteract() => true;
+    public GameObject interactPrompt;
+    public bool isDoor;
+    public LobbyEvents lobby;
+
+    public GameObject warningPopup;
+    private bool warned = false;
 
     public void Interact()
     {
         if (warned == true)
         {
-            SceneManager.LoadScene("WaveScene1");
+            SceneManager.LoadScene(lobby.LSO.nextWaveScene);
         }
 
-        Debug.Log("");
-        Debug.Log("Start first wave? You can't go back.");
+        warningPopup.SetActive(true);
         warned = true;
     }
 
     public void OnFocusGained()
     {
         interactPrompt.gameObject.SetActive(true);
-
     }
 
     public void OnFocusLost()
     {
         interactPrompt.gameObject.SetActive(false);
-
     }
 }

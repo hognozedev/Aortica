@@ -6,4 +6,5 @@ public class LobbyData : ScriptableObject
     public string lobbyName;
     public int lobbyNumber;
     public string[] dialogueLines;
+    public string nextWaveScene;
 }

@@ -22075,7 +22075,7 @@ MonoBehaviour:
   h50: {fileID: 1584064628}
   h25: {fileID: 7982027}
   playerHUD: {fileID: 1018659760}
-  cc: {fileID: 1804133742}
+  debugHealth: {fileID: 0}
   deathScreen: {fileID: 1164667590}
   camSwitcher: {fileID: 1238869682}
   pauseManager: {fileID: 2105200237}
@@ -27371,7 +27371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8915124290251487872, guid: 4e16824918825cb4884be9e1e551a038, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28074,7 +28074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6436918907607801844, guid: 6c5b978487919ee488a2e40ac16875c1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

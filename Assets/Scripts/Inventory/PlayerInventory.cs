@@ -17,7 +17,6 @@ public class PlayerInventory : MonoBehaviour
     [HideInInspector] public InventorySlot selectedItem;
     bool invOpen;
 
-
     private void OnEnable()
     {
         PlayerData.OnItemTaken += PopItem;
