@@ -51,9 +51,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 09d7466c10ca914478c371f62c3d5990, type: 2}
   agent: {fileID: 6613930476255871148}
   enemy: {fileID: 6349118224969685212}
-  widle: {fileID: 3225998923201912239}
   spawnPoint: {fileID: 0}
-  attackRange: 3
   sightRange: 15
   groundMask:
     serializedVersion: 2
@@ -81,8 +79,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3.56
-  m_BaseOffset: 1.82
+  m_Height: 3.25
+  m_BaseOffset: 1.65
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!65 &4018646797686654557
@@ -140,8 +138,8 @@ GameObject:
   - component: {fileID: 7800111066293790235}
   - component: {fileID: 9077026456815492526}
   - component: {fileID: 8583048316638532670}
-  - component: {fileID: 3323558656445787325}
-  - component: {fileID: 3225998923201912239}
+  - component: {fileID: 3576703521976514461}
+  - component: {fileID: 6045281375608400407}
   m_Layer: 9
   m_Name: wSprite
   m_TagString: Untagged
@@ -236,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e74ba33b7407c4fbfbb34826f5c5e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteBillboarding
---- !u!111 &3323558656445787325
+--- !u!111 &3576703521976514461
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,15 +243,15 @@ Animation:
   m_GameObject: {fileID: 6886065256679724053}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 4c99c58d0aaf6ed4fa05fdaa7b4f1c86, type: 2}
+  m_Animation: {fileID: 7400000, guid: d6f45f664a7b46046990780e66f58de4, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 4c99c58d0aaf6ed4fa05fdaa7b4f1c86, type: 2}
+  - {fileID: 7400000, guid: d6f45f664a7b46046990780e66f58de4, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 0
+  m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
---- !u!95 &3225998923201912239
+--- !u!95 &6045281375608400407
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -263,7 +261,7 @@ Animator:
   m_GameObject: {fileID: 6886065256679724053}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 53c849cace373f44dbcba5a1e4477b50, type: 2}
+  m_Controller: {fileID: 9100000, guid: 010e1eff8b1f75348a8395cd1ad850a5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
