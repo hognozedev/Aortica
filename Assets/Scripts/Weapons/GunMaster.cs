@@ -62,7 +62,7 @@ public class GunMaster : MonoBehaviour
         }
 
 
-        if (isShooting)
+        if (isShooting && !player.inLobby)
         {
             if (currentAmmo <= 0 && gunData.ammoType.playerHas <= 0)
             {

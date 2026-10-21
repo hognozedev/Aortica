@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public CinemachineInputAxisController camInputs;
     [SerializeField] private GameObject interactPrompt, h75, h50, h25;
     public GameObject playerHUD;
-    public CharacterController cc;
+    public TextMeshProUGUI debugHealth;
 
     [Header("Scripts")]
     public DeathScreen deathScreen;
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = true;
 
         currentHealth = maxHealth;
-        if (inLobby == false) UpdatePlayerHealth(0);
+        UpdatePlayerHealth(0);
     }
 
     void Update()
@@ -94,35 +94,26 @@ public class PlayerController : MonoBehaviour
         bool walkForward = moveAction.IsPressed();
         bool isSprinting = sprintAction.IsPressed();
 
-        if (inLobby == false)
+        if (walkForward) playerSpeed = walkSpeed;
+
+        if (isSprinting & walkForward & !camSwitcher.isAiming)
         {
-            if (walkForward) playerSpeed = walkSpeed;
-
-            if (isSprinting & walkForward & !camSwitcher.isAiming)
+            if (stamina.currentStamina > 0)
             {
-                if (stamina.currentStamina > 0)
-                {
-                    stamina.playerSprinting = true;
-                    stamina.Sprinting();
-                    playerSpeed = sprintSpeed;
-                }
+                stamina.playerSprinting = true;
+                stamina.Sprinting();
+                playerSpeed = sprintSpeed;
             }
-
-            else
-            {
-                stamina.playerSprinting = false;
-            }
-
         }
 
-        if (inLobby == true) playerSpeed = walkSpeed;
-        groundedPlayer = controller.isGrounded;
+        else stamina.playerSprinting = false;
 
+        groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0) playerVelocity.y = 0f;
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);       
-    //gravity
+            //gravity
 
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x, 0, input.y);
@@ -130,11 +121,11 @@ public class PlayerController : MonoBehaviour
         move = move.x * cameraTransform.right.normalized + move.z * cameraTransform.forward.normalized;
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
-    //use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
+            //use the vec2 to create a new vec3 where vertical movement is locked to 0 (change for jumping)
 
         Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, (lookSensitivity * 100) * Time.deltaTime);
-    //player will move in direction the camera faces
+            //player will move in direction the camera faces
     }
 
     private IInteractable FindNearestInteractable()
@@ -173,11 +164,9 @@ public class PlayerController : MonoBehaviour
     public void UpdatePlayerHealth(int damage)
     {
         currentHealth -= damage;
-
         if((currentHealth -= damage) >= maxHealth) currentHealth = maxHealth;
 
-
-        Debug.Log(currentHealth);
+        debugHealth.text = currentHealth.ToString();
 
         if (currentHealth >= maxHealth)
         {

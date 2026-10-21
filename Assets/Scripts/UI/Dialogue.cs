@@ -11,13 +11,11 @@ public class Dialogue : MonoBehaviour
 
     private int index;
     public bool isClicking = false;
-    private PlayerController player;
+    public PlayerController player;
 
     void Start()
     {
         lines = PlayerData.nextLobby.dialogueLines;
-      
-        player = FindFirstObjectByType<PlayerController>();
         dialogueText.text = string.Empty;
     }
 

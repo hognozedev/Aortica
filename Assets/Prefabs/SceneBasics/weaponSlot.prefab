@@ -88,3 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028208696a3e95c4ead96141d530f29b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hotbar
+  itemData: {fileID: 0}
+  descText: {fileID: 0}
+  itemIcon: {fileID: 201362624675898952}
