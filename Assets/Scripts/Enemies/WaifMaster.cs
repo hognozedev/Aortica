@@ -13,7 +13,7 @@ public class WaifMaster : MonoBehaviour
 
     private int currentEnemies = 0;
 
-    public void StarInvokeSpawn()
+    void Start()
     {
         InvokeRepeating("Spawn", startDelay, spawnRate * Random.Range(0.8f, 1.2f));
     }
@@ -31,7 +31,6 @@ public class WaifMaster : MonoBehaviour
             GameObject currentInst;
             currentInst = Instantiate(prefab, chosenPoint.transform.position, Quaternion.identity);
             currentInst.TryGetComponent<WaifAI>(out WaifAI wai); wai.spawnPoint = chosenPoint;
-
         }
     }
 

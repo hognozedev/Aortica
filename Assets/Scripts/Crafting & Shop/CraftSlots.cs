@@ -24,13 +24,11 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         itemData.itemCost = cost;
         costText.text = cost.ToString();
         itemImg.sprite = itemData.itemImage;
-
     }
 
     public void BuyButtonClicked()
     {
         craftManager.TryBuyItem(itemData, itemData.itemCost, itemData.shopAmount);
-
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -46,6 +44,6 @@ public class CraftSlots : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerMove(PointerEventData eventData)
     {
         if (itemData != null) itemPopup.FollowMouse();
-
     }
+
 }
