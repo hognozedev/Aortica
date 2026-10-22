@@ -18,8 +18,7 @@ public class CraftManager : MonoBehaviour, IInteractable
     [SerializeField] private GameObject interactPrompt;
     [SerializeField] private CanvasGroup canvasGroup;
     public GameObject inventoryUI;
-    public GunMaster gunMaster;
-
+    //public GunMaster gunMaster;
     private PlayerController player;
 
     private void Start()

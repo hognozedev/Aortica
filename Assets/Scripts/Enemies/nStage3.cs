@@ -118,8 +118,6 @@ public class nStage3 : MonoBehaviour
 
     private void MeleeAttack()
     {
-        Debug.Log("melee");
-
         if (inMeleeRange)
         {
             agent.SetDestination(enemy.position);
