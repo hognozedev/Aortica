@@ -14,13 +14,18 @@ public class CraftManager : MonoBehaviour, IInteractable
     [SerializeField] private List <CraftItems> craftItems;
     [SerializeField] private CraftSlots[] craftSlots;
 
-    [Header("References")]
+    [Header("Refs")]
     [SerializeField] private GameObject interactPrompt;
     [SerializeField] private CanvasGroup canvasGroup;
     public GameObject inventoryUI;
-    public GunMaster gunMaster;
 
+    [Header("Scripts")]
+    public GunMaster gunMaster;
+    public WaveEvents wave;
     private PlayerController player;
+
+    [Header("Vars")]
+    bool firstInt = true;
 
     private void Start()
     {
@@ -30,6 +35,14 @@ public class CraftManager : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (firstInt)
+        {
+            thingsSeen++;
+            firstInt = false;
+
+            wave.Wave1Events();
+        }
+
         player.InMenu();
         canvasGroup.gameObject.SetActive(true);
         inventoryUI.SetActive(true);

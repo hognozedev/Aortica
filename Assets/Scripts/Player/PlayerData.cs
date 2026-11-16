@@ -3,7 +3,7 @@ using UnityEngine;
 public static class PlayerData
 {
     [Header("Health")]
-    public static int maxHealth = 250, currentHealth;
+    public static int maxHealth = 100, currentHealth;
 
     [Header("Stamina")]
     public static float maxStamina = 20, staminaLoss = 10, regenSpeed = 5, regenDelay = 2;
@@ -13,16 +13,21 @@ public static class PlayerData
     public static float camShake;
 
     [Header("Currency")]
-    public static int playerSalv = 200, playerEnm;
+    public static int playerSalv = 100, playerEnm;
 
     [Header("Inventory")]
     public static Action<ItemData, int> OnItemTaken;
     public static Action<ItemData> OnGunTaken;
     public static Action<ItemData> OnModify;
     public static int currentWeapons;
-    //LAYOUT OF INVENTORY/ ITEMS IT CONTAINS
 
     [Header("Level Data")]
+    public static LobbyData lobbyData;
+    public static int thingsSeen;
+
+    [Header("Save File Info")]
+    //LAYOUT OF INVENTORY/ ITEMS IT CONTAINS
     public static int waveEnemyKills, vivisectorsKilled, waifsKilled, hoarfrostsKilled, necroEggKilled, necroBabyKilled, necrophagesKilled;
-    public static LobbyData nextLobby;
+    public static float wave1Time, wave2Time, wave3Time, wave4Time, wave5Time, wave6Time, wave7Time, wave8Time, wave9Time, wave10Time, gameCompletionTime;
+    public static int mostRecentWave;
 }

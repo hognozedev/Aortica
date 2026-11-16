@@ -137,12 +137,12 @@ public class WaifAI : MonoBehaviour
 
     private void EnemyDeath()
     {
-        Debug.Log("enemy death");
         if(waifMaster != null) waifMaster.ResetSpawnPoint(spawnPoint);
         StartCoroutine(DestroyEnemy());
 
         waifsKilled+=1;
         waveEnemyKills+=1;
+        waifMaster.waveEvents.WinConCheck();
     }
 
     IEnumerator DestroyEnemy()

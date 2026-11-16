@@ -5,16 +5,25 @@ public class WaifMaster : MonoBehaviour
     [Header("Refs")]
     public GameObject[] spawnPoints;
     public GameObject prefab;
+    public WaveEvents waveEvents;
 
     [Header("Vars")]
-    public int startDelay = 2;
+    //public int startDelay = 2;
     public int spawnRate = 2;
     public int maxSpawns;
 
     private int currentEnemies = 0;
+    private int spawnedSoFar;
 
-    public void StarInvokeSpawn()
+    void Start()
     {
+        spawnedSoFar = 0;
+    }
+
+    public void StartInvokeSpawn(int startDelay)
+    {
+        Debug.Log("spawning starts");
+
         InvokeRepeating("Spawn", startDelay, spawnRate * Random.Range(0.8f, 1.2f));
     }
 
@@ -32,6 +41,7 @@ public class WaifMaster : MonoBehaviour
             currentInst = Instantiate(prefab, chosenPoint.transform.position, Quaternion.identity);
             currentInst.TryGetComponent<WaifAI>(out WaifAI wai); wai.spawnPoint = chosenPoint;
 
+            spawnedSoFar++;
         }
     }
 

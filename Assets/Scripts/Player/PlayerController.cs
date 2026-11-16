@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
         cameraTransform = Camera.main.transform;
         Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
+        Cursor.visible = false;
 
         currentHealth = maxHealth;
         UpdatePlayerHealth(0);

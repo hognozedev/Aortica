@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a86127b02bd974b8002a5a78fc2573, type: 3}
   m_Name: Lobby01
   m_EditorClassIdentifier: Assembly-CSharp::LobbyData
-  lobbyName: First Level Yayy
+  lobbyName: Aortica
   lobbyNumber: 1
   dialogueLines:
   - This is a test
   - Does it work?
   - ...
   - Who knows.
+  nextWaveScene: Wave1

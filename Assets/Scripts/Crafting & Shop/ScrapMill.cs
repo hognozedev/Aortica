@@ -1,8 +1,5 @@
-using NUnit.Framework.Interfaces;
 using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using static PlayerData;
 
 public class ScrapMill : MonoBehaviour, IInteractable
@@ -16,6 +13,7 @@ public class ScrapMill : MonoBehaviour, IInteractable
     //scrap variables
     private float decimalSalvAmount;
     public int salvAmount;
+    public GameObject scrapFill, scrap1, scrap2, scrap3;
 
     //machine function & stats
     private float genSpeed = 0.5f;
@@ -24,15 +22,10 @@ public class ScrapMill : MonoBehaviour, IInteractable
     public int millDelay = 5;
     public float jamChancePerc = 0.25f;
 
-    //interact
-    [SerializeField] private bool isEnabled = true;
-    public bool CanInteract() => isEnabled;
-
 
     private void Start()
     {
         isJammed = true;
-
         salvAmount = 0;
         decimalSalvAmount = 0;
     }
@@ -53,24 +46,40 @@ public class ScrapMill : MonoBehaviour, IInteractable
                 Debug.Log("Mill is jammed!");
                 isJammed = true;
             }
-        }
 
+            
+            if (salvAmount >= 2)
+            {
+                scrap1.SetActive(true);
+
+                if (salvAmount >= 8)
+                {
+                    scrap2.SetActive(true);
+
+                    if (salvAmount >= 12) scrap3.SetActive(true);
+                }
+            } 
+        }
     }
 
     public void Interact()
     {
+        if(salvAmount <= 0)
+        {
+            scrap1.SetActive(false);
+            scrap2.SetActive(false);
+            scrap3.SetActive(false);
+        }
+
         if(isJammed == true)
         {
-            Debug.Log("");
             Debug.Log("Mill will restart soon.");
             MillRestart();
         }
 
         if(isJammed == false)
         {
-            Debug.Log("");
             Debug.Log("You collected Salvage");
-
             MillCollection();
         }
     }
@@ -97,13 +106,13 @@ public class ScrapMill : MonoBehaviour, IInteractable
         PlayerData.playerSalv += salvAmount;
         salvAmount = 0;
         decimalSalvAmount = 0;
-
     }
 
     public void OnFocusGained()
     {
         interactPrompt.gameObject.SetActive(true);
     }
+
     public void OnFocusLost()
     {
         interactPrompt.gameObject.SetActive(false);

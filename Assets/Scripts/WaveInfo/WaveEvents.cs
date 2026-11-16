@@ -3,10 +3,15 @@ using static PlayerData;
 
 public class WaveEvents : MonoBehaviour
 {
-    public PlayerController player;
     public GameObject pauseMenu;
-    public int currentWave;
-    public LobbyData NLD;
+    public WaveData waveData;
+    public int killCon;
+
+    [Header("Script Refs")]
+    public PlayerController player;
+    public WaifMaster waifs;
+    [SerializeField] ScrapMill tutorialMill;
+    [SerializeField] GameObject millInteract;
 
     bool escPressed;
     [HideInInspector] public bool menuOpen;
@@ -15,9 +20,9 @@ public class WaveEvents : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         player.inLobby = false;
+        waveEnemyKills = 0;
 
-        Wave1Events(currentWave);
-        nextLobby = NLD;
+        if(waveData.waveNumber != 1) waifs.StartInvokeSpawn(2);
     }
 
     public void Update()
@@ -36,10 +41,34 @@ public class WaveEvents : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    public void Wave1Events(int WN)
+    public void Wave1Events()
     {
-        if (WN == 1) Debug.Log("tutorial stuff");
-        else if (WN > 1) Debug.Log("other waves");
+        if(thingsSeen >= 3)
+        {
+            Debug.Log("seen all");
+            waifs.StartInvokeSpawn(10);
+
+            tutorialMill.gameObject.layer = LayerMask.NameToLayer("Interactable");
+            millInteract.SetActive(false);
+        }
     }
 
+    public void WinConCheck()
+    {
+        int kills = waveEnemyKills;
+            //can change this to be all total kills, specific enemies, etc.
+
+        if (kills >= killCon)
+        {
+            Debug.Log("wave won");
+            lobbyData = waveData.nextLobbyData;
+                //win screen
+        }
+
+        else if(kills < killCon)
+        {
+            Debug.Log("not enough to win");
+        }
+
+    }
 }

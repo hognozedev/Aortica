@@ -15,19 +15,21 @@ public class LobbyEvents : MonoBehaviour
     public LobbyData introLobby;
 
     //priv
-    [HideInInspector] public LobbyData LSO;
+    //[HideInInspector] public LobbyData lobbyData;
     [HideInInspector] public bool menuOpen;
     bool escPressed;
 
     void Awake()
     {
+        Time.timeScale = 1f;
         player.inLobby = true;
 
-        if (PlayerData.nextLobby == null) PlayerData.nextLobby = introLobby;
-        LSO = PlayerData.nextLobby;
+        if (lobbyData == null) lobbyData = introLobby;
 
-        waveText.text = LSO.lobbyName;
+        waveText.text = lobbyData.lobbyName;
             //must set in start here, as it is set in player during awake
+
+        dialogue.gameObject.SetActive(true);
 
         waveText.CrossFadeAlpha(0, 5, false);
         blackScreen.CrossFadeAlpha(0, 3, false);
@@ -45,7 +47,6 @@ public class LobbyEvents : MonoBehaviour
         escPressed = player.escapeAction.WasPressedThisFrame();
         if (escPressed && !menuOpen) PauseMenu();
     }
-
 
     public void PauseMenu()
     {

@@ -6,7 +6,7 @@ using static PlayerData;
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText;
-    private string[] lines;
+    public string[] lines;
     public float textSpeed;
 
     private int index;
@@ -15,7 +15,7 @@ public class Dialogue : MonoBehaviour
 
     void Start()
     {
-        lines = PlayerData.nextLobby.dialogueLines;
+        if(player.inLobby) lines = lobbyData.dialogueLines;
         dialogueText.text = string.Empty;
     }
 
@@ -32,19 +32,23 @@ public class Dialogue : MonoBehaviour
             {
                 StopAllCoroutines();
                 dialogueText.text = lines[index];
+                Debug.Log("fill line");
             }
         }
     }
 
     public void StartDialogue()
     {
+        dialogueText.text = string.Empty;
         index = 0;
         StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
     {
-        foreach(char c in lines[index].ToCharArray())
+        yield return new WaitForSeconds(0.5f);
+
+        foreach (char c in lines[index].ToCharArray())
         {
             dialogueText.text += c;
             yield return new WaitForSeconds(textSpeed);

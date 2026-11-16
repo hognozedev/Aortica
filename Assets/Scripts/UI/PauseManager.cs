@@ -11,6 +11,9 @@ public class PauseManager : MonoBehaviour
     {
         player.ExitedMenu();
 
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+
         gameObject.SetActive(false);
         if(waveEvents != null) waveEvents.menuOpen = false;
         if(lobbyEvents != null) lobbyEvents.menuOpen = false;

@@ -15,3 +15,4 @@ MonoBehaviour:
   lobbyName: Second Wave Lobby
   lobbyNumber: 2
   dialogueLines: []
+  nextWaveScene: Wave2

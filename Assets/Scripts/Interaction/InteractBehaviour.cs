@@ -1,25 +1,28 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static PlayerData;
 
 public class InteractBehaviour : MonoBehaviour, IInteractable
 {
     public bool CanInteract() => true;
     public GameObject interactPrompt;
-    public bool isDoor;
     public LobbyEvents lobby;
-
     public GameObject warningPopup;
-    private bool warned = false;
 
     public void Interact()
     {
-        if (warned == true)
-        {
-            SceneManager.LoadScene(lobby.LSO.nextWaveScene);
-        }
-
         warningPopup.SetActive(true);
-        warned = true;
+        lobby.player.InMenu();
+    }
+
+    public void Continue()
+    {
+        SceneManager.LoadScene(lobbyData.nextWaveScene);
+    }
+
+    public void NotYet()
+    {
+        interactPrompt.gameObject.SetActive(false);
     }
 
     public void OnFocusGained()
@@ -30,5 +33,6 @@ public class InteractBehaviour : MonoBehaviour, IInteractable
     public void OnFocusLost()
     {
         interactPrompt.gameObject.SetActive(false);
+        lobby.player.ExitedMenu();
     }
 }
