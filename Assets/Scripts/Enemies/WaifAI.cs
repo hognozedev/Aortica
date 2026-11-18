@@ -30,6 +30,11 @@ public class WaifAI : MonoBehaviour
     float walkPointRange = 50f;
     private int enemyHealth;
     private WaifMaster waifMaster;
+    private Vector3 lastKnownPlayerPosition;
+    private float lastKnownPositionTolerance = 1f;
+    [SerializeField] private LayerMask obstructionLayerMask;
+    private Vector3 raycastOffset = new Vector3(0f, -0.5f, 0f);
+    private float fieldOfView = 90f;
 
     //attack
     bool alreadyAttacked, windingUp;
@@ -51,10 +56,11 @@ public class WaifAI : MonoBehaviour
         inSightRange = Physics.CheckSphere(enemy.position, sightRange, playerMask);
         inAttackRange = Physics.CheckSphere(enemy.position, enemyData.attackRange, playerMask);
 
-        if (!inSightRange) Patrol();
-        if (inSightRange && !inAttackRange) Chase();
         if (inSightRange && inAttackRange && !windingUp) AttackWindup();
-    //when the enemy should run each different phase
+        else if (inSightRange && CanSeePlayer()) { lastKnownPlayerPosition = Vector3.zero; Chase(); }
+        else if (lastKnownPlayerPosition != Vector3.zero) ChaseLastKnownPosition();
+        else Patrol();
+        //when the enemy should run each different phase
     }
 
     private void Patrol()
@@ -65,7 +71,7 @@ public class WaifAI : MonoBehaviour
         Vector3 distanceToWalkPoint = enemy.position - walkPoint;
 
         if(distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
-    //find a walk point, move to it, then repeat
+        //find a walk point, move to it, then repeat
     }
 
     private void SearchWalkPoint()
@@ -75,13 +81,46 @@ public class WaifAI : MonoBehaviour
         walkPoint = new Vector3(enemy.position.x + randomX, enemy.position.y, enemy.position.z + randomZ);
 
         if (Physics.Raycast(walkPoint, -enemy.up, 2f, groundMask)) walkPointSet = true;
-    //get the enemy to go to a random point (that is above ground)
+        //get the enemy to go to a random point (that is above ground)
     }
 
     private void Chase()
     {
         agent.SetDestination(player.transform.position);
-    //enemy.LookAt(player); this looks weird maybe use with finished animations ?
+        lastKnownPlayerPosition = player.transform.position;
+        //enemy.LookAt(player); this looks weird maybe use with finished animations ?
+    }
+
+    private void ChaseLastKnownPosition()
+    {
+        agent.SetDestination(lastKnownPlayerPosition);
+
+        if (Vector3.Distance(enemy.position, lastKnownPlayerPosition) < lastKnownPositionTolerance)
+        {
+            lastKnownPlayerPosition = Vector3.zero;
+        }
+    }
+
+    private bool CanSeePlayer()
+    {
+        // Calculates direction to player
+        Vector3 dirToPlayer = player.transform.position - enemy.position;
+        float distanceToPlayer = dirToPlayer.magnitude;
+        // Is player in fov cone?
+        Vector3 flatDir = new Vector3(dirToPlayer.x, 0, dirToPlayer.z).normalized;
+        Vector3 flatForward = new Vector3(enemy.forward.x, 0, enemy.forward.z).normalized;
+        if (Vector3.Angle(flatForward, flatDir) > fieldOfView / 2f)
+        {
+            return false;
+        }
+        // Raycast to see if theres anything between the enemy and the player
+        Vector3 raycastOrigin = enemy.position + raycastOffset;
+        if (Physics.Raycast(raycastOrigin, dirToPlayer.normalized, out RaycastHit hit, distanceToPlayer, obstructionLayerMask))
+        {
+            Debug.Log("can't see because of: " + hit.collider.name); //Environment (layer) is blocking LOS to player
+            return false;
+        }
+        return true;
     }
 
     private void AttackWindup()

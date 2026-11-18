@@ -61,6 +61,9 @@ MonoBehaviour:
     m_Bits: 8
   head: {fileID: 3052998511310936618}
   bloodAnim: {fileID: 2007838810572776970}
+  obstructionLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!195 &6613930476255871148
 NavMeshAgent:
   m_ObjectHideFlags: 0
