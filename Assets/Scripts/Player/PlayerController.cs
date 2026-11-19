@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage;
         if((currentHealth -= damage) >= maxHealth) currentHealth = maxHealth;
 
-        debugHealth.text = currentHealth.ToString();
+        //debugHealth.text = currentHealth.ToString();
 
         if (currentHealth >= maxHealth)
         {
